@@ -4,7 +4,7 @@
   <title><![CDATA[Crystal Sight]]></title>
   <link href="http://carltonf.github.io/atom.xml" rel="self"/>
   <link href="http://carltonf.github.io/"/>
-  <updated>2014-11-18T19:59:24+08:00</updated>
+  <updated>2014-11-18T20:02:24+08:00</updated>
   <id>http://carltonf.github.io/</id>
   <author>
     <name><![CDATA[Carl Xiong]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Raw_markdown_try]]></title>
+    <link href="http://carltonf.github.io/blog/2014-11-18-raw-markdown-try/"/>
+    <updated>2014-11-18T20:01:53+08:00</updated>
+    <id>http://carltonf.github.io/blog/raw-markdown-try</id>
+    <content type="html"><![CDATA[<p>Hello, I am nothing but a try.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Something Fun to Try]]></title>
