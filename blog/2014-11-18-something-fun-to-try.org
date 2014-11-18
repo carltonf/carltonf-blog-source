@@ -6,4 +6,4 @@
 #+JEKYLL_PUBLISHED: true
 
 * Life is shitty hole. I've tried everything out ;P
-[[file:blog/2014-11-18-org-octopress/][Org Octopress: the first post]]
+[[file:/blog/2014-11-18-org-octopress/][Org Octopress: the first post]]
