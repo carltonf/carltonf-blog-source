@@ -1,0 +1,9 @@
+#+TITLE: Something fun to try
+#+DATE: 2014-11-18
+#+SETUPFILE: ~/sources/workshop/carltonf.github.io/org-sty/setupfile.org
+#+JEKYLL_LAYOUT: post
+#+JEKYLL_CATEGORIES: 
+#+JEKYLL_PUBLISHED: true
+
+* Life is shitty hole. I've tried everything out ;P
+[[file:2014-11-18-org-octopress.org][Org Octopress: the first post]]

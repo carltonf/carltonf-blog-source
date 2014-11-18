@@ -1,0 +1,147 @@
+#+TITLE: Org Octopress
+#+DATE: 2014-11-18
+#+SETUPFILE: ~/sources/workshop/carltonf.github.io/org-sty/setupfile.org
+#+JEKYLL_LAYOUT: post
+#+JEKYLL_CATEGORIES: 
+#+JEKYLL_PUBLISHED: true
+
+* Stupid tried files
+** TODO Ido on fullscreen
+SCHEDULED: <2014-12-08 Mon>
+:PROPERTIES:
+:LEARN_DATA: (77.11347671039995 6 2.0799999999999996 ((5 (2.0799999999999996 . 2.1422999999999996)) (4 (2.2199999999999998 . 2.2774))))
+:END:
+
+type =?= in =ido= mode and see completion buffer.
+
+Though I think this interface is in no par with =Helm=.
+** TODO =M-0 kill-line=: kill text before the point
+SCHEDULED: <2015-03-18 Wed>
+:PROPERTIES:
+:LEARN_DATA: (156.25 6 2.5 nil)
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (lambda (arg)
+    (interactive "p")
+    (message "I don't do a damn thing ;P"))
+#+END_SRC
+
+
+{{{more}}}
+** TODO Use 'C-h A' (`apropos') more often
+SCHEDULED: <2015-03-18 Wed>
+:LOGBOOK:
+- Note taken on [2014-07-17 Thu 11:04] \\
+  The reality is: this command seldom finds a chance to be used :(
+:END:
+:PROPERTIES:
+:ID:       bc917da7-2c72-4a78-a539-b0f5a1c00550
+:LEARN_DATA: (156.25 6 2.5 nil)
+:END:
+** TODO Review [[info:bash#History%20Interaction][info:bash#History Interaction]]
+SCHEDULED: <2014-11-10 Mon>
+:LOGBOOK:
+- Note taken on [2014-07-22 Tue 14:25] \\
+  Proved to be very useful. And we didn't know enough.
+:END:
+:PROPERTIES:
+:ID:       fd18b1f1-da43-4750-80bc-fbc2cd08f8de
+:LEARN_DATA: (4 2 2.5 nil)
+:END:
+
+various designators and modifiers are of particular interests.
+
+- [ ] =!!=: previous command
+- [ ] =!$=: last argument
+  
+  Not really used very often as M-. is good enough.
+
+- [ ] =!0=: the `0'th word
+
+- [ ] =!*=: All of the words, except the `0'th.
+  
+  very useful.
+
+- [ ] The combinations of =history | grep xxxx= and =!<number>=
+  
+  A much better way to revisit old commands than repeated =C-R=
+** TODO ELisp =sxhash= and =equal=
+SCHEDULED: <2014-12-08 Mon>
+:PROPERTIES:
+:LEARN_DATA: (77.11347671039995 6 2.0799999999999996 ((5 (2.0799999999999996 . 2.1422999999999996)) (4 (2.2199999999999998 . 2.2774))))
+:END:
+
+=sxhash= computes the hash code according to the contents of the object.
+
+So two objects that are =equal= will result in the same hash id.
+** TODO Review Emacs cookbook note
+SCHEDULED: <2014-12-08 Mon>
+
+[[/home/carl/Dropbox/T420sync/emacs_cookbook/elisp_cookbook.org][cookbook.org]]
+** TODO Emacs in batch mode output to stdout
+SCHEDULED: <2015-03-24 Tue>
+:PROPERTIES:
+:LEARN_DATA: (126.84207039999997 6 2.36 ((5 (2.36 . 2.4124999999999996))))
+:END:
+
+=print=, see =standard-output='s help
+=message=, outputs to =stderr=
+** TODO =flush-lines=
+SCHEDULED: <2015-02-23 Mon>
+:PROPERTIES:
+:LEARN_DATA: (124.08177663999999 6 2.36 nil)
+:END:
+
+handy for multiple lines deletion
+
+read http://www.masteringemacs.org/articles/2011/03/16/removing-blank-lines-buffer/
+** DONE =highlight-phrases=
+CLOSED: [2014-11-06 Thu 13:56] SCHEDULED: <2014-11-06 Thu>
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2014-11-06 Thu 13:56] \\
+  I've defined a new command =toggle-highlight-thing-at-point= to fully utilize it.
+- Note taken on [2014-09-22 Mon 13:49] \\
+  Interesting stuff. I need to remind myself more often about using it in practice.
+:END:
+:PROPERTIES:
+:LEARN_DATA: (44.89575263999999 5 2.2199999999999998 ((4 (2.2199999999999998 . 2.2774)) (3 (2.36 . 2.4124999999999996))))
+:END:
+
+ use font lock or overlay to highlight some phrases in a buffer (extremely
+ helpful for code viewing.)
+
+ Reciprocally, =unhighlight-phrases= to revert highlighted terms.
+** TODO =ps= to display a process tree
+SCHEDULED: <2014-12-26 Fri>
+:PROPERTIES:
+:LEARN_DATA: (58.62135185919997 6 1.9399999999999997 ((5 (1.9399999999999997 . 2.0071999999999997)) (4 (2.0799999999999996 . 2.1422999999999996)) (3 (2.2199999999999998 . 2.2774)) (2 (2.36 . 2.4124999999999996))))
+:END:
+
+=ps -afx=, remind me to seriously learn more about =ps=.
+
+** TODO Note the difference between PWD and CWD
+SCHEDULED: <2014-12-04 Thu>
+:PROPERTIES:
+:LEARN_DATA: (37.073786879999986 5 2.0799999999999996 ((4 (2.0799999999999996 . 2.1422999999999996)) (3 (2.2199999999999998 . 2.2774)) (2 (2.36 . 2.4124999999999996))))
+:END:
+
+PWD is just an environment variable, not necessarily reflect the CWD.
+
+use =pwd= or =pwdx $PID= to checkout the CWD (which is =/proc/$PID/cwd=)
+** TODO Save all file-related buffers
+SCHEDULED: <2014-12-05 Fri>
+:PROPERTIES:
+:LEARN_DATA: (30.217191679999985 5 1.9399999999999997 ((4 (1.9399999999999997 . 2.0071999999999997)) (3 (2.0799999999999996 . 2.1422999999999996)) (2 (2.2199999999999998 . 2.2774)) (1 (2.36 . 3.86))))
+:END:
+
+http://stackoverflow.com/questions/1852812/saving-all-modified-buffers-in-emacs-but-not-one-by-one
+In emacs >23, with ibuffer :
+
+    'M-x ibuffer' (to open a list of buffers)
+    '*u' (start and u at the same time) to marked all unsaved buffers
+    'S' to save all marked buffers
+
+
+
+
