@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Crystal Sight]]></title>
-  <link href="http://carltonf.github.io/atom.xml" rel="self"/>
-  <link href="http://carltonf.github.io/"/>
-  <updated>2014-11-19T15:56:09+08:00</updated>
-  <id>http://carltonf.github.io/</id>
+  <link href="https://carltonf.github.io/atom.xml" rel="self"/>
+  <link href="https://carltonf.github.io/"/>
+  <updated>2014-11-19T16:07:21+08:00</updated>
+  <id>https://carltonf.github.io/</id>
   <author>
     <name><![CDATA[Carl Xiong]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hello and Self-Introduction]]></title>
-    <link href="http://carltonf.github.io/blog/2014-11-19-hello-and-self-introduction.html"/>
+    <link href="https://carltonf.github.io/blog/2014-11-19-hello-and-self-introduction.html"/>
     <updated>2014-11-19T00:00:00+08:00</updated>
-    <id>http://carltonf.github.io/blog/hello-and-self-introduction</id>
+    <id>https://carltonf.github.io/blog/hello-and-self-introduction</id>
     <content type="html"><![CDATA[<p>
 A &#8220;Hello World&#8221; blog. Later it would grow into Page &#8220;About&#8221;.
 </p>
