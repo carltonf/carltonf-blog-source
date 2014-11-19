@@ -1,0 +1,40 @@
+#+TITLE: Hello and Self-Introduction
+#+DATE: 2014-11-19
+#+SETUPFILE: ~/sources/workshop/carltonf.github.io/org-sty/setupfile.org
+#+JEKYLL_LAYOUT: post
+#+JEKYLL_CATEGORIES: 
+#+JEKYLL_PUBLISHED: true
+
+A "Hello World" blog. Later it would grow into Page "About".
+
+* About Me (Philosophy matters)
+
+I'm an tech enthusiast with a business-like perspective towards the world.
+
+To me, there are only two things that matter: one that's interesting, the other
+that's profitable.
+
+All the happiness and sadness arises from the fact: the only way to understand
+an objective world is through the subjective mind.
+
+In the last but not the least, I am a programmer ;P
+
+{{{more}}}
+
+* About me
+
+I have a [[https://cn.linkedin.com/pub/chao-xiong/16/164/480][Linkedin profile]], which says much about my education and career so far.
+
+I am a Chinese and currently living in Beijing.
+
+That's basically all.
+
+* About this blog
+
+My interests are broad but this blog site would be a mostly programming-related
+one. Basically everything about my work, my hobby project and etc.
+
+I'd like short blog and regular posting.
+
+This blog also serves a wiki for me ;P and in sharing them, I hope it would be
+useful to others as well.
