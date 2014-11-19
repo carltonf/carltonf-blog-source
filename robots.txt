@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: https://carltonf.github.io/sitemap.xml 
+Sitemap: http://carltonf.github.io/sitemap.xml 

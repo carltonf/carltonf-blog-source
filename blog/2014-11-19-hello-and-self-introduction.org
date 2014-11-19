@@ -4,6 +4,7 @@
 #+JEKYLL_LAYOUT: post
 #+JEKYLL_CATEGORIES: 
 #+JEKYLL_PUBLISHED: true
+#+JEKYLL_COMMENTS: true
 
 A "Hello World" blog. Later it would grow into Page "About".
 
