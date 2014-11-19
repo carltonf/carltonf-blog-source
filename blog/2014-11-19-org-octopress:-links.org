@@ -1,0 +1,58 @@
+#+TITLE: Org-octopress: Links
+#+DATE: 2014-11-19
+#+SETUPFILE: ~/sources/workshop/carltonf.github.io/org-sty/setupfile.org
+#+JEKYLL_LAYOUT: post
+#+JEKYLL_CATEGORIES: 
+#+JEKYLL_PUBLISHED: true
+#+JEKYLL_COMMENTS: true
+
+* Summary
+
+In [[http://www.railsonmaui.com/blog/2014/03/05/octopress-setup-with-github-and-org-mode-v2/index.html][Org-Mode Octopress Setup V2]], which I am still reading to complete my setup of
+=Org= with =Octopress=, the author mentions the problems with links in *Org-mode
+Integration*.
+
+After digging around, here is my solution for that issue. Basically, the =Org=
+already has facilities for URL handling, but these are deeply buried in the
+code.
+
+{{{more}}}
+
+* My desired behavior
+As my =org= source files all reside in =source/blog/= directory, all local
+references should be using path relative to this directory. E.g. for
+=blog/a.org= to refer to =blog/b.org=, =./b.org= is all I need, for images
+in =source/image=, the link should look like =../image/=.
+
+* Issues
+=Org= can automatically convert =org= file link to =html= link, the gotcha here
+is: if the path is absolute, it would prefix it with =file:= in the final
+output. The relevant code snippet in =ox-html.el:org-html-link=:
+#+BEGIN_SRC emacs-lisp
+  ;; If file path is absolute, prepend it with protocol
+  ;; component - "file:".
+  (cond
+   ((file-name-absolute-p raw-path)
+    (setq raw-path (concat "file:" raw-path)))
+   ((and home use-abs-url)
+    (setq raw-path (concat (file-name-as-directory home) raw-path))))
+#+END_SRC
+
+But the relative link doesn't work reliably in the published site.
+
+* Solution
+
+Use two =Org= export option:
+: #+HTML_LINK_HOME: /blog/
+: #+OPTIONS: html-link-use-abs-url:t
+
+The combined effect of these two is to prefix all links with =/blog/= in the
+exported files, an absolute path on site. I've set these in the global
+=setupfile.org=, but they can also be used per-file or per-subtree.
+
+With these two options, locally you only need to write relative links and
+conversion to site absolute path is automatically taken care of.
+
+The related =ELisp= source code snippet is in
+=ox-html.el:org-export-define-backend= part. Read the document on
+=org-export-define-backend= to appreciate these deeply buried features ;P
