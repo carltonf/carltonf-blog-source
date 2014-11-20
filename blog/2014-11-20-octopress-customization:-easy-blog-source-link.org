@@ -1,0 +1,72 @@
+#+TITLE: Octopress Customization: easy blog source link
+#+DATE: 2014-11-20
+#+SETUPFILE: ~/sources/workshop/carltonf.github.io/org-sty/setupfile.org
+#+JEKYLL_LAYOUT: post
+#+JEKYLL_CATEGORIES: octopress jekyll
+#+JEKYLL_PUBLISHED: true
+#+JEKYLL_COMMENTS: true
+
+{% raw %}
+
+* Summary
+Most my posts here are programming-related and one of =Org='s killer features is
+embedding code (used in literate programming and etc.), I thought why not give
+the reader an easier way to access my post source. Chances are that they might
+be using =Emacs= and =Org=, then they can try the code directly without
+copying/pasting or the hassle to wade through my source repo ;).
+
+It turns out to be quite easy to do this, as shown in the red rectangle below:
+[[file:2014-11-20-octopress-customization:-easy-blog-source-link/2014-11-20-223301_856x329_scrot.png]]
+
+{{{more}}}
+
+* Code and References
+
+** Two key references:
+- [[http://jekyllrb.com/docs/variables/][Jekyll Variables]]: simply put, just various blog/post/page information
+  available to you when you are hacking.
+- [[http://jekyllrb.com/docs/templates/][Jekyll Templates]] and [[https://github.com/Shopify/liquid/wiki/Liquid-for-Designers][Liquid Filters&Tags]]: again simply, various predefined
+  methods or programming structure you can use to manipulate the data you
+  extract from above. The =Liquid= document is more useful.
+  
+** Code
+Here is the whole commit:
+#+BEGIN_SRC diff -n -r
+  diff --git a/source/_includes/article.html b/source/_includes/article.html
+  index 8427997..c38fd90 100644
+  --- a/source/_includes/article.html
+  +++ b/source/_includes/article.html
+  @@ -12,6 +12,14 @@
+              | <a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#disqus_thread"
+                data-disqus-identifier="{% if post.meta.disqus_id %}{{ post.meta.disqus_id }}{% else %}{{ site.url }}{{ post.url }}{% endif %}">Comments</a>
+           {% endif %}
+  +        |
+  +        {% if index %}  (ref:is-home)
+  +        {% capture abs_page_url %}{{ root_url }}{{ post.url }}{% endcapture %}
+  +        <a href="{{ abs_page_url | split:'.html' | first | append:'.org' }}">SOURCE</a>
+  +        {% else %}
+  +        <a href="{{ page.url | split:'.html' | first | append:'.org' }}">SOURCE</a> (ref:html-to-org)
+  +        {% endif %}
+  +
+         </p>
+       {% endunless %}
+     </header>
+
+#+END_SRC
+
+*Explanations:*
+- Line [[(is-home)]] checks whether the current html snippet is in Home page or not.
+  If the post is in Home, links in the articles are updated to absolute path
+  (versus the site), otherwise relative paths are used.
+- Line [[(html-to-org)]] uses 3 filters to replace =.html= with =.org=. I have my
+  source synced to the =_deploy/blog= so here changing the extension is enough.
+  I didn't find a better way to do this simple replacement :(.
+
+* Afternote
+
+While I still like this idea of sharing blog source more easily, its usability
+might not always be so good as I thought. As in this post, I've used some =Org=
+link reference to make explanation clearer, which is nice for a post but at the
+same time make it inconvenient to use the code directly.
+
+{% endraw %}
