@@ -28,7 +28,8 @@ It turns out to be quite easy to do this, as shown in the red rectangle below:
 - [[http://jekyllrb.com/docs/templates/][Jekyll Templates]] and [[https://github.com/Shopify/liquid/wiki/Liquid-for-Designers][Liquid Filters&Tags]]: again simply, various predefined
   methods or programming structure you can use to manipulate the data you
   extract from above. The =Liquid= document is more useful.
-  
+- [[http://octopress.org/docs/theme/][Octopress: Theming & Customization]]: the =Octopress=-specific docs.
+
 ** Code
 Here is the whole commit:
 #+BEGIN_SRC diff -n -r

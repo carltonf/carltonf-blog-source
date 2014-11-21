@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Org | Crystal Sight]]></title>
   <link href="http://carltonf.github.io/blog/categories/org/atom.xml" rel="self"/>
   <link href="http://carltonf.github.io/"/>
-  <updated>2014-11-20T23:37:40+08:00</updated>
+  <updated>2014-11-21T22:26:48+08:00</updated>
   <id>http://carltonf.github.io/</id>
   <author>
     <name><![CDATA[Carl Xiong]]></name>
@@ -63,6 +63,8 @@ available to you when you are hacking.
 <li><a href="http://jekyllrb.com/docs/templates/">Jekyll Templates</a> and <a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid Filters&amp;Tags</a>: again simply, various predefined
 methods or programming structure you can use to manipulate the data you
 extract from above. The <code>Liquid</code> document is more useful.
+</li>
+<li><a href="http://octopress.org/docs/theme/">Octopress: Theming &amp; Customization</a>: the <code>Octopress</code>-specific docs.
 </li>
 </ul>
 </div>
