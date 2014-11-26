@@ -9,8 +9,8 @@
   <meta name="author" content="Carl Xiong">
 
   
-  <meta name="description" content="Summary I work across multiple computers: home PC, my own laptop, company PC and laptop.
-And I like to use Arch for my daily work everywhere. The &hellip;">
+  <meta name="description" content="Intro The other day some of my colleagues were discussing about how to manage a
+package. From what I heard: SUSE decides to use kernel's bundled &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,72 @@ And I like to use Arch for my daily work everywhere. The &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014-11-26-packaging-and-several-concepts.html">Packaging and Several Concepts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-26'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+           | <a href="/blog/2014-11-26-packaging-and-several-concepts.html#disqus_thread"
+             data-disqus-identifier="http://carltonf.github.io/blog/2014-11-26-packaging-and-several-concepts.html">Comments</a>
+        
+        |
+        
+        
+        <a href="/blog/2014-11-26-packaging-and-several-concepts.org">SOURCE</a>
+        
+
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Intro</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The other day some of my colleagues were discussing about how to manage a
+package. From what I heard: <code>SUSE</code> decides to use kernel&#8217;s bundled <code>DRDB</code> module
+instead of the version built out of <code>DRDB</code>&#8217;s source tree, which is dropped in
+<code>DRDB</code>&#8217;s new version anyway. The package for this new <code>DRDB</code> is called
+<code>DRDB-user</code> as it only contains the user-space part. The problem rises when a
+user of older version of <code>SLE</code> (SUSE Linux Enterprise) decides to update to this
+<code>DRDB-user</code>. <code>DRDB-user</code> is said to support some old versions, i.e. for these
+versions you can mix up kernel modules from old <code>DRDB</code> package with newer
+<code>DRDB-user</code>. The question is how to do the packaging? (I am totally ignorant
+about <code>DRDB</code>, so the details might not be exact but the important point here is
+packaging.)
+</p>
+
+<p>
+I joined this discussion and throughout the course I&#8217;ve come to understand many
+concepts more clearly than before: no overlap among packages, different
+packaging methods, the meaning and differences between &#8220;Obsoletes&#8221; and
+&#8220;Conflicts&#8221;
+</p>
+
+<p>
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014-11-26-packaging-and-several-concepts.html">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -331,6 +397,10 @@ In the last but not the least, I am a programmer ;P
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014-11-26-packaging-and-several-concepts.html">Packaging and Several Concepts</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014-11-21-arch-for-suse-package-development.html">Arch for SUSE Package Development</a>
       </li>
     
@@ -383,7 +453,7 @@ In the last but not the least, I am a programmer ;P
 
 <section>
   <h1>Category Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/arch-linux' style='font-size: 130.0%; margin: 1%'>arch_linux</a> <a href='/blog/categories/emacs' style='font-size: 130.0%; margin: 1%'>emacs</a> <a href='/blog/categories/emacs-lisp' style='font-size: 130.0%; margin: 1%'>emacs-lisp</a> <a href='/blog/categories/jekyll' style='font-size: 130.0%; margin: 1%'>jekyll</a> <a href='/blog/categories/octopress' style='font-size: 160.0%; margin: 1%'>octopress</a> <a href='/blog/categories/org' style='font-size: 160.0%; margin: 1%'>org</a> <a href='/blog/categories/rpm' style='font-size: 130.0%; margin: 1%'>rpm</a> <a href='/blog/categories/suse' style='font-size: 130.0%; margin: 1%'>suse</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/arch-linux' style='font-size: 130.0%; margin: 1%'>arch_linux</a> <a href='/blog/categories/drdb' style='font-size: 130.0%; margin: 1%'>drdb</a> <a href='/blog/categories/emacs' style='font-size: 130.0%; margin: 1%'>emacs</a> <a href='/blog/categories/emacs-lisp' style='font-size: 130.0%; margin: 1%'>emacs-lisp</a> <a href='/blog/categories/jekyll' style='font-size: 130.0%; margin: 1%'>jekyll</a> <a href='/blog/categories/octopress' style='font-size: 160.0%; margin: 1%'>octopress</a> <a href='/blog/categories/org' style='font-size: 160.0%; margin: 1%'>org</a> <a href='/blog/categories/pkgbuild' style='font-size: 130.0%; margin: 1%'>pkgbuild</a> <a href='/blog/categories/rpm' style='font-size: 160.0%; margin: 1%'>rpm</a> <a href='/blog/categories/suse' style='font-size: 130.0%; margin: 1%'>suse</a> </span>
 </section>
 
   

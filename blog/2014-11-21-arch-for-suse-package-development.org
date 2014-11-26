@@ -68,3 +68,7 @@ nothing. This works fine translations.
 * Status
 =rpm -bp= and =quilt setup= now works like a charm, not a single warnings or
 errors, at least for the packages I've been working on.
+
+* Update
+[2014-11-25 Tue] I'm picking up new packages along the way! Add
+=obs-service-source_validator= and =obs-service-format_spec_file-git=. They are all uploaded to =AUR=

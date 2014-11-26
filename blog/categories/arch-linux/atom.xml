@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Arch_linux | Crystal Sight]]></title>
   <link href="http://carltonf.github.io/blog/categories/arch-linux/atom.xml" rel="self"/>
   <link href="http://carltonf.github.io/"/>
-  <updated>2014-11-21T22:26:48+08:00</updated>
+  <updated>2014-11-27T00:39:27+08:00</updated>
   <id>http://carltonf.github.io/</id>
   <author>
     <name><![CDATA[Carl Xiong]]></name>
@@ -137,6 +137,19 @@ nothing. This works fine translations.
 <p>
 <code>rpm -bp</code> and <code>quilt setup</code> now works like a charm, not a single warnings or
 errors, at least for the packages I&#8217;ve been working on.
+</p>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Update</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2014-11-25 Tue]</span></span> I&#8217;m picking up new packages along the way! Add
+<code>obs-service-source_validator</code> and <code>obs-service-format_spec_file-git</code>. They are all uploaded to <code>AUR</code>
 </p>
 </div>
 </div>
