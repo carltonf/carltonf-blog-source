@@ -1,0 +1,11 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+LAYOUT: default
+#+AUTHOR: carltonf
+#+DATE: 2015-04-01 Wed 20:09
+#+TITLE: About
+#+CATEGORIES: 
+#+DESCRIPTION: About me
+
+Nothing here yet. I'm just another programmer.

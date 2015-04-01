@@ -1,0 +1,11 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-04-01 Wed 19:52
+#+TITLE: From Octopress to Jekyll
+#+DESCRIPTION: 
+#+CATEGORIES: jekyll octopress org
+
+Only a stub for now.

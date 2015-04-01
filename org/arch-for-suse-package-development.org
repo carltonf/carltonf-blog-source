@@ -1,0 +1,77 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2014-11-21 Wed 17:48
+#+TITLE: Arch for SUSE package development
+#+DESCRIPTION: 
+#+CATEGORIES: arch_linux suse rpm
+
+
+* Summary
+
+I work across multiple computers: home PC, my own laptop, company PC and laptop.
+And I like to use =Arch= for my daily work everywhere. The problem is that
+=Linux= does a poor job to support new hardware, more so for less known brands.
+For example the sleep/hibernation on my AMD-laptop constantly breaks. So I've
+opted for a =VM/Linux + Windows/Linux= setup. My =Arch= runs inside the
+=VirtualBox=, and basically all I need is to sync the =vm= to have a consistent
+working environment EVERYWHERE! It took me about one month to adapt to this new
+layout, but it feels superb!
+
+A little off topic;P, just a little background.
+
+This article introduces [[https://github.com/carltonf/arch-suse-dev-setup][my simple package]] for making =Arch= a good environment
+for SUSE package development.
+
+{{{more}}}
+
+* Code
+
+It's only a =PKGBUILD= file now. Here is the link: [[https://github.com/carltonf/arch-suse-dev-setup][arch-suse-dev-setup]]. *Alpha
+stage*.
+
+* Some Highlights
+
+** =RPM= macros
+
+=osc= works flawlessly on =Arch=. Errors/warnings are shown when you =rpmbuild
+-bp= the source. Many =RPM= macros are missing, some are SUSE-specific, some are
+upstream macros considered common on SUSE machines. And thus chasing down files
+with these macro definitions is the first task.
+
+The most useful command is this =rpm --showrc=. You can find path definitions,
+custom macro file naming pattern and etc.
+ 
+** =suse_version=
+It's defined in the OBS project configuration, so no problem in =osc build=.
+
+However, =rpm= is not OBS-aware, so it would not read project configuration.
+=rpm= will find this value in the local macro file, which records the version of
+the running SUSE, which usually is not the same as the one in project
+configuration.
+
+In my package, I have default the version to =openSUSE:Factory= and warns the
+user that they might need to overrides this macro.
+
+Can we make this better? I am thinking of the =envsetup= in =Android=, which
+before any coding happen setup the environment and introduce lots of useful
+utilities. =osc= should setup the current environment as well, so that tools
+like =rpm= would be configured right. Definitely on my TODO list.
+
+** Fake utilities
+For code hacking/patching, =rpm= will only execute =%prep= part of the SPEC
+file. Even so some tools missed from =Arch= are still used. Among them the
+translation update scripts are mostly notable.
+
+Since I am not interested in translation texts, I made fake utilities that does
+nothing. This works fine translations.
+
+* Status
+=rpm -bp= and =quilt setup= now works like a charm, not a single warnings or
+errors, at least for the packages I've been working on.
+
+* Update
+[2014-11-25 Tue] I'm picking up new packages along the way! Add
+=obs-service-source_validator= and =obs-service-format_spec_file-git=. They are all uploaded to =AUR=
