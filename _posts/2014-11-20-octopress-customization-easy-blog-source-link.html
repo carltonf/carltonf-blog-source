@@ -1,0 +1,119 @@
+---
+layout: post
+title: "Octopress Customization: easy blog source link"
+date: 2014-11-20
+categories: 
+- octopress jekyll org
+author: carltonf
+excerpt: 
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Summary</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Most my posts here are programming-related and one of <code>Org</code>'s killer features is
+embedding code (used in literate programming and etc.), I thought why not give
+the reader an easier way to access my post source. Chances are that they might
+be using <code>Emacs</code> and <code>Org</code>, then they can try the code directly without
+copying/pasting or the hassle to wade through my source repo ;).
+</p>
+
+<p>
+It turns out to be quite easy to do this, as shown in the red rectangle below:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/octopress-customization-easy-blog-source-link/source-link-demo.png" alt="source-link-demo.png" style="border: 1px; border-radius: 5%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Code and References</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Two key references:</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li><a href="http://jekyllrb.com/docs/variables/">Jekyll Variables</a>: simply put, just various blog/post/page information
+available to you when you are hacking.
+</li>
+<li><a href="http://jekyllrb.com/docs/templates/">Jekyll Templates</a> and <a href="https://github.com/Shopify/liquid/wiki/Liquid-for-Designers">Liquid Filters&amp;Tags</a>: again simply, various predefined
+methods or programming structure you can use to manipulate the data you
+extract from above. The <code>Liquid</code> document is more useful.
+</li>
+<li><a href="http://octopress.org/docs/theme/">Octopress: Theming &amp; Customization</a>: the <code>Octopress</code>-specific docs.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Code</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Here is the whole commit:
+</p>
+
+<p>
+{% raw %}
+</p>
+<div class="org-src-container">
+
+<pre class="src src-diff"><span class="linenr"> 1: </span><span style="color: #93a1a1;">diff --git a/source/_includes/article.html b/source/_includes/article.html</span>
+<span class="linenr"> 2: </span><span style="color: #93a1a1;">index 8427997..c38fd90 100644</span>
+<span class="linenr"> 3: </span><span style="color: #586e75; background-color: #fdf6e3;">--- </span><span style="color: #586e75; background-color: #fdf6e3;">a/source/_includes/article.html</span>
+<span class="linenr"> 4: </span><span style="color: #586e75; background-color: #fdf6e3;">+++ </span><span style="color: #586e75; background-color: #fdf6e3;">b/source/_includes/article.html</span>
+<span class="linenr"> 5: </span><span style="color: #586e75; background-color: #fdf6e3;">@@ -12,6 +12,14 @@</span>
+<span class="linenr"> 6: </span><span style="color: #93a1a1;">            | &lt;a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#disqus_thread"</span>
+<span class="linenr"> 7: </span><span style="color: #93a1a1;">              data-disqus-identifier="{% if post.meta.disqus_id %}{{ post.meta.disqus_id }}{% else %}{{ site.url }}{{ post.url }}{% endif %}"&gt;Comments&lt;/a&gt;</span>
+<span class="linenr"> 8: </span><span style="color: #93a1a1;">         {% endif %}</span>
+<span class="linenr"> 9: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        |</span>
+<span id="coderef-is-home" class="coderef-off"><span class="linenr">10: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% if index %}</span></span>
+<span class="linenr">11: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% capture abs_page_url %}{{ root_url }}{{ post.url }}{% endcapture %}</span>
+<span class="linenr">12: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        &lt;a href="{{ abs_page_url | split:'.html' | first | append:'.org' }}"&gt;SOURCE&lt;/a&gt;</span>
+<span class="linenr">13: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% else %}</span>
+<span id="coderef-html-to-org" class="coderef-off"><span class="linenr">14: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        &lt;a href="{{ page.url | split:'.html' | first | append:'.org' }}"&gt;SOURCE&lt;/a&gt;</span></span>
+<span class="linenr">15: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% endif %}</span>
+<span class="linenr">16: </span><span style="color: #859900; font-weight: bold;">+</span>
+<span class="linenr">17: </span><span style="color: #93a1a1;">       &lt;/p&gt;</span>
+<span class="linenr">18: </span><span style="color: #93a1a1;">     {% endunless %}</span>
+<span class="linenr">19: </span><span style="color: #93a1a1;">   &lt;/header&gt;</span>
+</pre>
+</div>
+
+<p>
+<b>Explanations:</b>
+</p>
+<ul class="org-ul">
+<li>Line <a href="#coderef-is-home"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-is-home');" onmouseout="CodeHighlightOff(this, 'coderef-is-home');">10</a> checks whether the current html snippet is in Home page or not.
+If the post is in Home, links in the articles are updated to absolute path
+(versus the site), otherwise relative paths are used.
+</li>
+<li>Line <a href="#coderef-html-to-org"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-html-to-org');" onmouseout="CodeHighlightOff(this, 'coderef-html-to-org');">14</a> uses 3 filters to replace <code>.html</code> with <code>.org</code>. I have my
+source synced to the <code>_deploy/blog</code> so here changing the extension is enough.
+I didn't find a better way to do this simple replacement :(.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Afternote</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+While I still like this idea of sharing blog source more easily, its usability
+might not always be so good as I thought. As in this post, I've used some <code>Org</code>
+link reference to make explanation clearer, which is nice for a post but at the
+same time make it inconvenient to use the code directly.
+</p>
+
+<p>
+{% endraw %}
+</p>
+</div>
+</div>

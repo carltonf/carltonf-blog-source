@@ -1,0 +1,132 @@
+---
+layout: post
+title: Packaging and Several Concepts
+date: 2014-11-26
+categories: 
+- rpm pkgbuild drdb
+author: carltonf
+excerpt: 
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Intro</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The other day some of my colleagues were discussing about how to manage a
+package. From what I heard: <code>SUSE</code> decides to use kernel's bundled <code>DRDB</code> module
+instead of the version built out of <code>DRDB</code>'s source tree, which is dropped in
+<code>DRDB</code>'s new version anyway. The package for this new <code>DRDB</code> is called
+<code>DRDB-user</code> as it only contains the user-space part. The problem rises when a
+user of older version of <code>SLE</code> (SUSE Linux Enterprise) decides to update to this
+<code>DRDB-user</code>. <code>DRDB-user</code> is said to support some old versions, i.e. for these
+versions you can mix up kernel modules from old <code>DRDB</code> package with newer
+<code>DRDB-user</code>. The question is how to do the packaging? (I am totally ignorant
+about <code>DRDB</code>, so the details might not be exact but the important point here is
+packaging.)
+</p>
+
+<p>
+I joined this discussion and throughout the course I've come to understand many
+concepts more clearly than before: no overlap among packages, different
+packaging methods, the meaning and differences between "Obsoletes" and
+"Conflicts"
+</p>
+
+<p>
+
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">How to design packages?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The most intuitive and also best way should be just to divide the old <code>DRDB</code>
+package into two: <code>DRDB-user</code> and <code>DRDB-km</code>. In this way, <code>DRDB-user</code> is just
+the new package and can be upgraded separately if needed. So far so good. But
+what if we don't want to change the old package? Why? In retrospect, I think
+it's truly evil to have thought in that way, but back then they wanted to limit
+the <span class="underline">maintenance burden</span> by reducing the number of packages.(Oh, I did support
+this view&#x2026;, I understand&#x2026;) And then we fell into the rabbit hole.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Packages should never overwrite each other.</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+The first idea was to have <code>DRDB-user</code> overwrite <code>DRDB</code>. This won't work. No
+matter how the dependency links are designed. Naive I was, I believed
+carefully-crafted dependency would avoid any package breaks. Even cyclic
+dependency was considered. As an afterthought, no overlap between packages is
+actually the number one rule of packaging. In this case, just think of
+re-installing <code>DRDB</code> after <code>DRDB-user</code> is installed.
+</p>
+
+<p>
+However, this is the quickest solution. So if the use cases of mixing up old
+<code>DRDB</code> with new <code>DRDB-user</code> are only few, then it might not be necessary to
+design <code>DRDB-km</code>. To tell the sysadmin to be extra careful or add some warning
+to the (un)installation/update message would be enough.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Overwriting while packaging.</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+In the build&amp;install phrase of packaging, build old <code>DRDB</code> and also new
+<code>DRDB-user</code>; install <code>DRDB</code> first, then <code>DRDB-user</code>, overwriting same files at
+the same time. At last you pack everything up and name it <code>DRDB</code>. This method
+should work in principle, but it's bizarre and in reality we maintain a new
+package even though it has an old name.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">Several concepts</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+When talking about making new packages, we got confused on "Obsoletes" vs
+"Conflicts". I'll put up two good references:
+</p>
+
+<p>
+<a href="http://rpm5.org/community/rpm-users/0442.html">"Re: Conflicts vs Obsoletes" from rpm5.org</a>
+</p>
+
+<p>
+<a href="https://wiki.archlinux.org/index.php/PKGBUILD#replaces">PKGBUILD#replaces</a> &#x2013; <code>replaces</code> is just the <code>Obsoletes</code> in <code>Arch</code>'s jargon.
+</p>
+
+<p>
+In common, they all remove the designated packages. &#x2013; here is the cause we get
+confused.
+</p>
+
+<p>
+But have different purposes: <code>Obsoletes</code> prescribes an upgrade, so it's
+automatically done by the packaging system. <code>Conflicts</code> prevents installation
+and these packages are surely not in the upgraded package list.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">After note</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I didn't follow this discussion later and don't know what they've decided to do
+in the end. In reflection, I realized how little I knew about packaging and how
+real-life <span class="underline">politics</span> can affect engineering choice. The mentality to avoid
+designing necessary new packages might come from this fact: whoever introduces
+the package is likely to be responsible for maintaining it. And there are
+already <b>A LOT</b> of packages at each one's hand. Further, even the evil
+package-overwriting method might be useful, if only one or two customers need
+that special mix setup.
+</p>
+</div>
+</div>

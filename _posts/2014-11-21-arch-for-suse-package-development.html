@@ -1,0 +1,134 @@
+---
+layout: post
+title: Arch for SUSE package development
+date: 2014-11-21
+categories: 
+- arch_linux suse rpm
+author: carltonf
+excerpt: 
+---
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Summary</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I work across multiple computers: home PC, my own laptop, company PC and laptop.
+And I like to use <code>Arch</code> for my daily work everywhere. The problem is that
+<code>Linux</code> does a poor job to support new hardware, more so for less known brands.
+For example the sleep/hibernation on my AMD-laptop constantly breaks. So I've
+opted for a <code>VM/Linux + Windows/Linux</code> setup. My <code>Arch</code> runs inside the
+<code>VirtualBox</code>, and basically all I need is to sync the <code>vm</code> to have a consistent
+working environment EVERYWHERE! It took me about one month to adapt to this new
+layout, but it feels superb!
+</p>
+
+<p>
+A little off topic;P, just a little background.
+</p>
+
+<p>
+This article introduces <a href="https://github.com/carltonf/arch-suse-dev-setup">my simple package</a> for making <code>Arch</code> a good environment
+for SUSE package development.
+</p>
+
+<p>
+
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Code</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+It's only a <code>PKGBUILD</code> file now. Here is the link: <a href="https://github.com/carltonf/arch-suse-dev-setup">arch-suse-dev-setup</a>. <b>Alpha
+stage</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Some Highlights</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><code>RPM</code> macros</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<code>osc</code> works flawlessly on <code>Arch</code>. Errors/warnings are shown when you <code>rpmbuild
+-bp</code> the source. Many <code>RPM</code> macros are missing, some are SUSE-specific, some are
+upstream macros considered common on SUSE machines. And thus chasing down files
+with these macro definitions is the first task.
+</p>
+
+<p>
+The most useful command is this <code>rpm --showrc</code>. You can find path definitions,
+custom macro file naming pattern and etc.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><code>suse_version</code></h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+It's defined in the OBS project configuration, so no problem in <code>osc build</code>.
+</p>
+
+<p>
+However, <code>rpm</code> is not OBS-aware, so it would not read project configuration.
+<code>rpm</code> will find this value in the local macro file, which records the version of
+the running SUSE, which usually is not the same as the one in project
+configuration.
+</p>
+
+<p>
+In my package, I have default the version to <code>openSUSE:Factory</code> and warns the
+user that they might need to overrides this macro.
+</p>
+
+<p>
+Can we make this better? I am thinking of the <code>envsetup</code> in <code>Android</code>, which
+before any coding happen setup the environment and introduce lots of useful
+utilities. <code>osc</code> should setup the current environment as well, so that tools
+like <code>rpm</code> would be configured right. Definitely on my TODO list.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">Fake utilities</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+For code hacking/patching, <code>rpm</code> will only execute <code>%prep</code> part of the SPEC
+file. Even so some tools missed from <code>Arch</code> are still used. Among them the
+translation update scripts are mostly notable.
+</p>
+
+<p>
+Since I am not interested in translation texts, I made fake utilities that does
+nothing. This works fine translations.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Status</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>rpm -bp</code> and <code>quilt setup</code> now works like a charm, not a single warnings or
+errors, at least for the packages I've been working on.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Update</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2014-11-25 Tue]</span></span> I'm picking up new packages along the way! Add
+<code>obs-service-source_validator</code> and <code>obs-service-format_spec_file-git</code>. They are all uploaded to <code>AUR</code>
+</p>
+</div>
+</div>

@@ -1,0 +1,94 @@
+---
+layout: post
+title: "Org-octopress: Links"
+date: 2014-11-19
+categories: 
+- org emacs octopress emacs-lisp
+author: carltonf
+excerpt: 
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Summary</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In <a href="http://www.railsonmaui.com/blog/2014/03/05/octopress-setup-with-github-and-org-mode-v2/index.html">Org-Mode Octopress Setup V2</a>, which I am still reading to complete my setup of
+<code>Org</code> with <code>Octopress</code>, the author mentions the problems with links in <b>Org-mode
+Integration</b>.
+</p>
+
+<p>
+After digging around, here is my solution for that issue. Basically, the <code>Org</code>
+already has facilities for URL handling, but these are deeply buried in the
+code.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">My desired behavior</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+As my <code>org</code> source files all reside in <code>source/blog/</code> directory, all local
+references should be using path relative to this directory. E.g. for
+<code>blog/a.org</code> to refer to <code>blog/b.org</code>, <code>./b.org</code> is all I need, for images
+in <code>source/image</code>, the link should look like <code>../image/</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Issues</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<code>Org</code> can automatically convert <code>org</code> file link to <code>html</code> link, the gotcha here
+is: if the path is absolute, it would prefix it with <code>file:</code> in the final
+output. The relevant code snippet in <code>ox-html.el:org-html-link</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp"><span style="color: #93a1a1; font-style: italic;">;; </span><span style="color: #93a1a1; font-style: italic;">If file path is absolute, prepend it with protocol</span>
+<span style="color: #93a1a1; font-style: italic;">;; </span><span style="color: #93a1a1; font-style: italic;">component - "file:".</span>
+(<span style="color: #859900;">cond</span>
+ ((file-name-absolute-p raw-path)
+  (setq raw-path (concat <span style="color: #2aa198;">"file:"</span> raw-path)))
+ ((and home use-abs-url)
+  (setq raw-path (concat (file-name-as-directory home) raw-path))))
+</pre>
+</div>
+
+<p>
+But the relative link doesn't work reliably in the published site.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Solution</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Use two <code>Org</code> export option:
+</p>
+<pre class="example">
+#+HTML_LINK_HOME: /blog/
+#+OPTIONS: html-link-use-abs-url:t
+</pre>
+
+<p>
+The combined effect of these two is to prefix all links with <code>/blog/</code> in the
+exported files, an absolute path on site. I've set these in the global
+<code>setupfile.org</code>, but they can also be used per-file or per-subtree.
+</p>
+
+<p>
+With these two options, locally you only need to write relative links and
+conversion to site absolute path is automatically taken care of.
+</p>
+
+<p>
+The related <code>ELisp</code> source code snippet is in
+<code>ox-html.el:org-export-define-backend</code> part. Read the document on
+<code>org-export-define-backend</code> to appreciate these deeply buried features ;P
+</p>
+</div>
+</div>
