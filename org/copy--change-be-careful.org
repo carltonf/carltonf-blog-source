@@ -1,0 +1,120 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-04-02 Thu 16:22
+#+TITLE: "Copy & Change: be careful"
+#+DESCRIPTION: The story about a file-roller bug
+#+CATEGORIES: libarchive file-roller compiler sparse
+
+This is a story about what we've learned from debugging the following bug:
+[[https://bugzilla.gnome.org/show_bug.cgi?id%3D747091][Bug 747091 – File-Roller fails to handle archive with sparse files]]
+
+*Credit:* Thanks for my colleague =Tao Yang= for bringing this to my awareness.
+
+* Main Points
+- Learn something about [[http://www.libarchive.org/][libarchive]]
+- Learn something about [[http://en.wikipedia.org/wiki/Sparse_file][Sparse file - Wikipedia]]
+  [[https://wiki.archlinux.org/index.php/Sparse_file][Sparse file - ArchWiki]] is also helpful ;)
+- Warnings over "unused" variables: enlightenment on its usefulness and the
+  difficulty in finding them.
+- In Practice: Copy & Change, you can't be more careful.
+
+* Preface 
+
+** Libarchive
+I didn't find a well-formatted API document anywhere, but the
+[[https://github.com/libarchive/libarchive/blob/master/libarchive/archive.h][libarchive/archive.h]] serves the purpose. What's relevant here is, =offset= is
+the main point:
+#+BEGIN_SRC C
+  /*
+  ,* A zero-copy version of archive_read_data that also exposes the file offset
+  ,* of each returned block. Note that the client has no way to specify
+  ,* the desired size of the block. The API does guarantee that offsets will
+  ,* be strictly increasing and that returned blocks will not overlap.
+  ,*/
+  __LA_DECL int archive_read_data_block(struct archive *a,
+  const void **buff, size_t *size, __LA_INT64_T *offset);
+#+END_SRC
+
+And the revelation from the following comment:
+: // A "Non-sparse" file is also a sparse file with only one block
+
+Further, a =read&write= example from [[https://github.com/libarchive/libarchive/wiki/Examples#A_Basic_Write_Example][Examples · libarchive/libarchive Wiki]],
+again the =offset= is of interest:
+#+BEGIN_SRC C
+  static int
+  copy_data(struct archive *ar, struct archive *aw)
+  {
+    int r;
+    const void *buff;
+    size_t size;
+    off_t offset;
+
+    for (;;) {
+      r = archive_read_data_block(ar, &buff, &size, &offset);
+      if (r == ARCHIVE_EOF)
+        return (ARCHIVE_OK);
+      if (r < ARCHIVE_OK)
+        return (r);
+      r = archive_write_data_block(aw, buff, size, offset);
+      if (r < ARCHIVE_OK) {
+        fprintf(stderr, "%s\n", archive_error_string(aw));
+        return (r);
+      }
+    }
+  }
+#+END_SRC
+
+*Main Point:* Value in =offset= is how =archive_read_data_block= tells
+the client whether&how the file is "sparsed".
+
+** The cause of the bug
+#+BEGIN_SRC c
+  // fr-archive-libarchive.c::extract_archive_thread
+  while ((r = archive_read_data_block (a, &buffer, &buffer_size, &offset)) == ARCHIVE_OK) {
+          if (g_output_stream_write (ostream, buffer, buffer_size, cancellable, &load_data->error) == -1)
+                  break;
+          fr_archive_progress_inc_completed_bytes (load_data->archive, buffer_size);
+  }
+#+END_SRC
+
+As shown above, the =offset= is set but not used. The use of
+=g_output_stream_write= might come from a desire to use =GLib= functions as much
+as possible, to be consistent as it's a =GNOME= project. But by doing so, it
+omits crucial info conveyed by =offset= and thus fails in the case of archive
+with sparse files. Also note, =offset= is not used in any other place.
+
+* Thoughts
+
+** Unused variables
+I never truly thought warnings like these are of particular usefulness before
+today. After all, these warnings are meant to urge programmers to clean up the
+code, aren't they?
+
+But let's imagine if there had been such warning, and developers heeded it for
+=File-roller=, then this bug might not have existed at all. Hours of debugging
+saved!
+
+So such warnings are not just about house cleaning or a style. They suggest
+potential problems we might have overlooked. Pay attention to them and fix in
+time!
+
+However, there can't be such warning to help the poor developer out in this
+case. =&offset= is the malicious C pointer operator. With a pointer, the
+function can access the value or change it, and the compiler can't be fully sure
+about which is the case. Image this code written in another language, say
+=Ruby=:
+
+#+BEGIN_SRC ruby
+  # loop around ...
+  r, buffer, buffer_size, offset = a.read_data_block()
+  # the rest ...
+#+END_SRC
+
+Now there is no ambiguity about the use of =offset= any more ;P
+
+** Copy & Change
+A necessary evil in programming is "copy & change". Be careful. What more can we
+say~

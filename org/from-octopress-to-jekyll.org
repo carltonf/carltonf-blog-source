@@ -8,4 +8,66 @@
 #+DESCRIPTION: 
 #+CATEGORIES: jekyll octopress org
 
-Only a stub for now.
+After 4 months' idleness, I've come back to my blog and decide to take another
+look at the blogging tools.
+
+* What do I need for blogging tools?
+As a developer using Emacs, I've taken the following as prerequisites:
+1. Blog source in =org-mode= format.
+2. =Github Page= or similar static blog hosting sites (e.g. =Heroku=).
+
+And what actually makes a blog site?
+: Articles linked in a website-way: uniform theme, front page, navigator, catogories and etc.
+So naturally a static site generator would be sufficient. For the record, one
+year ago I used my own self-hosted =wordpress=, which is easier to use but as a
+developer I found I know too little and it was an overkill solution for a blog.
+
+About choosing the right static site generator, I've found [[https://www.staticgen.com/][StaticGen]], which is a
+ranking site to static site generators as [[http://distrowatch.com/][DistroWatch.com]] to =Linux/BSD=
+distributions. I was using [[octopress.org][Octopress]]. Two potential candidates are [[jekyllrb.com][Jekyll]], which
+is what's used by =Github Page= and [[hexo.io/][Hexo]], ranked as the third, a =nodejs= based
+generator that seems to be compatible with =Octopress=. I'm interested in =Hexo=
+as recently I've started a project using =nodejs-webkit=, another story.
+
+Other successful stories on =org-mode=-related blogs have suggested: [[http://www.blogofile.com/][Blogofile]],
+[[blog.getpelican.com/][Pelican]] and [[www.getnikola.com][Nikola]].
+
+* Octopress/Rails is NOT KISS.
+This site was using =Octopress= and some of my posts here are about configuring
+=Octopress=. =Octopress= is not hard to use. As a complete beginner, it took me
+about two days to setup up the blog (with [[https://github.com/yoshinari-nomura/org-octopress][Org-octopress]]), and by the third I was
+able to play with the source to add some small new features. The issue with
+=Octopress= is that it feels like =Rails=: convenient, powerful and
+highly-customizable, but as a newbie the learning curve is steep. I don't feel I
+understand the structure at all and lost in features...
+
+So maybe another time for =Octopress=. To learn more, I decided to go with the
+old =KISS=: use simple/single-purpose tools and chain them together.
+
+* Notes on the migration.
+The choice is =Jekyll=, which =Octopress= claims to base on. [[http://www.academia.edu/9761706/Building_a_Technical_Blog_Site_With_Jekyll_And_Emacs][This article]] is
+very helpful in making this decision. The breakdown steps in that article help
+me understand the missing pieces from =Org= files to =Jekyll= site:
+
+1. =Jekyll= handles =Markdown= natively, but it also can deal with HTML with
+   special headers (=YAML= =Jekyll= header).
+2. =Org-publish= export org files to HTML format.
+3. Insert the required header to the exported HTML files and put the result
+   files in =Jekyll= directory. It's DONE!
+
+And it turns out there are many Emacs packages deal with these steps. I choose
+[[https://github.com/ardumont/org2jekyll][org2jekyll]] for its simplicity and separation of =Org= header and =Jekyll=
+header.
+
+An afternoon is all it takes to finish the migration. Yep, I lose some features
+like comments, tag cloud and etc, but I also understand the insides much
+clearer. I plan to add back features step by step with more confidence!
+
+* More to desire.
+=org2jekyll= is the bridge between =Org= and =Jekyll=. There are some issues I'd
+like to see fixed and features to be implemented. Now I can focus on "simple"
+components like =Jekyll=, =org2jekyll= and =org-publish=. This kind of clarity
+and confidence didn't come out from many weeks working with =Org= and
+=Org-octopress=: too many levels of abstractions impede understanding. Maybe
+some day I'll be back to =Octopress= for its strength, but surely after I've
+learned more with the KISS ^_^
