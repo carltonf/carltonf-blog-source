@@ -1,0 +1,185 @@
+---
+layout: post
+title: "Copy & Change: be careful"
+date: 2015-04-02
+categories: 
+- libarchive file-roller compiler sparse
+author: carltonf
+excerpt: The story about a file-roller bug
+---
+<p>
+This is a story about what we've learned from debugging the following bug:
+<a href="https://bugzilla.gnome.org/show_bug.cgi?id=747091">Bug 747091 – File-Roller fails to handle archive with sparse files</a>
+</p>
+
+<p>
+<b>Credit:</b> Thanks for my colleague <code>Tao Yang</code> for bringing this to my awareness.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Main Points</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Learn something about <a href="http://www.libarchive.org/">libarchive</a>
+</li>
+<li>Learn something about <a href="http://en.wikipedia.org/wiki/Sparse_file">Sparse file - Wikipedia</a>
+  <a href="https://wiki.archlinux.org/index.php/Sparse_file">Sparse file - ArchWiki</a> is also helpful ;)
+</li>
+<li>Warnings over "unused" variables: enlightenment on its usefulness and the
+difficulty in finding them.
+</li>
+<li>In Practice: Copy &amp; Change, you can't be more careful.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Preface</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Libarchive</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+I didn't find a well-formatted API document anywhere, but the
+<a href="https://github.com/libarchive/libarchive/blob/master/libarchive/archive.h">libarchive/archive.h</a> serves the purpose. What's relevant here is, <code>offset</code> is
+the main point:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #93a1a1; font-style: italic;">/*</span>
+<span style="color: #93a1a1; font-style: italic;">* A zero-copy version of archive_read_data that also exposes the file offset</span>
+<span style="color: #93a1a1; font-style: italic;">* of each returned block. Note that the client has no way to specify</span>
+<span style="color: #93a1a1; font-style: italic;">* the desired size of the block. The API does guarantee that offsets will</span>
+<span style="color: #93a1a1; font-style: italic;">* be strictly increasing and that returned blocks will not overlap.</span>
+<span style="color: #93a1a1; font-style: italic;">*/</span>
+__LA_DECL <span style="color: #b58900;">int</span> <span style="color: #268bd2;">archive_read_data_block</span>(<span style="color: #859900;">struct</span> <span style="color: #b58900;">archive</span> *<span style="color: #268bd2;">a</span>,
+<span style="color: #859900;">const</span> <span style="color: #b58900;">void</span> **<span style="color: #268bd2;">buff</span>, <span style="color: #b58900;">size_t</span> *<span style="color: #268bd2;">size</span>, <span style="color: #b58900;">__LA_INT64_T</span> *<span style="color: #268bd2;">offset</span>);
+</pre>
+</div>
+
+<p>
+And the revelation from the following comment:
+</p>
+<pre class="example">
+// A "Non-sparse" file is also a sparse file with only one block
+</pre>
+
+<p>
+Further, a <code>read&amp;write</code> example from <a href="https://github.com/libarchive/libarchive/wiki/Examples#A_Basic_Write_Example">Examples · libarchive/libarchive Wiki</a>,
+again the <code>offset</code> is of interest:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #859900;">static</span> <span style="color: #b58900;">int</span>
+<span style="color: #268bd2;">copy_data</span>(<span style="color: #859900;">struct</span> <span style="color: #b58900;">archive</span> *<span style="color: #268bd2;">ar</span>, <span style="color: #859900;">struct</span> <span style="color: #b58900;">archive</span> *<span style="color: #268bd2;">aw</span>)
+{
+  <span style="color: #b58900;">int</span> <span style="color: #268bd2;">r</span>;
+  <span style="color: #859900;">const</span> <span style="color: #b58900;">void</span> *<span style="color: #268bd2;">buff</span>;
+  <span style="color: #b58900;">size_t</span> <span style="color: #268bd2;">size</span>;
+  <span style="color: #b58900;">off_t</span> <span style="color: #268bd2;">offset</span>;
+
+  <span style="color: #859900;">for</span> (;;) {
+    r = archive_read_data_block(ar, &amp;buff, &amp;size, &amp;offset);
+    <span style="color: #859900;">if</span> (r == ARCHIVE_EOF)
+      <span style="color: #859900;">return</span> (ARCHIVE_OK);
+    <span style="color: #859900;">if</span> (r &lt; ARCHIVE_OK)
+      <span style="color: #859900;">return</span> (r);
+    r = archive_write_data_block(aw, buff, size, offset);
+    <span style="color: #859900;">if</span> (r &lt; ARCHIVE_OK) {
+      fprintf(stderr, <span style="color: #2aa198;">"%s\n"</span>, archive_error_string(aw));
+      <span style="color: #859900;">return</span> (r);
+    }
+  }
+}
+</pre>
+</div>
+
+<p>
+<b>Main Point:</b> Value in <code>offset</code> is how <code>archive_read_data_block</code> tells
+the client whether&amp;how the file is "sparsed".
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">The cause of the bug</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span style="color: #93a1a1; font-style: italic;">// </span><span style="color: #93a1a1; font-style: italic;">fr-archive-libarchive.c::extract_archive_thread</span>
+<span style="color: #859900;">while</span> ((r = archive_read_data_block (a, &amp;buffer, &amp;buffer_size, &amp;offset)) == ARCHIVE_OK) {
+        <span style="color: #859900;">if</span> (g_output_stream_write (ostream, buffer, buffer_size, cancellable, &amp;load_data-&gt;error) == -1)
+                <span style="color: #859900;">break</span>;
+        fr_archive_progress_inc_completed_bytes (load_data-&gt;archive, buffer_size);
+}
+</pre>
+</div>
+
+<p>
+As shown above, the <code>offset</code> is set but not used. The use of
+<code>g_output_stream_write</code> might come from a desire to use <code>GLib</code> functions as much
+as possible, to be consistent as it's a <code>GNOME</code> project. But by doing so, it
+omits crucial info conveyed by <code>offset</code> and thus fails in the case of archive
+with sparse files. Also note, <code>offset</code> is not used in any other place.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Thoughts</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">Unused variables</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+I never truly thought warnings like these are of particular usefulness before
+today. After all, these warnings are meant to urge programmers to clean up the
+code, aren't they?
+</p>
+
+<p>
+But let's imagine if there had been such warning, and developers heeded it for
+<code>File-roller</code>, then this bug might not have existed at all. Hours of debugging
+saved!
+</p>
+
+<p>
+So such warnings are not just about house cleaning or a style. They suggest
+potential problems we might have overlooked. Pay attention to them and fix in
+time!
+</p>
+
+<p>
+However, there can't be such warning to help the poor developer out in this
+case. <code>&amp;offset</code> is the malicious C pointer operator. With a pointer, the
+function can access the value or change it, and the compiler can't be fully sure
+about which is the case. Image this code written in another language, say
+<code>Ruby</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-ruby"><span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">loop around ...</span>
+r, buffer, buffer_size, offset = a.read_data_block()
+<span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">the rest ...</span>
+</pre>
+</div>
+
+<p>
+Now there is no ambiguity about the use of <code>offset</code> any more ;P
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">Copy &amp; Change</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+A necessary evil in programming is "copy &amp; change". Be careful. What more can we
+say~
+</p>
+</div>
+</div>
+</div>

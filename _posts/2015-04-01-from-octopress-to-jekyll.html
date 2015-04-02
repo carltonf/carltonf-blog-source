@@ -8,5 +8,116 @@ author: carltonf
 excerpt: 
 ---
 <p>
-Only a stub for now.
+After 4 months' idleness, I've come back to my blog and decide to take another
+look at the blogging tools.
 </p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">What do I need for blogging tools?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+As a developer using Emacs, I've taken the following as prerequisites:
+</p>
+<ol class="org-ol">
+<li>Blog source in <code>org-mode</code> format.
+</li>
+<li><code>Github Page</code> or similar static blog hosting sites (e.g. <code>Heroku</code>).
+</li>
+</ol>
+
+<p>
+And what actually makes a blog site?
+</p>
+<pre class="example">
+Articles linked in a website-way: uniform theme, front page, navigator, catogories and etc.
+</pre>
+<p>
+So naturally a static site generator would be sufficient. For the record, one
+year ago I used my own self-hosted <code>wordpress</code>, which is easier to use but as a
+developer I found I know too little and it was an overkill solution for a blog.
+</p>
+
+<p>
+About choosing the right static site generator, I've found <a href="https://www.staticgen.com/">StaticGen</a>, which is a
+ranking site to static site generators as <a href="http://distrowatch.com/">DistroWatch.com</a> to <code>Linux/BSD</code>
+distributions. I was using <i>Octopress</i>. Two potential candidates are <i>Jekyll</i>, which
+is what's used by <code>Github Page</code> and <i>Hexo</i>, ranked as the third, a <code>nodejs</code> based
+generator that seems to be compatible with <code>Octopress</code>. I'm interested in <code>Hexo</code>
+as recently I've started a project using <code>nodejs-webkit</code>, another story.
+</p>
+
+<p>
+Other successful stories on <code>org-mode</code>-related blogs have suggested: <a href="http://www.blogofile.com/">Blogofile</a>,
+<i>Pelican</i> and <i>Nikola</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Octopress/Rails is NOT KISS.</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This site was using <code>Octopress</code> and some of my posts here are about configuring
+<code>Octopress</code>. <code>Octopress</code> is not hard to use. As a complete beginner, it took me
+about two days to setup up the blog (with <a href="https://github.com/yoshinari-nomura/org-octopress">Org-octopress</a>), and by the third I was
+able to play with the source to add some small new features. The issue with
+<code>Octopress</code> is that it feels like <code>Rails</code>: convenient, powerful and
+highly-customizable, but as a newbie the learning curve is steep. I don't feel I
+understand the structure at all and lost in features&#x2026;
+</p>
+
+<p>
+So maybe another time for <code>Octopress</code>. To learn more, I decided to go with the
+old <code>KISS</code>: use simple/single-purpose tools and chain them together.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Notes on the migration.</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+The choice is <code>Jekyll</code>, which <code>Octopress</code> claims to base on. <a href="http://www.academia.edu/9761706/Building_a_Technical_Blog_Site_With_Jekyll_And_Emacs">This article</a> is
+very helpful in making this decision. The breakdown steps in that article help
+me understand the missing pieces from <code>Org</code> files to <code>Jekyll</code> site:
+</p>
+
+<ol class="org-ol">
+<li><code>Jekyll</code> handles <code>Markdown</code> natively, but it also can deal with HTML with
+special headers (<code>YAML</code> <code>Jekyll</code> header).
+</li>
+<li><code>Org-publish</code> export org files to HTML format.
+</li>
+<li>Insert the required header to the exported HTML files and put the result
+files in <code>Jekyll</code> directory. It's DONE!
+</li>
+</ol>
+
+<p>
+And it turns out there are many Emacs packages deal with these steps. I choose
+<a href="https://github.com/ardumont/org2jekyll">org2jekyll</a> for its simplicity and separation of <code>Org</code> header and <code>Jekyll</code>
+header.
+</p>
+
+<p>
+An afternoon is all it takes to finish the migration. Yep, I lose some features
+like comments, tag cloud and etc, but I also understand the insides much
+clearer. I plan to add back features step by step with more confidence!
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">More to desire.</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<code>org2jekyll</code> is the bridge between <code>Org</code> and <code>Jekyll</code>. There are some issues I'd
+like to see fixed and features to be implemented. Now I can focus on "simple"
+components like <code>Jekyll</code>, <code>org2jekyll</code> and <code>org-publish</code>. This kind of clarity
+and confidence didn't come out from many weeks working with <code>Org</code> and
+<code>Org-octopress</code>: too many levels of abstractions impede understanding. Maybe
+some day I'll be back to <code>Octopress</code> for its strength, but surely after I've
+learned more with the KISS ^_^
+</p>
+</div>
+</div>
