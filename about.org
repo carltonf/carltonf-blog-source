@@ -8,4 +8,8 @@
 #+CATEGORIES: 
 #+DESCRIPTION: About me
 
-Nothing here yet. I'm just another programmer.
+Hi, I am Carl Xiong (熊超). I am a software developer currently working at SUSE.
+
+This a technical blog. Not much yet.
+
+You can find me at [[http://cn.linkedin.com/pub/chao-xiong/16/164/480][LinkedIn]] and [[https://github.com/carltonf][GitHub]].
