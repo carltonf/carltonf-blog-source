@@ -1,0 +1,103 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-06-11 Thu 17:19
+#+TITLE: From Text to simple UML diagram - Tools
+#+DESCRIPTION: My review and survey on textual uml tools
+#+CATEGORIES: uml diagram
+
+* Background
+I want to make some diagrams about my small project =etss=. Simple class
+diagrams and sequence diagrams would be enough.
+
+I started by drawing by hand, which soon strikes me that most of my fiddling
+with the representations is repetitive&tedious. So I started to search for tools
+that translate high-level textual representation into decent looking graphic
+diagrams.
+
+I try to find some JavaScript libraries first as recently my main focus is on
+Web tech. However, as the search goes on, I've found there are not many
+JavaScript projects on UML actually. Tools like =jointjs=, =draw2d= are too much
+for my purpose. In the end, I settle down on =PlantUML=, a Java solution.
+
+The following is what IMHO that's worth noting.
+
+* [[http://plantuml.sourceforge.net/][PlantUML]]
+
+So far the most complete tool for generating UML from text.
+
+** Pros
+- The DSL is very intuitive, actually =bramp/js-sequence-diagrams='s DSL is
+  roughly based on it.
+- Very complete, the documentation and examples are amble.
+** Cons
+- Written in Java (Do I still remember how to code Java?)
+- Web integration requires a 3rd party server to render UML image....
+- Styles are not very modern, but acceptable any way.
+
+* Sequence Diagrams
+
+** [[https://github.com/bramp/js-sequence-diagrams][bramp/js-sequence-diagrams]]
+
+*** Pros
+- Simplest so far
+- The employed technology is easily understood.
+- The hand-drawn theme is great.
+*** Cons
+- Not quite =UML= like, the simple theme feels too simple.
+- Does't support quoted string, an issue opened by the author for now, #107.
+
+** [[http://jumly.tmtk.net/][tmtk75/jumly]]
+
+*** Pros
+- Very modern, professional-UML looking. Built-in themes looks great.
+- Not using SVG, but DOM objects directly, so styling can be done with CSS.
+
+*** Cons
+- =coffeescript= and =stylus= are used, which to me feels too hackishy.
+- The DSL feels too hackishy, not as intuitive as =plantUML=.
+  
+  ? Maybe I can help improve on this.
+
+* Class/State Diagrams
+** [[http://www.nomnoml.com/][nomnoml]]
+  
+Web-based UML library, looks very promising. Though it doesn't support sequence
+UML.
+
+* Flow Chart
+
+** [[http://adrai.github.io/flowchart.js/][flowchart.js]]
+
+Useful to draw logic diagram about inner workings of complicated piece of code.
+
+* Other interesting diagram tools
+
+- [[http://modeling-languages.com/uml-tools/#textual][A list of textual UML tools]]
+  
+  Someone else keeps a list of textual tools.
+
+- [[http://www.bottlecaps.de/rr/ui][Railroad Diagram Generator]]
+  
+  A tool for creating syntax diagrams. Together with =Jison=, very handy when
+  you design some DSLs.
+
+- [[http://timeline.knightlab.com/][Timeline JS]]
+  
+  In case you need to make a timeline about something in the web.
+
+* Others
+
+** [[http://zaach.github.io/jison/][Jison]]: JavaScript parser generator!
+Good for designing DSL with JavaScript, I think, similar to =Bison=.
+
+Many tools above utilize this library.
+** [[http://willthompson.co.uk/bustle/][Bustle]]
+
+A =DBus= monitor with sequence diagram, looks very cool. If you ever use the
+default =dbus-monitor=, you would appreciate the graphical representation ;P
+
+** [[http://www.draw.io/][draw.io]]
+A nice in-browser IDE for drawing diagrams manually.
