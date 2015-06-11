@@ -1,0 +1,219 @@
+---
+layout: post
+title: From Text to simple UML diagram - Tools
+date: 2015-06-11
+categories: 
+- uml diagram
+author: carltonf
+excerpt: My review and survey on textual uml tools
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Background</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I want to make some diagrams about my small project <code>etss</code>. Simple class
+diagrams and sequence diagrams would be enough.
+</p>
+
+<p>
+I started by drawing by hand, which soon strikes me that most of my fiddling
+with the representations is repetitive&amp;tedious. So I started to search for tools
+that translate high-level textual representation into decent looking graphic
+diagrams.
+</p>
+
+<p>
+I try to find some JavaScript libraries first as recently my main focus is on
+Web tech. However, as the search goes on, I've found there are not many
+JavaScript projects on UML actually. Tools like <code>jointjs</code>, <code>draw2d</code> are too much
+for my purpose. In the end, I settle down on <code>PlantUML</code>, a Java solution.
+</p>
+
+<p>
+The following is what IMHO that's worth noting.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><a href="http://plantuml.sourceforge.net/">PlantUML</a></h2>
+<div class="outline-text-2" id="text-2">
+<p>
+So far the most complete tool for generating UML from text.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Pros</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>The DSL is very intuitive, actually <code>bramp/js-sequence-diagrams</code>'s DSL is
+roughly based on it.
+</li>
+<li>Very complete, the documentation and examples are amble.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Cons</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>Written in Java (Do I still remember how to code Java?)
+</li>
+<li>Web integration requires a 3rd party server to render UML image&#x2026;.
+</li>
+<li>Styles are not very modern, but acceptable any way.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Sequence Diagrams</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><a href="https://github.com/bramp/js-sequence-diagrams">bramp/js-sequence-diagrams</a></h3>
+<div class="outline-text-3" id="text-3-1">
+</div><ul class="org-ul"><li><a id="sec-3-1-1" name="sec-3-1-1"></a>Pros<br  /><div class="outline-text-4" id="text-3-1-1">
+<ul class="org-ul">
+<li>Simplest so far
+</li>
+<li>The employed technology is easily understood.
+</li>
+<li>The hand-drawn theme is great.
+</li>
+</ul>
+</div>
+</li>
+<li><a id="sec-3-1-2" name="sec-3-1-2"></a>Cons<br  /><div class="outline-text-4" id="text-3-1-2">
+<ul class="org-ul">
+<li>Not quite <code>UML</code> like, the simple theme feels too simple.
+</li>
+<li>Does't support quoted string, an issue opened by the author for now, #107.
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><a href="http://jumly.tmtk.net/">tmtk75/jumly</a></h3>
+<div class="outline-text-3" id="text-3-2">
+</div><ul class="org-ul"><li><a id="sec-3-2-1" name="sec-3-2-1"></a>Pros<br  /><div class="outline-text-4" id="text-3-2-1">
+<ul class="org-ul">
+<li>Very modern, professional-UML looking. Built-in themes looks great.
+</li>
+<li>Not using SVG, but DOM objects directly, so styling can be done with CSS.
+</li>
+</ul>
+</div>
+</li>
+
+<li><a id="sec-3-2-2" name="sec-3-2-2"></a>Cons<br  /><div class="outline-text-4" id="text-3-2-2">
+<ul class="org-ul">
+<li><code>coffeescript</code> and <code>stylus</code> are used, which to me feels too hackishy.
+</li>
+<li>The DSL feels too hackishy, not as intuitive as <code>plantUML</code>.
+
+<p>
+? Maybe I can help improve on this.
+</p>
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Class/State Diagrams</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><a href="http://www.nomnoml.com/">nomnoml</a></h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Web-based UML library, looks very promising. Though it doesn't support sequence
+UML.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Flow Chart</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><a href="http://adrai.github.io/flowchart.js/">flowchart.js</a></h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Useful to draw logic diagram about inner workings of complicated piece of code.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Other interesting diagram tools</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><a href="http://modeling-languages.com/uml-tools/#textual">A list of textual UML tools</a>
+
+<p>
+Someone else keeps a list of textual tools.
+</p>
+</li>
+
+<li><a href="http://www.bottlecaps.de/rr/ui">Railroad Diagram Generator</a>
+
+<p>
+A tool for creating syntax diagrams. Together with <code>Jison</code>, very handy when
+you design some DSLs.
+</p>
+</li>
+
+<li><a href="http://timeline.knightlab.com/">Timeline JS</a>
+
+<p>
+In case you need to make a timeline about something in the web.
+</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">Others</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><a href="http://zaach.github.io/jison/">Jison</a>: JavaScript parser generator!</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Good for designing DSL with JavaScript, I think, similar to <code>Bison</code>.
+</p>
+
+<p>
+Many tools above utilize this library.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><a href="http://willthompson.co.uk/bustle/">Bustle</a></h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+A <code>DBus</code> monitor with sequence diagram, cool.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><a href="http://www.draw.io/">draw.io</a></h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+A nice in-browser IDE for drawing diagrams manually.
+</p>
+</div>
+</div>
+</div>
