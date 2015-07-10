@@ -1,0 +1,387 @@
+---
+layout: post
+title: A workflow for bug fixing
+date: 2015-07-10
+categories: 
+- bug-fix
+author: carltonf
+excerpt: Problem, Question, Facts and Solutions
+---
+<p>
+As a developer in SUSE Desktop Department, most of my work are bug fixing.
+Desktop bugs are diversified in nature: I constantly need to handle bugs from an
+unknown package or who-knows-why weird behaviors of the desktop/applications.
+One fact I learned working in the industry is that <b>80% of the time we work with
+only 20%(even less) of the knowledge we need</b>. This is a rhetoric saying which
+nevertheless captures the core characteristics of this line of work. To comb
+with this reality, the followings are needed:
+</p>
+
+<ol class="org-ol">
+<li>You want to learn! And not timid before the unknown.
+</li>
+
+<li>SRN: Search, Read, Note and repeat.
+
+<p>
+One of my main complaints about my last job in a local company is that they
+have regulated web access excessively in the office: in order to search for
+information I have to use common terminals that are constantly in short. IMO,
+this restriction contributes as half to the failure of the new project as all
+other factors combined. From that time on, I decide that I should refuse to
+work on any new project without decent web access.
+</p>
+
+<p>
+Document reading is a trait that I believe many interviewers have overlooked
+(at least no one ever asks me about this part). In today's fast-paced world,
+technology evolves quickly. Reading is the best way to keep in sync with the
+new developments.
+</p>
+
+<p>
+Noting is more about recording what you've found. You need to mark what info
+you think are more important, more relevant, what questions or unclear points
+you still have. For this purpose, pen&amp;paper is always my favorite.
+</p>
+</li>
+
+<li>A logical workflow.
+
+<p>
+The first two steps help you become comfortable with a new package or field.
+After you've been briefed with the context and you need to handle the problem
+itself. The reality is we still know only very little so the previous steps
+tend to appear again and again.
+</p>
+</li>
+</ol>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">My workflow</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In short: <b>problem -&gt; questions -&gt; solutions -&gt; actions</b>
+</p>
+
+<ol class="org-ol">
+<li>Divide and rephrase the <b>Problem</b>.
+
+<p>
+Bug reports from customers or QA are never the appropriate way you should
+think about the bugs. Reproduce the bugs, be creative, try out different
+cases. Play with the problem till you can divide/rephrase the problem in a
+way you're confident it can be addressed technically.
+</p>
+</li>
+
+<li>Ask Questions.
+
+<p>
+What is this? Why something work in A situation but not B? How the other
+program handle this situation? What if I do this?
+</p>
+
+<p>
+Whatever the question you ask or encounter. Do the SRN.
+</p>
+</li>
+
+<li>Make the bold assumptions and leave questions unanswered.
+
+<p>
+A careful mind will always have more questions than what it can manage to
+answer in the limited period. Keep in mind the goal is fixing bugs, and
+questions can be dealt with by: <b>making bold assumptions</b> if all known facts
+fit, <b>unanswered</b> if not considered relevant, <b>short answer</b> if that's
+sufficient.
+</p>
+
+<p>
+I've always found <b>assumption</b> is a very effective way of moving things
+forward. A striking fact is human minds work similarly: many times what you
+think intuitively is not too far away from what others've done. As long as
+the exact detail is not needed, by making assumptions, we save us time and
+progress fast. (And there is little to lose, correct it if we assumed wrong.)
+</p>
+</li>
+
+<li>Iteration till a solution comes to your mind.
+
+<p>
+There are no recipes for locating the solution. It comes to you at proper
+time ;P after enough work along the right direction.
+</p>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">A workflow example</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The rest of the article is a workflow document I've created while fixing a
+Desktop bug. It's a reproduction as in work I actually only sketch on paper. I
+also would not include any references on the details because the outline is more
+important for ideas I'd like to share.
+</p>
+
+<hr  />
+<hr  />
+
+
+<p>
+<b>Example</b>
+</p>
+
+<p>
+Related the component is in <code>SLE Classic</code> <code>extension.js</code> part.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Rephrasing</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+As in my comment #3, the main issue is the misuse of GNOME Tweak tools.
+</p>
+
+<p>
+Two real bugs remain:
+</p>
+<ol class="org-ol">
+<li>Window buttons are not shown or displayed correctly across workspace.
+</li>
+<li>Nautilus has issue dealing with window grouping.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Workflow</h3>
+<div class="outline-text-3" id="text-2-2">
+</div><ul class="org-ul"><li><a id="sec-2-2-1" name="sec-2-2-1"></a>FACTS &amp; Questions<br  /><ul class="org-ul"><li><a id="sec-2-2-1-1" name="sec-2-2-1-1"></a><span class="done DONE">DONE</span> How windows add&amp;remove event gets detected?<br  /><div class="outline-text-5" id="text-2-2-1-1">
+<p>
+<code>this._workspaceSignals</code> a hash map holds <code>window-added</code> and <code>window-removed</code>
+listeners IDs.
+</p>
+
+<p>
+The listeners are working as expected.
+</p>
+</div>
+</li>
+
+<li><a id="sec-2-2-1-2" name="sec-2-2-1-2"></a><b>FACT</b> The grouping works correctly in one single workspace.<br  /><ul class="org-ul"><li><a id="sec-2-2-1-2-1" name="sec-2-2-1-2-1"></a><span class="done DONE">DONE</span> <b>Q</b>: How? And can we duplicate the logic to multiple workspaces?<br  /><div class="outline-text-6" id="text-2-2-1-2-1">
+<p>
+<code>_populateWindowList</code> has check on the grouping setting. If the grouping is
+turned on, <code>AppButton</code> is used, o/w <code>WindowButton</code> is employed.
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="sec-2-2-1-2-1-1" name="sec-2-2-1-2-1-1"></a><span class="done DONE">DONE</span> <b>Q</b> Why only windows in current WS is displayed? (no grouping for simplicity.)<br  /><div class="outline-text-7" id="text-2-2-1-2-1-1">
+<p>
+<code>WindowList</code> holds all window/app buttons. Each button is responsible for
+checking whether it should be displayed with regards to current workspace.
+</p>
+
+<p>
+<b>App and Window Button have different visibility criteria</b>. More on this later.
+</p>
+</div>
+</li>
+
+<li><a id="sec-2-2-1-2-1-2" name="sec-2-2-1-2-1-2"></a><b>FACTS</b> <code>AppButton</code> is new to me.<br  /><div class="outline-text-7" id="text-2-2-1-2-1-2">
+<p>
+Two implications only happens to me later: bugs that were fixed for
+<code>WindowButton</code> should be ported to <code>AppButton</code>. <code>AppButton</code> and <code>WindowButton</code>
+are similar in nature but do <b>NOT</b> share a same class hierarchy, which I believe
+is an issue.
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="sec-2-2-1-2-1-2-1" name="sec-2-2-1-2-1-2-1"></a><span class="todo TODO">TODO</span> Should <code>AppButton</code> and <code>WindowButton</code> has a same parent?<br  /><div class="outline-text-8" id="text-2-2-1-2-1-2-1">
+<p>
+To prevent duplicated code and emphasize the common role both play.
+</p>
+</div>
+</li></ul>
+</li></ul>
+</li></ul>
+</li>
+
+<li><a id="sec-2-2-1-3" name="sec-2-2-1-3"></a><span class="done DONE">DONE</span> <b>Q</b>: Why switching back&amp;forth workspaces fixes button issues?<br  /><div class="outline-text-5" id="text-2-2-1-3">
+<ol class="org-ol">
+<li><code>_populateWindowList</code> recreate all active window/app buttons, but this
+routine only run at <code>notify::allocation</code>, which is <b>NOT</b> triggered with
+workspace change.
+</li>
+
+<li><code>AppButton</code> is similar to <code>WindowButton</code>, visibility check callback is hooked
+to <code>switch-workspace</code> signal.
+
+<p>
+This finding leads necessarily to the first solution.
+</p>
+</li>
+</ol>
+</div>
+</li></ul>
+</li>
+
+<li><a id="sec-2-2-2" name="sec-2-2-2"></a>Solution: missing or legacy buttons.<br  /><ul class="org-ul"><li><a id="sec-2-2-2-1" name="sec-2-2-2-1"></a>TARGET: <code>_onWindowAdded</code>, <code>grouped</code> branch.<br  /><div class="outline-text-5" id="text-2-2-2-1">
+<p>
+Add <code>AppButton</code> visibility update callback into <code>windows-change</code> signal from
+<code>ShellApp</code>.
+</p>
+</div>
+</li>
+
+<li><a id="sec-2-2-2-2" name="sec-2-2-2-2"></a>Fixes<br  /><div class="outline-text-5" id="text-2-2-2-2">
+<ul class="org-ul">
+<li>No button in new workspace if we open a new window for an already running
+application.
+</li>
+<li>Remaining legacy button in a workspace after all windows of one application is
+closed. NOTE, the application is still running, i.e. it has opened window in
+some other workspace.
+</li>
+</ul>
+</div>
+</li></ul>
+</li>
+
+<li><a id="sec-2-2-3" name="sec-2-2-3"></a>Solution: Title problem<br  /><ul class="org-ul"><li><a id="sec-2-2-3-1" name="sec-2-2-3-1"></a><b>FACTS</b><br  /><div class="outline-text-5" id="text-2-2-3-1">
+<ul class="org-ul">
+<li>Currently button title only gets updated with "windows-change"
+</li>
+<li><code>[&#xa0;]</code> "windows-change" is signaled even only by switching workspace
+
+<p>
+This explains why switching fixes some issues. But why this event gets
+triggered?
+</p>
+</li>
+</ul>
+</div>
+</li>
+<li><a id="sec-2-2-3-2" name="sec-2-2-3-2"></a>TARGET: <code>_windowsChanged</code><br  /><div class="outline-text-5" id="text-2-2-3-2">
+<p>
+There is a bug in original code. It doesn't consider the case when an
+application has two single window in separate workspace as it does nothing if
+<code>this._windowTitle</code> exists. Forcing update to fix this.
+</p>
+</div>
+</li>
+<li><a id="sec-2-2-3-3" name="sec-2-2-3-3"></a>Fix<br  /><div class="outline-text-5" id="text-2-2-3-3">
+<ul class="org-ul">
+<li>Incorrectly displayed title, see original bug report for detail.
+</li>
+</ul>
+</div>
+</li></ul>
+</li>
+
+<li><a id="sec-2-2-4" name="sec-2-2-4"></a><span class="done DONE">DONE</span> Q: an app gets its window list on current workspace? Specifically for <code>Nautilus</code>.<br  /><div class="outline-text-4" id="text-2-2-4">
+<p>
+<code>_getWindowList</code> uses API <code>Shell_app_get_windows</code>, which returns <b>all</b> windows
+belonging to a specific application.
+</p>
+
+<p>
+<code>win.located_on_workspace(ws)</code> is used to check whether <code>win</code> is in <code>ws</code>.
+</p>
+</div>
+</li>
+
+<li><a id="sec-2-2-5" name="sec-2-2-5"></a>Solution: Desktop is shown as a window in the panel with grouping on.<br  /><div class="outline-text-4" id="text-2-2-5">
+<ul class="org-ul">
+<li><code>_getWindowList</code> should only check window types. Only return
+window of type <code>Meta.WindowType.NORMAL</code>.
+</li>
+</ul>
+</div>
+
+<ul class="org-ul"><li><a id="sec-2-2-5-1" name="sec-2-2-5-1"></a><span class="done DONE">DONE</span> Q: Why an <code>Nautilus</code> button is still displayed even without <code>Desktop</code>.<br  /><div class="outline-text-5" id="text-2-2-5-1">
+<p>
+<code>_updateVisibility</code> uses API <code>Shell_app_is_on_workspace</code> (<code>shell-app.c</code>), which
+according to <a href="https://mail.gnome.org/archives/commits-list/2011-January/msg04214.html">this patch</a>, will return <code>true</code> for Desktop window (a workspace less
+window as we see).
+</p>
+</div>
+</li>
+
+<li><a id="sec-2-2-5-2" name="sec-2-2-5-2"></a>Sol<br  /><div class="outline-text-5" id="text-2-2-5-2">
+<p>
+Use <code>(this._getWindowList() &gt; 0)</code> to test for visibility.
+</p>
+
+<p>
+This is safe as <code>shell_app_is_on_workspace</code> uses the same logic. The only
+difference is application in STARTING status and workspaceless window, both
+should be ignored anyway.
+</p>
+</div>
+</li></ul>
+</li>
+
+<li><a id="sec-2-2-6" name="sec-2-2-6"></a><b>FACT:</b> If <code>grouping</code> is enabled, context menu is shaky and unusable, also a lot of stability issue.<br  /><div class="outline-text-4" id="text-2-2-6">
+<ul class="org-ul">
+<li><code>[X]</code> "button-press-event" issue
+</li>
+<li><code>[X]</code> <code>this._contextMenuManager</code> should remove <code>this._appContextMenu</code> if there
+is a single application window.
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">Final Report</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+A patch has been submitted.
+</p>
+
+<p>
+Both issues for demonstration 1 and nautilus have been fixed for <b>SLE Classic</b>.
+</p>
+
+<p>
+In short the original code contains multiple grouping bugs.
+</p>
+
+<p>
+Details:
+In total 4 separate bugs are identified and addressed.
+</p>
+<ol class="org-ol">
+<li>Failure to update buttons visibility when windows are added/removed for an
+application.
+</li>
+<li>Window title is not updated correctly.
+</li>
+<li>When deciding what windows should be displayed as buttons, failed to exclude
+abnormal windows like Nautilus Desktop.
+</li>
+<li>(Found in Development) Forget to manage _appContextMenu, which, with grouping
+on, leads to instability and focus grabbing issue for button context menu
+</li>
+</ol>
+
+<p>
+Further, I've overlooked AppButton in previous fix. So some patches for
+WindowButton is also ported to AppButton.
+</p>
+
+<hr  />
+<hr  />
+<p>
+<b>Example End</b>
+</p>
+</div>
+</div>
+</div>
