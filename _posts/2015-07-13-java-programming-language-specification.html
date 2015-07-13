@@ -1,0 +1,287 @@
+---
+layout: post
+title: Java Programming Language Specification
+date: 2015-07-13
+categories: 
+- java specification prog-lang
+author: carltonf
+excerpt: as a intro to more formal programming language study
+---
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<p>
+The last several weeks I've been skimming through <i>James Gosling</i>, <i>Bill Joy</i>,
+<i>Guy Steel</i>, <i>Gilad Bracha</i>, <i>The Java<sup>TM</sup> Language Specification - 3rd edition</i>.
+An old book, but I happen to have a printed version by hand. So I guessed that
+reading through it would be helpful for me to understand general language
+specification.
+</p>
+
+<p>
+The main motive behind this endeavor is the revelation of the multitude of
+languages that I have to work with these days. I've been following development
+of JavaScript as well and there is a need to understand formal JS specification
+as it constantly evolves.
+</p>
+
+<p>
+The overall experience is rewarding though I only managed to absorb tiny portion
+from that book. Most Java specific parts are skipped. The following is the note
+I've taken while reading.
+</p>
+
+<hr  />
+<hr  />
+<p>
+<b>Notes</b>
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Goal</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Learn the conventions &amp; terminology for language specification. 
+<b>NOT Learning Java for now</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Lexical Grammar</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>raw stream of Unicode chars
+</li>
+<li>translation (escaped Unicode char)
+</li>
+<li>remove white space and comments
+</li>
+<li>tokenized
+</li>
+<li>syntactic grammar
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Extra Notes</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>In translation, the longest possible translation.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Syntactic Grammar</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Tokens are the terminal symbols of the syntactic grammar.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Language Compatibility</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>language compatibility
+</li>
+<li>platform compatibility
+</li>
+<li>migration compatibility
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><code>subtype</code> and <code>supertype</code></h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<code>Subtyping</code> does not extend through generic types: \( T<:U \) does not imply that
+\( C\langle T \rangle <: C\langle U \rangle \).
+</p>
+
+<p>
+Here we need to understand that <code>subtype</code> relationship is NOT the same as
+<code>subset</code>.
+</p>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="todo TODO">TODO</span> Some deep digging for the type system theory?</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Related to set theory and category theory (all three seem to be able to serve as
+a foundation of Math.)
+</p>
+
+<p>
+I've done some search on this topic, later fill this part with materials found.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="todo TODO">TODO</span> There is a clear separation of concepts between <code>Array</code> and <code>Class</code>. Why?</h2>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">Bewildered concepts</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Something we don't truly understand, but nevertheless widely seen.
+</p>
+
+<ul class="org-ul">
+<li>heap pollution
+</li>
+<li>capture conversion
+</li>
+<li>unchecked warning
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">Names</h2>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li>Simple Names and Qualified Names
+</li>
+<li>Names represent entities in a program
+</li>
+<li><b>Declarations</b> with <b>Identifiers</b> introduces entities that have <b>Names</b> into program.
+
+<p>
+Names are constructed with identifiers. But not all identifiers are part of
+Names (e.g. identifier used as label)
+</p>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1">Scope</h3>
+<div class="outline-text-3" id="text-8-1">
+<ul class="org-ul">
+<li>Scope of a Declaration
+
+<p>
+The <b>scope of a declaration</b> is the region of the program within which the
+<b>entity</b> declared by the declaration can be referred to with a <b>simple name</b>
+(provided it is visible, i.e. not shadowed).
+</p>
+</li>
+
+<li><code>in scope</code>
+</li>
+
+<li><code>shadowing</code> vs <code>hiding</code> vs <code>obscuring</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2">Name Obscuring</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+arise from the resolution of ambiguity of simple names in some contexts.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3">Identifier</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+an unlimited-length sequence of <span class="underline">Java</span> letters and <span class="underline">Java</span> digits.
+</p>
+
+<ul class="org-ul">
+<li>identifiers in labeled statement
+</li>
+<li>$3.8
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9">Packages</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1">storage</h3>
+<div class="outline-text-3" id="text-9-1">
+<ul class="org-ul">
+<li>file
+
+<p>
+some limitation for this format
+</p>
+</li>
+
+<li>database
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2">compilation units</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10">Definite Assignment</h2>
+</div>
+
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11">Key references</h2>
+<div class="outline-text-2" id="text-11">
+<ul class="org-ul">
+<li>$2.4
+</li>
+<li>$6 Names
+
+<p>
+forms, scope, access
+</p>
+</li>
+<li><a href="http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce-ebook/dp/B00AJXZ5JE/ref=tmm_kin_title_0?_encoding=UTF8&amp;sr=8-1&amp;qid=1436357919">Amazon.com: Types and Programming Languages eBook: Benjamin C. Pierce: Kindle Store</a>
+  A book on type theory.
+</li>
+
+<li>$14.5 "dangling else" problem
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12">Skipped</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+$8 - $11, from Classes to Exceptions
+</p>
+
+<p>
+$13 binary compatibility (dealing with updating widely deployed packages)
+</p>
+
+
+<hr  />
+<hr  />
+<p>
+<b>Notes End</b>
+</p>
+</div>
+</div>
