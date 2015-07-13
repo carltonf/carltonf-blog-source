@@ -1,0 +1,142 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-07-13 Mon 15:58
+#+TITLE: Java Programming Language Specification
+#+DESCRIPTION: as a intro to more formal programming language study
+#+CATEGORIES: java specification prog-lang
+
+#+BEGIN_HTML
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+#+END_HTML
+
+The last several weeks I've been skimming through /James Gosling/, /Bill Joy/,
+/Guy Steel/, /Gilad Bracha/, /The Java^TM Language Specification - 3rd edition/.
+An old book, but I happen to have a printed version around. So I guessed that
+reading through it would be helpful for me to understand language
+specification in general.
+
+The main motive behind this endeavor is the revelation of the multitude of
+languages that I have to work with these days. I've been following development
+of JavaScript as well and there is a need to understand formal JS specification
+as it constantly evolves.
+
+The overall experience is rewarding though I only managed to absorb tiny portion
+from that book. Most Java specific parts are skipped. The following is the note
+I've taken while reading.
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+*Notes*
+
+* Goal
+Learn the conventions & terminology for language specification. 
+*NOT Learning Java for now*
+
+* Lexical Grammar
+
+- raw stream of Unicode chars
+- translation (escaped Unicode char)
+- remove white space and comments
+- tokenized
+- syntactic grammar
+
+** Extra Notes
+- In translation, the longest possible translation.
+
+* Syntactic Grammar
+Tokens are the terminal symbols of the syntactic grammar.
+
+* Language Compatibility
+- language compatibility
+- platform compatibility
+- migration compatibility
+
+* =subtype= and =supertype=
+=Subtyping= does not extend through generic types: \( T<:U \) does not imply that
+\( C\langle T \rangle <: C\langle U \rangle \).
+
+Here we need to understand that =subtype= relationship is NOT the same as
+=subset=.
+
+** TODO Some deep digging for the type system theory?
+
+Related to set theory and category theory (all three seem to be able to serve as
+a foundation of Math.)
+
+I've done some search on this topic, later fill this part with materials found.
+
+* TODO There is a clear separation of concepts between =Array= and =Class=. Why?
+
+* Bewildered concepts
+Something we don't truly understand, but nevertheless widely seen.
+
+- heap pollution
+- capture conversion
+- unchecked warning
+
+* Names
+- Simple Names and Qualified Names
+- Names represent entities in a program
+- *Declarations* with *Identifiers* introduces entities that have *Names* into program.
+  
+  Names are constructed with identifiers. But not all identifiers are part of
+  Names (e.g. identifier used as label)
+
+** Scope
+- Scope of a Declaration
+
+  The *scope of a declaration* is the region of the program within which the
+  *entity* declared by the declaration can be referred to with a *simple name*
+  (provided it is visible, i.e. not shadowed).
+
+- =in scope=
+  
+- =shadowing= vs =hiding= vs =obscuring=
+
+** Name Obscuring
+
+arise from the resolution of ambiguity of simple names in some contexts.
+
+** Identifier
+
+an unlimited-length sequence of _Java_ letters and _Java_ digits.
+
+- identifiers in labeled statement
+- $3.8
+
+* Packages
+
+** storage
+- file
+  
+  some limitation for this format
+
+- database
+
+** compilation units
+
+* Definite Assignment
+
+
+* Key references
+- $2.4
+- $6 Names
+
+  forms, scope, access
+- [[http://www.amazon.com/Types-Programming-Languages-Benjamin-Pierce-ebook/dp/B00AJXZ5JE/ref=tmm_kin_title_0?_encoding=UTF8&amp;sr=8-1&amp;qid=1436357919][Amazon.com: Types and Programming Languages eBook: Benjamin C. Pierce: Kindle Store]]
+  A book on type theory.
+
+- $14.5 "dangling else" problem
+* Skipped
+$8 - $11, from Classes to Exceptions
+
+$13 binary compatibility (dealing with updating widely deployed packages)
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+*Notes End*
