@@ -1,3 +1,4 @@
+# -*- mode: conf -*-
 # Site settings
 title: Crystal Sight
 email: carl.xiong AT yahoo.com
@@ -17,3 +18,8 @@ markdown: kramdown
 
 encoding: utf-8
 permalink: /:title
+
+collections:
+    wiki:
+      output: true
+      permalink: /wiki/:title.html
