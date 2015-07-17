@@ -1,0 +1,356 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-07-17 Fri 15:58
+#+TITLE: Linux System Configuration General
+#+DESCRIPTION: The all-in-one list of tricks (should be splitted into multiple entries) 
+#+TAGS: 
+#+CATEGORIES: linux,configuration
+
+* desktop environment
+** keyboard oriented settings
+it's highly recommended to use *ratpoison* or *stumpwm*. However, the following
+should work on any desktop environment (e.g. Gnome and KDE)
+*** tools used
+- xwrits - reminds you to take wrist breaks
+  well, in case you don't have *workrave* or *RSIBreak*
+- xbindkeys - a grabbing keys program for X
+  can be used to define combination keys that simulate behaviors of *ratpoison*
+- dmenu - dynamic menu (includes dmenu_run, and dmenu_path)
+  open program through keystrokes
+- xmodmap - utility for modifying keymaps and pointer button mappings in X
+  emacs key (make enter and cap ctrls)
+*** configurations
+NOTE: GNU Guile is required to configure xbindkeys
+
+[[../core/2e/fd/keyoriented][keyoriented]]
+
+** sharing files through bluetooth
+- In GNOME 3 (< 3.6)
+  use this command =gnome-file-share-properties= to configure file sharing
+  settings. (Or with Gnome shell, you can search it in Activities overview.)
+
+- Above GNOME 3.6
+  
+  The above mentioned tool has been removed from =gnome-user-share= package, and
+  the related dconf keys have also been changed. Some sharing properties can be
+  set in G-C-C now but some functionality seems to be missing.
+
+* applications
+** vmware
+*** VMware 7.1.4(5) on Ubuntu 11.10
+fix module compilation errors
+- within the following directory, usually run scripts within
+  'vmware2_6_39patchv3.tar.bz2' is enough
+- other web pages serve as references.
+
+references & patches: [[../core/92/9c/vmware-7-ubuntu11.10-patch][vmware-7-ubuntu11.10-patch.dir]]
+
+* ubuntu
+** offline repo
+all related files are in [[../core/b1/34/offline_ubuntu_repo][offline_ubuntu_repo]]
+*** preparation
+1. define an offline repo location
+   add it to the top of the source list
+   ~deb file:///opt/ubuntu_offline_repo/ oneiric main restricted multiverse universe~
+2. populate the above directory
+   - the key here is to simulate the file system hierarchy of an ubuntu mirror
+   - download files with 'init_setup.bat'
+   - copy to corresponding directory in the local repo
+   - apt-get update
+3. the local repo is ready to be used, searched and generate dependencies.
+*** how to use
+1. copy files in *in_linux* to the local repo (or other places e.g. /root/)
+2. you can accumulate the package to install to a separate file. (find them through apt-cache search)
+   the 'todo.txt' is and example
+3. run *./gen_list.sh* to generate *apt_list* (see *./gen_list.sh* to see usage)
+4. copy *apt_list* to pen disk to windows box with Internet
+5. run ~wget.exe -i apt_list~ to download
+6. copy all *deb* files downloaded to ~/var/cache/apt/archives/~
+7. ~apt-get install <packages>~
+* shell commands
+** remove some files but not all
+*** shell pattern (glob and extglob)
+- basic glob
+  ?: one char; *: any number of chars; [..]: one of the char
+
+  highly limited, trying to figure out the right pattern might be even harder
+  and more time consuming than the toolchain method
+- extglob
+  shopt -s extglob
+
+  !(.|.|.) anything that doesn't match patterns
+
+*** toolchain
+one example: ls | grep ... | xargs rm
+
+** urxvt
+The following command, combined with =new-session= in =~/.tmux.conf=, let you connect to
+an existent session or create a new one if no session is alive.
+
+=urxvt -title "urxvt-tmux" -e tmux attach-session &=
+** rsync
+# linux to linux
+#+BEGIN_SRC shell-script
+  rsync -avuz --exclude=.repo/ --exclude=.git/ `pwd` dev-tplink:
+  rsync -avuz dev-tplink:/home/xiongchao/gingerbread_u12/out .
+
+  # to windows: pay attention to the last slash of the 1st param.
+  rsync --delete -vuzr carlibrelib ~/mnt/syncdisk
+#+END_SRC
+* ssh
+** sshfs
+[[../core/77/b9/sshfs_intro][sshfs_intro]]
+** speed/multiplex up ssh connection
+articles: [[../core/89/3a/ssh_connection_multiplexing][ssh_connection_multiplexing]]
+*** ssh -N -f host
+
+opens a connection and goes into the background without executing a remote
+command so you don't need to keep a window or shell running locally just to keep
+that connection.
+*** opinions
+Also, isn't the whole point of putting ControlPath in =.ssh/config= to make the
+=-S= argument uneccessary? And doesn't the =ControlMaster auto= also make the
+toggling =-M= uneccessary?
+*** auto vs autoask
+You can set it to autoask instead of auto to have ssh prompt you for whether or
+not to reuse an existing connection.
+*** ControlPath
+The configuration directive ControlPath tells ssh where it should keep its
+socket information. I've chosen to put these files in /tmp, however it may be
+best to put this into your own home directory on multi-user systems.
+*** -o ControlMaster=no for ssh tunneling
+NOTE: You will need to specify -o ControlMaster=no when using ssh to do ssh
+tunneling otherwise multiple tunnels to a particular host will not work.
+
+*** X11 forwarding under connection multiplexing
+
+Won't work and will fail silently, use =-v= to see whether X11 forwarding
+request is sent to debug this.
+
+- config solution
+
+  : add ForwardX11=yes (and ForwardX11Trusted=yes) to .ssh/config
+
+- =-S none= option
+  
+  The last time I checked this one, it's not working, however it should
+  according to ssh man page.
+  
+  PS: while testing this one, I crashed =systemd= in SLED12 beta2, which
+  resulted in very interesting bug.
+
+* diff + patch
+** two files both added some lines, but no change among common lines
+example:
+
+=diff -Naur index/ ~/icwiki/index/ > icwiki-patch.diff=
+
+=patch -Rp0 --merge < ~/learnspace/git-mylife/icwiki/icwiki-patch.diff=
+
+NOTE: you can --dry-run for previous command to see what the effect might be,
+however, you are still encouraged to backup your to-be-patched files.
+* mount virtual disk
+original reference: [[../core/7f/37/How to mount a VirtualBox VDI image | Be the signal.maff][How to mount a VirtualBox VDI image | Be the signal]]
+
+The following the essential steps needed
+#+BEGIN_SRC shell-script
+  # you need to be root
+  ## max_part is needed, as sometimes it defaults to 0
+  modprobe nbd max_part=16
+
+  # nbd0 is established by last cmd
+  qemu-nbd -c /dev/nbd0 .VirtualBox/Machines/win_xp/LargeData.vdi
+
+  mount /dev/mbd0p1 /mnt/tmp
+#+END_SRC
+* Multiple Pipes
+** Common Grep Buffer Issue
+use =--line-buffered=, a GNU grep extension.
+
+- example
+  =adb shell 'getevent /dev/input/event4' | grep --line-buffered "0003 0019" | tee tmp.txt=
+
+** Other Stdout Buffer Issue
+use complex while-read-line structure.
+
+- example
+  =tail -f logfile | while read line ; do echo "$line"| grep 'org.springframework'|cut -c 25- ; done=
+
+* Timestamp output
+usually we want to timestamp the output, use Perl to do this.
+
+*NOTE*: you may need to deal with buffer issues, refer to [[Multiple Pipes]].
+- example
+  The following timestamp the distance sensor's output.
+
+  #+BEGIN_SRC shell-script
+    # This this the one line perl to timestamp the output.
+    # You can change `time' to `localtime', if you want pretty time format.
+    # perl -ne '$|=1; print "[" . time . "]" . ": $_"'
+
+    adb shell 'getevent /dev/input/event4' \
+        | grep --line-buffered "0003 0019" \
+        | perl -ne '$|=1; print "[" . time . "]" . ": $_"'
+
+    # relative time, the start of recording is the time zero.
+    adb logcat | perl -ne \
+        '$|=1; $start = time unless $start; print "[" . (time - $start) . "]" . ": $_"'
+  #+END_SRC
+* Swap file
+- use file as swap space.
+  #+BEGIN_SRC shell-script
+    # create a 4G swap image
+    dd if=/dev/zero of=swap.img bs=1024M count=4
+    mkswap swap.img
+
+    # see the currently used swap space
+    swapon -s
+
+    # mount this file as swap space
+    swapon swap.img
+  #+END_SRC
+  Optionally you can use =swapoff= to disable some swap space.
+
+- add this entry into =/etc/fstab=
+  #+BEGIN_SRC conf-space
+    /opt/swap.img  none            swap    defaults        0       0
+  #+END_SRC
+* NTP
+** References
+- technical presentation
+  [[../core/d3/f0/NTP Clock Discipline Modelling and Analysis - presentation.algor.pdf][NTP Clock Discipline Modelling and Analysis - presentation.algor.pdf]]
+- Wiki Article
+  [[../core/38/eb/Network Time Protocol - Wikipedia, the free encyclopedia.maff][Network Time Protocol - Wikipedia, the free encyclopedia.maff]]
+* tar + 7z
+How to backup linux files with 7z
+: tar cf - <dir/file> | 7z a -si <path_to_archive_file>
+* Cool one-line find
+- Finding number of files in a folder
+  : find . -type f | wc -l
+
+- Finding # of all subfolders with a folder
+  : find . -type d | wc -l
+
+- Find # of folders ONLY in current folder
+  : find . -maxdepth 1 -type d | wc -l
+
+* Cron/Time Management
+A thorough article about almost every practical facets of cron and other time
+management in Linux.
+[[http://www.markus-gattol.name/ws/time.html][Original link]]
+
+Archived [[../core/e2/0b/Time - Create, Read, Store, Manipulate.maff][Time - Create, Read, Store, Manipulate.maff]]
+* Tmux
+Tmux is a very versatile terminal multiplexer.
+
+- Good guide
+
+  Interesting short book, most from author's personal experience rather than
+  being thorough. Complement the long tmux manual.
+
+  [[../core/76/66/tmux Productive Mouse-Free Development.pdf][tmux Productive Mouse-Free Development.pdf]]
+* Fedora/SuSe
+** Build packages from Sources RPM
+You need to install =rpmbuild=.
+
+=rpmbuild –rebuild package_name.src.rpm=
+
+=rpm -Uvih your_rpm_package.rpm=
+
+Optionally, =SuSEconfig=
+** Unpacking/Extracting source rpm
+=rpm2cpio foo-1.0-1.src.rpm | cpio --extract --make-directories --verbose=
+* Restore/Undeleted deleted/overwritten files
+** =testdisk=
+This is a tool mainly for partition fixing, however, the built-in file restoring
+function has come to handy a lot of times.
+
+Particularly good for case: you know the position of the file and there is no
+same-named file under the same path (i.e. doesn't work for overwritten files).
+This tool recovers the file by looking at the file system journal.
+
+** =photorec=
+The more powerful tool coming from the same developer team. This tool bypasses
+the file system, recovers files by looking at the content instead. This is the
+best shot for overwritten files.
+
+*NOTE*: Many on web says that you can't recover overwritten files. The fact is
+if the blocks of the files are overwritten then you are out of luck, but for
+files, usually overwriting leaves the old one intact by storing new content in
+new blocks.
+
+** Other "bizarre" ways
+
+=grep=, =debugfs= and blablabla.... They work by principle and look awesome, BUT
+it's hard to use them.
+* Debug offlineimap error
+In my workplace, =offlineimap= fails to retrieve mails from the company mail
+sever sometimes.
+
+With the following error:
+#+BEGIN_SRC text
+  Folder INBOX [acc: cxiongsuse]:
+   Copy message 13095 (1 of 84) cxiongsuse_remote:INBOX -> cxiongsuse_local
+   Copy message 13096 (2 of 84) cxiongsuse_remote:INBOX -> cxiongsuse_local
+  Copy message from cxiongsuse_remote:INBOX:
+   Establishing connection to imap.novell.com:993
+   ERROR: command: UID => no response after 60.0 secs
+   Establishing connection to imap.novell.com:993
+   ERROR: command: UID => no response after 60.0 secs
+   ERROR: command: UID => no response after 60.0 secs
+  Folder INBOX [acc: cxiongsuse]:
+   Copy message 13097 (3 of 84) cxiongsuse_remote:INBOX -> cxiongsuse_local
+  Thread 'Copy message from cxiongsuse_remote:INBOX' terminated with exception:
+  Traceback (most recent call last):
+    File "/usr/lib/python2.7/site-packages/offlineimap/threadutil.py", line 156, in run
+      Thread.run(self)
+    File "/usr/lib64/python2.7/threading.py", line 504, in run
+      self.__target(*self.__args, **self.__kwargs)
+    File "/usr/lib/python2.7/site-packages/offlineimap/folder/Base.py", line 330, in copymessageto
+      message = self.getmessage(uid)
+    File "/usr/lib/python2.7/site-packages/offlineimap/folder/IMAP.py", line 225, in getmessage
+      raise e
+  abort: command: UID => no response after 60.0 secs
+  
+  
+  Last 3 debug messages logged for Copy message from cxiongsuse_remote:INBOX prior to exception:
+  thread: Register new thread 'Copy message from cxiongsuse_remote:INBOX' (account 'cxiongsuse')
+  imap: Attempting plain authentication
+  imap: Attempting plain authentication
+  ERROR: Exceptions occurred during the run!
+  ERROR: command: UID => no response after 60.0 secs
+  ERROR: command: UID => no response after 60.0 secs
+  ERROR: command: UID => no response after 60.0 secs
+  
+#+END_SRC
+
+This article tries to explain a way to "fix" this, well not really a fix but a workaround.
+
+1. The "Copy" lines before errors identify the possible error message.
+
+2. Find the last successfully archived mail
+   
+   In the case above, 13095 and 13096 are the suspicious mails ID. Search the
+   local =offlineimap= mailbox for these two IDs. If you can't find it, use
+   13094, i.e. an even earlier one. After all, with an error close, the writing
+   operation might simply fail.
+
+3. Find another way to log into your mail account.
+   
+   Web UI, another Web clients and etc.
+
+4. Locate the mail you find in step 2.
+   
+   Sort all your mail from latest to oldest. And look at the source of the mail
+   in step 2, use "Date" to locate it. Pay attention to the time zone setting.
+   Let's denote the mail you found "2R".
+
+5. Remove one or more later mail(s) after "2R".
+   
+   This would usually solve the problem. Later on, we might try to find out
+   what's wrong with the "bad" mails.
+
