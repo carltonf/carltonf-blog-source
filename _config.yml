@@ -11,7 +11,6 @@ author_name: "Carl Xiong"
 twitter_username: 
 github_username: carltonf
 
-safe: true
 highlighter: pygments
 # Build settings
 markdown: kramdown
@@ -23,3 +22,8 @@ collections:
     wiki:
       output: true
       permalink: /wiki/:title.html
+
+## to have plugins run, disable this setting
+# safe: true
+gems:
+  - jekyll-sitemap
