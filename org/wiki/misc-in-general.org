@@ -1,0 +1,55 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-07-17 Fri 16:07
+#+TITLE: Misc in General
+#+DESCRIPTION: misc knowledge
+#+TAGS: 
+#+CATEGORIES: misc
+
+* Unicode
+** The Absolute Minimum Unicode Knowledge
+Every Software Developer Absolutely, Positively Must Know About Unicode and
+Character Sets (No Excuses!)
+
+- the very first article that get me understand Unicode and Charset's basics.
+[[../core/7f/4c/unicode-minimal-knowledge/Unicode-abs.html][unicode-minimal-knowledge]]
+* Software Architecture
+** event-based implicit invocation
+
+[[../core/bf/93/intro_to_implicit_invocation.pdf][intro_to_implicit_invocation.pdf]]
+- a clear styled intro with software architecture context
+- an *very simple* article
+* Free&Open Source
+** short_study_sustainable_open_source_project_(pgp4win)
+[[../core/bd/b2/short_study_sustainable_open_source_project_(pgp4win)/ShortStudy-Sustainable-FS-example-Gpg4win.html][short_study_sustainable_open_source_project_(pgp4win)]]
+
+- short and simple web article (*no* deep insight)
+*** interesting parts:
+- the pyramid structure of user space
+- comparisons with other famous open source project like _Apache_
+- plans and suggestions about the project's sustainability.
+
+* Windows 7
+** A bug in Windows 7 Samba share
+refer to this [[../core/c6/8c/smbmount_errors_in_win7.txt][smbmount_errors_in_win7.txt]] for patch.
+* Modern Working Environment
+** [[../core/3b/91/Cubicle - Wikipedia, the free encyclopedia.maff][Cubicle - Wikipedia, the free encyclopedia]]
+an article describe the most common modern working environment setup - cubicle.
+* AOP
+
+Wiki and another good articles introducing AOP. I haven't read every word of
+these articles. Among them the most interesting parts are advices, which are
+very useful to extend Emacs.
+
+[[../core/0d/16/aspect-oriented-programming][aspect-oriented-programming]]
+* Peopleware
+
+[[../core/ed/2c/peopleware_reading][peopleware_reading]]
+About how intelligence-intense work should be managed. Very enlightening.
+
+** TODO Finish reading
+

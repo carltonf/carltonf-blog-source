@@ -1,0 +1,42 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-07-17 Fri 16:04
+#+TITLE: Lisp or Scheme in General
+#+DESCRIPTION: general lisp/scheme entries
+#+TAGS: 
+#+CATEGORIES: lisp,scheme
+
+* Common Lisp Hyperspec
+It's meant to be used with SLIME.
+
+[[../core/7d/04/CL-HyperSpec][Offline CL-HyperSpec 7.0]]
+
+Downloaded from [[http://www.lispworks.com/documentation/common-lisp.html]].
+
+* The Scheme Programming Language
+The Scheme's version of K&R.
+
+Notably, the books below can be accessed freely on web.
+
+- well formatted R5 standard
+  [[../core/03/0a/tspl3.chm][The Scheme programming language.3th-Edition]]
+
+  [[../core/03/0a/exercises][My ongoing answers to exercises in the book]]
+
+- less formatted R6 standard
+  [[../core/7b/ce/The%20scheme%20programming%20language.Fourth%20Edition.pdf][The Scheme programming language.4th-Edition]]
+* Hyperpolyglot: famous Lisp dialects comparisons
+
+[[../core/76/58/Lisp: Common Lisp, Scheme, Clojure, Emacs Lisp - Hyperpolyglot.maff][Lisp: Common Lisp, Scheme, Clojure, Emacs Lisp - Hyperpolyglot.maff]]
+
+This is mostly a syntax level comparison, superficial but very thorough.
+* Lisp History
+
+One of the definitive sources of Lisp history.
+
+[[../core/90/86/HOPL2-Uncut-the-evolution-of-lisp.pdf][HOPL2-Uncut-the-evolution-of-lisp.pdf]]
+
