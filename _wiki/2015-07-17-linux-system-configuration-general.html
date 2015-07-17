@@ -1,0 +1,718 @@
+---
+collections: wiki
+layout: post
+title: Linux System Configuration General
+date: 2015-07-17
+categories: 
+- linux
+- configuration
+tags: 
+-
+author: carltonf
+excerpt: The all-in-one list of tricks (should be splitted into multiple entries) 
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">desktop environment</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">keyboard oriented settings</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+it's highly recommended to use <b>ratpoison</b> or <b>stumpwm</b>. However, the following
+should work on any desktop environment (e.g. Gnome and KDE)
+</p>
+</div>
+<ul class="org-ul"><li><a id="sec-1-1-1" name="sec-1-1-1"></a>tools used<br  /><div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>xwrits - reminds you to take wrist breaks
+well, in case you don't have <b>workrave</b> or <b>RSIBreak</b>
+</li>
+<li>xbindkeys - a grabbing keys program for X
+can be used to define combination keys that simulate behaviors of <b>ratpoison</b>
+</li>
+<li>dmenu - dynamic menu (includes dmenu<sub>run</sub>, and dmenu<sub>path</sub>)
+open program through keystrokes
+</li>
+<li>xmodmap - utility for modifying keymaps and pointer button mappings in X
+emacs key (make enter and cap ctrls)
+</li>
+</ul>
+</div>
+</li>
+<li><a id="sec-1-1-2" name="sec-1-1-2"></a>configurations<br  /><div class="outline-text-4" id="text-1-1-2">
+<p>
+NOTE: GNU Guile is required to configure xbindkeys
+</p>
+
+<p>
+<a href="../core/2e/fd/keyoriented">keyoriented</a>
+</p>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">sharing files through bluetooth</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>In GNOME 3 (&lt; 3.6)
+use this command <code>gnome-file-share-properties</code> to configure file sharing
+settings. (Or with Gnome shell, you can search it in Activities overview.)
+</li>
+
+<li>Above GNOME 3.6
+
+<p>
+The above mentioned tool has been removed from <code>gnome-user-share</code> package, and
+the related dconf keys have also been changed. Some sharing properties can be
+set in G-C-C now but some functionality seems to be missing.
+</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">applications</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">vmware</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><ul class="org-ul"><li><a id="sec-2-1-1" name="sec-2-1-1"></a>VMware 7.1.4(5) on Ubuntu 11.10<br  /><div class="outline-text-4" id="text-2-1-1">
+<p>
+fix module compilation errors
+</p>
+<ul class="org-ul">
+<li>within the following directory, usually run scripts within
+'vmware2<sub>6</sub><sub>39patchv3</sub>.tar.bz2' is enough
+</li>
+<li>other web pages serve as references.
+</li>
+</ul>
+
+<p>
+references &amp; patches: <a href="../core/92/9c/vmware-7-ubuntu11.10-patch">vmware-7-ubuntu11.10-patch.dir</a>
+</p>
+</div>
+</li></ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">ubuntu</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">offline repo</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+all related files are in <a href="../core/b1/34/offline_ubuntu_repo">offline<sub>ubuntu</sub><sub>repo</sub></a>
+</p>
+</div>
+<ul class="org-ul"><li><a id="sec-3-1-1" name="sec-3-1-1"></a>preparation<br  /><div class="outline-text-4" id="text-3-1-1">
+<ol class="org-ol">
+<li>define an offline repo location
+add it to the top of the source list
+<code>deb file:///opt/ubuntu_offline_repo/ oneiric main restricted multiverse universe</code>
+</li>
+<li>populate the above directory
+<ul class="org-ul">
+<li>the key here is to simulate the file system hierarchy of an ubuntu mirror
+</li>
+<li>download files with 'init<sub>setup</sub>.bat'
+</li>
+<li>copy to corresponding directory in the local repo
+</li>
+<li>apt-get update
+</li>
+</ul>
+</li>
+<li>the local repo is ready to be used, searched and generate dependencies.
+</li>
+</ol>
+</div>
+</li>
+<li><a id="sec-3-1-2" name="sec-3-1-2"></a>how to use<br  /><div class="outline-text-4" id="text-3-1-2">
+<ol class="org-ol">
+<li>copy files in <b>in<sub>linux</sub></b> to the local repo (or other places e.g. <i>root</i>)
+</li>
+<li>you can accumulate the package to install to a separate file. (find them through apt-cache search)
+the 'todo.txt' is and example
+</li>
+<li>run <b>./gen<sub>list</sub>.sh</b> to generate <b>apt<sub>list</sub></b> (see <b>./gen<sub>list</sub>.sh</b> to see usage)
+</li>
+<li>copy <b>apt<sub>list</sub></b> to pen disk to windows box with Internet
+</li>
+<li>run <code>wget.exe -i apt_list</code> to download
+</li>
+<li>copy all <b>deb</b> files downloaded to <code>/var/cache/apt/archives/</code>
+</li>
+<li><code>apt-get install &lt;packages&gt;</code>
+</li>
+</ol>
+</div>
+</li></ul>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">shell commands</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">remove some files but not all</h3>
+<div class="outline-text-3" id="text-4-1">
+</div><ul class="org-ul"><li><a id="sec-4-1-1" name="sec-4-1-1"></a>shell pattern (glob and extglob)<br  /><div class="outline-text-4" id="text-4-1-1">
+<ul class="org-ul">
+<li>basic glob
+?: one char; *: any number of chars; [..]: one of the char
+
+<p>
+highly limited, trying to figure out the right pattern might be even harder
+and more time consuming than the toolchain method
+</p>
+</li>
+<li>extglob
+shopt -s extglob
+
+<p>
+!(.|.|.) anything that doesn't match patterns
+</p>
+</li>
+</ul>
+</div>
+</li>
+
+<li><a id="sec-4-1-2" name="sec-4-1-2"></a>toolchain<br  /><div class="outline-text-4" id="text-4-1-2">
+<p>
+one example: ls | grep &#x2026; | xargs rm
+</p>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">urxvt</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+The following command, combined with <code>new-session</code> in <code>~/.tmux.conf</code>, let you connect to
+an existent session or create a new one if no session is alive.
+</p>
+
+<p>
+<code>urxvt -title "urxvt-tmux" -e tmux attach-session &amp;</code>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3">rsync</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+
+<pre class="src src-shell-script">rsync -avuz --exclude=.repo/ --exclude=.git/ `pwd` dev-tplink:
+rsync -avuz dev-tplink:/home/xiongchao/gingerbread_u12/out .
+
+# to windows: pay attention to the last slash of the 1st param.
+rsync --delete -vuzr carlibrelib ~/mnt/syncdisk
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">ssh</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1">sshfs</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+<a href="../core/77/b9/sshfs_intro">sshfs<sub>intro</sub></a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2">speed/multiplex up ssh connection</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+articles: <a href="../core/89/3a/ssh_connection_multiplexing">ssh<sub>connection</sub><sub>multiplexing</sub></a>
+</p>
+</div>
+<ul class="org-ul"><li><a id="sec-5-2-1" name="sec-5-2-1"></a>ssh -N -f host<br  /><div class="outline-text-4" id="text-5-2-1">
+<p>
+opens a connection and goes into the background without executing a remote
+command so you don't need to keep a window or shell running locally just to keep
+that connection.
+</p>
+</div>
+</li>
+<li><a id="sec-5-2-2" name="sec-5-2-2"></a>opinions<br  /><div class="outline-text-4" id="text-5-2-2">
+<p>
+Also, isn't the whole point of putting ControlPath in <code>.ssh/config</code> to make the
+<code>-S</code> argument uneccessary? And doesn't the <code>ControlMaster auto</code> also make the
+toggling <code>-M</code> uneccessary?
+</p>
+</div>
+</li>
+<li><a id="sec-5-2-3" name="sec-5-2-3"></a>auto vs autoask<br  /><div class="outline-text-4" id="text-5-2-3">
+<p>
+You can set it to autoask instead of auto to have ssh prompt you for whether or
+not to reuse an existing connection.
+</p>
+</div>
+</li>
+<li><a id="sec-5-2-4" name="sec-5-2-4"></a>ControlPath<br  /><div class="outline-text-4" id="text-5-2-4">
+<p>
+The configuration directive ControlPath tells ssh where it should keep its
+socket information. I've chosen to put these files in /tmp, however it may be
+best to put this into your own home directory on multi-user systems.
+</p>
+</div>
+</li>
+<li><a id="sec-5-2-5" name="sec-5-2-5"></a>-o ControlMaster=no for ssh tunneling<br  /><div class="outline-text-4" id="text-5-2-5">
+<p>
+NOTE: You will need to specify -o ControlMaster=no when using ssh to do ssh
+tunneling otherwise multiple tunnels to a particular host will not work.
+</p>
+</div>
+</li>
+
+<li><a id="sec-5-2-6" name="sec-5-2-6"></a>X11 forwarding under connection multiplexing<br  /><div class="outline-text-4" id="text-5-2-6">
+<p>
+Won't work and will fail silently, use <code>-v</code> to see whether X11 forwarding
+request is sent to debug this.
+</p>
+
+<ul class="org-ul">
+<li>config solution
+
+<pre class="example">
+add ForwardX11=yes (and ForwardX11Trusted=yes) to .ssh/config
+</pre>
+</li>
+
+<li><code>-S none</code> option
+
+<p>
+The last time I checked this one, it's not working, however it should
+according to ssh man page.
+</p>
+
+<p>
+PS: while testing this one, I crashed <code>systemd</code> in SLED12 beta2, which
+resulted in very interesting bug.
+</p>
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">diff + patch</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1">two files both added some lines, but no change among common lines</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+example:
+</p>
+
+<p>
+<code>diff -Naur index/ ~/icwiki/index/ &gt; icwiki-patch.diff</code>
+</p>
+
+<p>
+<code>patch -Rp0 --merge &lt; ~/learnspace/git-mylife/icwiki/icwiki-patch.diff</code>
+</p>
+
+<p>
+NOTE: you can &#x2013;dry-run for previous command to see what the effect might be,
+however, you are still encouraged to backup your to-be-patched files.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">mount virtual disk</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+original reference: <a href="../core/7f/37/How to mount a VirtualBox VDI image | Be the signal.maff">How to mount a VirtualBox VDI image | Be the signal</a>
+</p>
+
+<p>
+The following the essential steps needed
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell-script"># you need to be root
+## max_part is needed, as sometimes it defaults to 0
+modprobe nbd max_part=16
+
+# nbd0 is established by last cmd
+qemu-nbd -c /dev/nbd0 .VirtualBox/Machines/win_xp/LargeData.vdi
+
+mount /dev/mbd0p1 /mnt/tmp
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">Multiple Pipes</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1">Common Grep Buffer Issue</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+use <code>--line-buffered</code>, a GNU grep extension.
+</p>
+
+<ul class="org-ul">
+<li>example
+<code>adb shell 'getevent /dev/input/event4' | grep --line-buffered "0003 0019" | tee tmp.txt</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2">Other Stdout Buffer Issue</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+use complex while-read-line structure.
+</p>
+
+<ul class="org-ul">
+<li>example
+<code>tail -f logfile | while read line ; do echo "$line"| grep 'org.springframework'|cut -c 25- ; done</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9">Timestamp output</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+usually we want to timestamp the output, use Perl to do this.
+</p>
+
+<p>
+<b>NOTE</b>: you may need to deal with buffer issues, refer to <a href="#sec-8">Multiple Pipes</a>.
+</p>
+<ul class="org-ul">
+<li>example
+The following timestamp the distance sensor's output.
+
+<div class="org-src-container">
+
+<pre class="src src-shell-script"># This this the one line perl to timestamp the output.
+# You can change `time' to `localtime', if you want pretty time format.
+# perl -ne '$|=1; print "[" . time . "]" . ": $_"'
+
+adb shell 'getevent /dev/input/event4' \
+    | grep --line-buffered "0003 0019" \
+    | perl -ne '$|=1; print "[" . time . "]" . ": $_"'
+
+# relative time, the start of recording is the time zero.
+adb logcat | perl -ne \
+    '$|=1; $start = time unless $start; print "[" . (time - $start) . "]" . ": $_"'
+</pre>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10">Swap file</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li>use file as swap space.
+<div class="org-src-container">
+
+<pre class="src src-shell-script"># create a 4G swap image
+dd if=/dev/zero of=swap.img bs=1024M count=4
+mkswap swap.img
+
+# see the currently used swap space
+swapon -s
+
+# mount this file as swap space
+swapon swap.img
+</pre>
+</div>
+<p>
+Optionally you can use <code>swapoff</code> to disable some swap space.
+</p>
+</li>
+
+<li>add this entry into <code>/etc/fstab</code>
+<div class="org-src-container">
+
+<pre class="src src-conf-space">/opt/swap.img  none            swap    defaults        0       0
+</pre>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11">NTP</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1">References</h3>
+<div class="outline-text-3" id="text-11-1">
+<ul class="org-ul">
+<li>technical presentation
+<a href="../core/d3/f0/NTP Clock Discipline Modelling and Analysis - presentation.algor.pdf">NTP Clock Discipline Modelling and Analysis - presentation.algor.pdf</a>
+</li>
+<li>Wiki Article
+<a href="../core/38/eb/Network Time Protocol - Wikipedia, the free encyclopedia.maff">Network Time Protocol - Wikipedia, the free encyclopedia.maff</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12">tar + 7z</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+How to backup linux files with 7z
+</p>
+<pre class="example">
+tar cf - &lt;dir/file&gt; | 7z a -si &lt;path_to_archive_file&gt;
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13">Cool one-line find</h2>
+<div class="outline-text-2" id="text-13">
+<ul class="org-ul">
+<li>Finding number of files in a folder
+<pre class="example">
+find . -type f | wc -l
+</pre>
+</li>
+
+<li>Finding # of all subfolders with a folder
+<pre class="example">
+find . -type d | wc -l
+</pre>
+</li>
+
+<li>Find # of folders ONLY in current folder
+<pre class="example">
+find . -maxdepth 1 -type d | wc -l
+</pre>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14">Cron/Time Management</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+A thorough article about almost every practical facets of cron and other time
+management in Linux.
+<a href="http://www.markus-gattol.name/ws/time.html">Original link</a>
+</p>
+
+<p>
+Archived <a href="../core/e2/0b/Time - Create, Read, Store, Manipulate.maff">Time - Create, Read, Store, Manipulate.maff</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15">Tmux</h2>
+<div class="outline-text-2" id="text-15">
+<p>
+Tmux is a very versatile terminal multiplexer.
+</p>
+
+<ul class="org-ul">
+<li>Good guide
+
+<p>
+Interesting short book, most from author's personal experience rather than
+being thorough. Complement the long tmux manual.
+</p>
+
+<p>
+<a href="../core/76/66/tmux Productive Mouse-Free Development.pdf">tmux Productive Mouse-Free Development.pdf</a>
+</p>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16">Fedora/SuSe</h2>
+<div class="outline-text-2" id="text-16">
+</div><div id="outline-container-sec-16-1" class="outline-3">
+<h3 id="sec-16-1">Build packages from Sources RPM</h3>
+<div class="outline-text-3" id="text-16-1">
+<p>
+You need to install <code>rpmbuild</code>.
+</p>
+
+<p>
+<code>rpmbuild –rebuild package_name.src.rpm</code>
+</p>
+
+<p>
+<code>rpm -Uvih your_rpm_package.rpm</code>
+</p>
+
+<p>
+Optionally, <code>SuSEconfig</code>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-16-2" class="outline-3">
+<h3 id="sec-16-2">Unpacking/Extracting source rpm</h3>
+<div class="outline-text-3" id="text-16-2">
+<p>
+<code>rpm2cpio foo-1.0-1.src.rpm | cpio --extract --make-directories --verbose</code>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-17" class="outline-2">
+<h2 id="sec-17">Restore/Undeleted deleted/overwritten files</h2>
+<div class="outline-text-2" id="text-17">
+</div><div id="outline-container-sec-17-1" class="outline-3">
+<h3 id="sec-17-1"><code>testdisk</code></h3>
+<div class="outline-text-3" id="text-17-1">
+<p>
+This is a tool mainly for partition fixing, however, the built-in file restoring
+function has come to handy a lot of times.
+</p>
+
+<p>
+Particularly good for case: you know the position of the file and there is no
+same-named file under the same path (i.e. doesn't work for overwritten files).
+This tool recovers the file by looking at the file system journal.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-2" class="outline-3">
+<h3 id="sec-17-2"><code>photorec</code></h3>
+<div class="outline-text-3" id="text-17-2">
+<p>
+The more powerful tool coming from the same developer team. This tool bypasses
+the file system, recovers files by looking at the content instead. This is the
+best shot for overwritten files.
+</p>
+
+<p>
+<b>NOTE</b>: Many on web says that you can't recover overwritten files. The fact is
+if the blocks of the files are overwritten then you are out of luck, but for
+files, usually overwriting leaves the old one intact by storing new content in
+new blocks.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-17-3" class="outline-3">
+<h3 id="sec-17-3">Other "bizarre" ways</h3>
+<div class="outline-text-3" id="text-17-3">
+<p>
+<code>grep</code>, <code>debugfs</code> and blablabla&#x2026;. They work by principle and look awesome, BUT
+it's hard to use them.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-18" class="outline-2">
+<h2 id="sec-18">Debug offlineimap error</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+In my workplace, <code>offlineimap</code> fails to retrieve mails from the company mail
+sever sometimes.
+</p>
+
+<p>
+With the following error:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-text">Folder INBOX [acc: cxiongsuse]:
+ Copy message 13095 (1 of 84) cxiongsuse_remote:INBOX -&gt; cxiongsuse_local
+ Copy message 13096 (2 of 84) cxiongsuse_remote:INBOX -&gt; cxiongsuse_local
+Copy message from cxiongsuse_remote:INBOX:
+ Establishing connection to imap.novell.com:993
+ ERROR: command: UID =&gt; no response after 60.0 secs
+ Establishing connection to imap.novell.com:993
+ ERROR: command: UID =&gt; no response after 60.0 secs
+ ERROR: command: UID =&gt; no response after 60.0 secs
+Folder INBOX [acc: cxiongsuse]:
+ Copy message 13097 (3 of 84) cxiongsuse_remote:INBOX -&gt; cxiongsuse_local
+Thread 'Copy message from cxiongsuse_remote:INBOX' terminated with exception:
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site-packages/offlineimap/threadutil.py", line 156, in run
+    Thread.run(self)
+  File "/usr/lib64/python2.7/threading.py", line 504, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/usr/lib/python2.7/site-packages/offlineimap/folder/Base.py", line 330, in copymessageto
+    message = self.getmessage(uid)
+  File "/usr/lib/python2.7/site-packages/offlineimap/folder/IMAP.py", line 225, in getmessage
+    raise e
+abort: command: UID =&gt; no response after 60.0 secs
+
+
+Last 3 debug messages logged for Copy message from cxiongsuse_remote:INBOX prior to exception:
+thread: Register new thread 'Copy message from cxiongsuse_remote:INBOX' (account 'cxiongsuse')
+imap: Attempting plain authentication
+imap: Attempting plain authentication
+ERROR: Exceptions occurred during the run!
+ERROR: command: UID =&gt; no response after 60.0 secs
+ERROR: command: UID =&gt; no response after 60.0 secs
+ERROR: command: UID =&gt; no response after 60.0 secs
+</pre>
+</div>
+
+<p>
+This article tries to explain a way to "fix" this, well not really a fix but a workaround.
+</p>
+
+<ol class="org-ol">
+<li>The "Copy" lines before errors identify the possible error message.
+</li>
+
+<li>Find the last successfully archived mail
+
+<p>
+In the case above, 13095 and 13096 are the suspicious mails ID. Search the
+local <code>offlineimap</code> mailbox for these two IDs. If you can't find it, use
+13094, i.e. an even earlier one. After all, with an error close, the writing
+operation might simply fail.
+</p>
+</li>
+
+<li>Find another way to log into your mail account.
+
+<p>
+Web UI, another Web clients and etc.
+</p>
+</li>
+
+<li>Locate the mail you find in step 2.
+
+<p>
+Sort all your mail from latest to oldest. And look at the source of the mail
+in step 2, use "Date" to locate it. Pay attention to the time zone setting.
+Let's denote the mail you found "2R".
+</p>
+</li>
+
+<li>Remove one or more later mail(s) after "2R".
+
+<p>
+This would usually solve the problem. Later on, we might try to find out
+what's wrong with the "bad" mails.
+</p>
+</li>
+</ol>
+</div>
+</div>
