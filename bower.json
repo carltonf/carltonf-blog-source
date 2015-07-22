@@ -1,0 +1,26 @@
+{
+  "name": "carltonf.github.io",
+  "version": "0.0.0",
+  "homepage": "https://github.com/carltonf/carltonf.github.io",
+  "authors": [
+    "Carl Xiong <xiongc05@gmail.com>"
+  ],
+  "description": "Personal blog",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "blog"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
