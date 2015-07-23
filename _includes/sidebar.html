@@ -15,6 +15,13 @@
 <!-- /well -->
 <div class="well">
   <h4><i class="glyphicon glyphicon-list-alt"></i> Popular Tags:</h4>
+  <!-- TAG links are harder than thought due to the nature of static pages
+  see https://github.com/danielsiwiec/leanoverboard.com/commit/cf04dd322f5ffe2251ca6e3733d2707c2eaec7d4
+  for a JS solution.
+  Solutions:
+  - Statically generate all tag pages
+  - Use JS with a tag-pages-index.json (like in search)
+  -->
   {% for tag in site.tags %}
     <a href=""><span class="badge badge-info">{{ tag | first }}</span></a>
   {% endfor %}
