@@ -1,0 +1,37 @@
+<!-- TODO use meaningful content  -->
+<div class="well">
+  <h4>Search...</h4>
+  <div class="input-group">
+    <input type="text" class="form-control">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button">
+        <i class="glyphicon glyphicon-search"></i>
+      </button>
+    </span>
+  </div>
+  <!-- /input-group -->
+</div>
+
+<!-- /well -->
+<div class="well">
+  <h4><i class="glyphicon glyphicon-list-alt"></i> Popular Tags:</h4>
+  {% for tag in site.tags %}
+    <a href=""><span class="badge badge-info">{{ tag | first }}</span></a>
+  {% endfor %}
+</div>
+<!-- /well -->
+
+<div class="well">
+  <h4><i class="glyphicon glyphicon-time"></i> Recent Posts:</h4>
+  <ul>
+    {% for post in site.posts %}
+    <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="well" style="display: none;">
+  <h4><i class="glyphicon glyphicon-star"></i> Popular Posts:</h4>
+  <ul>
+  </ul>
+</div>
