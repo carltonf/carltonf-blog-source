@@ -1,9 +1,14 @@
 ---
+collections: post
 layout: post
 title: "Octopress Customization: easy blog source link"
 date: 2014-11-20
 categories: 
-- octopress jekyll org
+-
+tags: 
+- octopress
+- jekyll
+- org
 author: carltonf
 excerpt: 
 ---
@@ -63,25 +68,25 @@ Here is the whole commit:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-diff"><span class="linenr"> 1: </span><span style="color: #93a1a1;">diff --git a/source/_includes/article.html b/source/_includes/article.html</span>
-<span class="linenr"> 2: </span><span style="color: #93a1a1;">index 8427997..c38fd90 100644</span>
-<span class="linenr"> 3: </span><span style="color: #586e75; background-color: #fdf6e3;">--- </span><span style="color: #586e75; background-color: #fdf6e3;">a/source/_includes/article.html</span>
-<span class="linenr"> 4: </span><span style="color: #586e75; background-color: #fdf6e3;">+++ </span><span style="color: #586e75; background-color: #fdf6e3;">b/source/_includes/article.html</span>
-<span class="linenr"> 5: </span><span style="color: #586e75; background-color: #fdf6e3;">@@ -12,6 +12,14 @@</span>
-<span class="linenr"> 6: </span><span style="color: #93a1a1;">            | &lt;a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#disqus_thread"</span>
-<span class="linenr"> 7: </span><span style="color: #93a1a1;">              data-disqus-identifier="{% if post.meta.disqus_id %}{{ post.meta.disqus_id }}{% else %}{{ site.url }}{{ post.url }}{% endif %}"&gt;Comments&lt;/a&gt;</span>
-<span class="linenr"> 8: </span><span style="color: #93a1a1;">         {% endif %}</span>
-<span class="linenr"> 9: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        |</span>
-<span id="coderef-is-home" class="coderef-off"><span class="linenr">10: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% if index %}</span></span>
-<span class="linenr">11: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% capture abs_page_url %}{{ root_url }}{{ post.url }}{% endcapture %}</span>
-<span class="linenr">12: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        &lt;a href="{{ abs_page_url | split:'.html' | first | append:'.org' }}"&gt;SOURCE&lt;/a&gt;</span>
-<span class="linenr">13: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% else %}</span>
-<span id="coderef-html-to-org" class="coderef-off"><span class="linenr">14: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        &lt;a href="{{ page.url | split:'.html' | first | append:'.org' }}"&gt;SOURCE&lt;/a&gt;</span></span>
-<span class="linenr">15: </span><span style="color: #859900; font-weight: bold;">+</span><span style="color: #859900; font-weight: bold;">        {% endif %}</span>
-<span class="linenr">16: </span><span style="color: #859900; font-weight: bold;">+</span>
-<span class="linenr">17: </span><span style="color: #93a1a1;">       &lt;/p&gt;</span>
-<span class="linenr">18: </span><span style="color: #93a1a1;">     {% endunless %}</span>
-<span class="linenr">19: </span><span style="color: #93a1a1;">   &lt;/header&gt;</span>
+<pre class="src src-diff"><span class="linenr"> 1: </span><span style="color: #7f7f7f;">diff --git a/source/_includes/article.html b/source/_includes/article.html</span>
+<span class="linenr"> 2: </span><span style="color: #7f7f7f;">index 8427997..c38fd90 100644</span>
+<span class="linenr"> 3: </span><span style="background-color: #cccccc;">--- </span><span style="background-color: #b3b3b3; font-weight: bold;">a/source/_includes/article.html</span>
+<span class="linenr"> 4: </span><span style="background-color: #cccccc;">+++ </span><span style="background-color: #b3b3b3; font-weight: bold;">b/source/_includes/article.html</span>
+<span class="linenr"> 5: </span><span style="background-color: #cccccc;">@@ -12,6 +12,14 @@</span>
+<span class="linenr"> 6: </span><span style="color: #7f7f7f;">            | &lt;a href="{% if index %}{{ root_url }}{{ post.url }}{% endif %}#disqus_thread"</span>
+<span class="linenr"> 7: </span><span style="color: #7f7f7f;">              data-disqus-identifier="{% if post.meta.disqus_id %}{{ post.meta.disqus_id }}{% else %}{{ site.url }}{{ post.url }}{% endif %}"&gt;Comments&lt;/a&gt;</span>
+<span class="linenr"> 8: </span><span style="color: #7f7f7f;">         {% endif %}</span>
+<span class="linenr"> 9: </span><span style="background-color: #ddffdd;">+</span><span style="background-color: #ddffdd;">        |</span>
+<span id="coderef-is-home" class="coderef-off"><span class="linenr">10: </span><span style="background-color: #ddffdd;">+</span><span style="background-color: #ddffdd;">        {% if index %}</span></span>
+<span class="linenr">11: </span><span style="background-color: #ddffdd;">+</span><span style="background-color: #ddffdd;">        {% capture abs_page_url %}{{ root_url }}{{ post.url }}{% endcapture %}</span>
+<span class="linenr">12: </span><span style="background-color: #ddffdd;">+</span><span style="background-color: #ddffdd;">        &lt;a href="{{ abs_page_url | split:'.html' | first | append:'.org' }}"&gt;SOURCE&lt;/a&gt;</span>
+<span class="linenr">13: </span><span style="background-color: #ddffdd;">+</span><span style="background-color: #ddffdd;">        {% else %}</span>
+<span id="coderef-html-to-org" class="coderef-off"><span class="linenr">14: </span><span style="background-color: #ddffdd;">+</span><span style="background-color: #ddffdd;">        &lt;a href="{{ page.url | split:'.html' | first | append:'.org' }}"&gt;SOURCE&lt;/a&gt;</span></span>
+<span class="linenr">15: </span><span style="background-color: #ddffdd;">+</span><span style="background-color: #ddffdd;">        {% endif %}</span>
+<span class="linenr">16: </span><span style="background-color: #ddffdd;">+</span>
+<span class="linenr">17: </span><span style="color: #7f7f7f;">       &lt;/p&gt;</span>
+<span class="linenr">18: </span><span style="color: #7f7f7f;">     {% endunless %}</span>
+<span class="linenr">19: </span><span style="color: #7f7f7f;">   &lt;/header&gt;</span>
 </pre>
 </div>
 

@@ -1,9 +1,15 @@
 ---
+collections: post
 layout: post
 title: "Org-octopress: Links"
 date: 2014-11-19
 categories: 
-- org emacs octopress emacs-lisp
+-
+tags: 
+- org
+- emacs
+- octopress
+- emacs-lisp
 author: carltonf
 excerpt: 
 ---
@@ -47,11 +53,11 @@ output. The relevant code snippet in <code>ox-html.el:org-html-link</code>:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp"><span style="color: #93a1a1; font-style: italic;">;; </span><span style="color: #93a1a1; font-style: italic;">If file path is absolute, prepend it with protocol</span>
-<span style="color: #93a1a1; font-style: italic;">;; </span><span style="color: #93a1a1; font-style: italic;">component - "file:".</span>
-(<span style="color: #859900;">cond</span>
+<pre class="src src-emacs-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">If file path is absolute, prepend it with protocol</span>
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">component - "file:".</span>
+(<span style="color: #a020f0;">cond</span>
  ((file-name-absolute-p raw-path)
-  (setq raw-path (concat <span style="color: #2aa198;">"file:"</span> raw-path)))
+  (setq raw-path (concat <span style="color: #8b2252;">"file:"</span> raw-path)))
  ((and home use-abs-url)
   (setq raw-path (concat (file-name-as-directory home) raw-path))))
 </pre>
