@@ -4,9 +4,11 @@
 #+LAYOUT: post
 #+AUTHOR: carltonf
 #+DESCRIPTION: 
-#+CATEGORIES: octopress jekyll org
+#+CATEGORIES:
 #+TITLE: "Octopress Customization: easy blog source link"
 #+DATE: 2014-11-20
+#+TAGS: octopress,jekyll,org
+#+TYPE: post
 
 * Summary
 Most my posts here are programming-related and one of =Org='s killer features is

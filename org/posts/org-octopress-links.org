@@ -4,9 +4,11 @@
 #+LAYOUT: post
 #+AUTHOR: carltonf
 #+DESCRIPTION: 
-#+CATEGORIES: org emacs octopress emacs-lisp
+#+CATEGORIES:
 #+TITLE: "Org-octopress: Links"
 #+DATE: 2014-11-19
+#+TAGS: org,emacs,octopress,emacs-lisp
+#+TYPE: post
 
 * Summary
 

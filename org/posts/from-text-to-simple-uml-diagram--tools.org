@@ -6,7 +6,9 @@
 #+DATE: 2015-06-11 Thu 17:19
 #+TITLE: From Text to simple UML diagram - Tools
 #+DESCRIPTION: My review and survey on textual uml tools
-#+CATEGORIES: uml diagram
+#+CATEGORIES:
+#+TAGS: uml,diagram
+#+TYPE: post
 
 * Background
 I want to make some diagrams about my small project =etss=. Simple class

@@ -4,9 +4,12 @@
 #+LAYOUT: post
 #+AUTHOR: carltonf
 #+DESCRIPTION: 
-#+CATEGORIES: rpm pkgbuild drdb
+#+CATEGORIES:
 #+TITLE: Packaging and Several Concepts
 #+DATE: 2014-11-26
+#+TAGS: rpm,pkgbuild,drdb
+#+TYPE: post
+
 
 * Intro
 The other day some of my colleagues were discussing about how to manage a

@@ -6,7 +6,9 @@
 #+DATE: 2015-04-02 Thu 16:22
 #+TITLE: "Copy & Change: be careful"
 #+DESCRIPTION: The story about a file-roller bug
-#+CATEGORIES: libarchive file-roller compiler sparse
+#+CATEGORIES:
+#+TAGS: libarchive,file-roller,compiler,sparse
+#+TYPE: post
 
 This is a story about what we've learned from debugging the following bug:
 [[https://bugzilla.gnome.org/show_bug.cgi?id%3D747091][Bug 747091 – File-Roller fails to handle archive with sparse files]]

@@ -6,8 +6,9 @@
 #+DATE: 2014-11-21 Wed 17:48
 #+TITLE: Arch for SUSE package development
 #+DESCRIPTION: 
-#+CATEGORIES: arch_linux suse rpm
-
+#+CATEGORIES:
+#+TAGS: arch_linux,suse,rpm
+#+TYPE: post
 
 * Summary
 

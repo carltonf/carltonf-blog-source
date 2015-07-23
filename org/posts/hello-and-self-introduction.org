@@ -7,6 +7,8 @@
 #+CATEGORIES:
 #+TITLE: Hello and Self-Introduction
 #+DATE: 2014-11-19
+#+TAGS: hello,self-introduction
+#+TYPE: post
 
 A "Hello World" blog. Later it would grow into Page "About".
 

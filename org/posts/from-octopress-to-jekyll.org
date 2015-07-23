@@ -6,7 +6,9 @@
 #+DATE: 2015-04-01 Wed 19:52
 #+TITLE: From Octopress to Jekyll
 #+DESCRIPTION: 
-#+CATEGORIES: jekyll octopress org
+#+CATEGORIES:
+#+TAGS: jekyll,octopress,org
+#+TYPE: post
 
 After 4 months' idleness, I've come back to my blog and decide to take another
 look at the blogging tools.

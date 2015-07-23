@@ -6,7 +6,9 @@
 #+DATE: 2015-07-10 Fri 16:18
 #+TITLE: A workflow for bug fixing
 #+DESCRIPTION: Problem, Question, Facts and Solutions
-#+CATEGORIES: bug-fix
+#+CATEGORIES:
+#+TAGS: bug-fix,workflow
+#+TYPE: post
 
 As a developer in SUSE Desktop Department, most of my work are bug fixing.
 Desktop bugs are diversified in nature: I constantly need to handle bugs from an
