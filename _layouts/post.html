@@ -16,7 +16,7 @@ layout: default
   <!-- TODO add tag links -->
   <hr>
   <p><i class="glyphicon glyphicon-tag"></i> Tags:
-                  {% for tag in page.tags %}
-    <a href=""><span class="badge badge-info">{{ tag }}</span></a>
-                  {% endfor %}
+    {% for tag in page.tags %}
+      <a href=""><span class="badge badge-info">{{ tag }}</span></a>
+    {% endfor %}
 </div>
