@@ -3,8 +3,8 @@
 <!-- TODO use meaningful content  -->
 <div class="well">
   <div class="input-group">
-    <input type="text" class="form-control" placeholder="Quick Search...">
-    <span class="input-group-btn">
+    <input type="text" class="form-control" placeholder="Quick Search..." id="quick-search" />
+    <span class="input-group-btn" style="display: none">
       <button class="btn btn-default" type="button">
         <i class="glyphicon glyphicon-search"></i>
       </button>
@@ -12,6 +12,35 @@
   </div>
   <!-- /input-group -->
 </div>
+
+<script>
+ /* TODO too crude for the check on 'searchIndex' */
+ if ( !searchIndex ){
+   var searchIndex;
+   $.getJSON('/search-index.json', function (data){
+     searchIndex = data;
+
+     $('#quick-search').autocomplete({
+       lookup: searchIndex,
+
+       /* TODO we've force the format of JSON, use 'transformResult' to undo that. */
+       onSelect: function (suggestion) {
+         console.log("Jump to: " + suggestion.data);
+         window.location.href = suggestion.data;
+       }
+     });
+   })
+ }
+
+</script>
+<style>
+ .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; font-size: 80%; }
+ .autocomplete-suggestion { padding: 2px 5px; border-bottom: 1px; border-bottom-style: dashed; border-bottom-color: grey; }
+ .autocomplete-selected { background: #F0F0F0; }
+ .autocomplete-suggestions strong { font-weight: bold; color: #3399FF; }
+ .autocomplete-group { padding: 2px 5px; }
+ .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+</style>
 
 <!-- /well -->
 <div class="well">
