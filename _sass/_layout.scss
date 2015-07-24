@@ -136,7 +136,7 @@
     margin-left: 0;
     list-style: none;
 
-    > li {
+    > div {
         margin-bottom: $spacing-unit;
     }
 }
@@ -195,4 +195,12 @@
             font-size: 18px;
         }
     }
+}
+
+/**
+ * Sidebar
+ */
+
+.sidebar {
+    font-size: 80%;
 }
