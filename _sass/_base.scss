@@ -104,6 +104,22 @@ a {
     }
 }
 
+.tag-badge {
+    &.tag-text {
+        color: $text-color;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    a .tag-text:hover {
+        color: #9ACFEA;
+    }
+
+    /* make sure the proper separation */
+    line-height: 2;
+}
 
 
 /**

@@ -22,7 +22,15 @@
   - Use JS with a tag-pages-index.json (like in search)
   -->
   {% for tag in site.tags %}
-    <a href=""><span class="badge">{{ tag | first }}</span></a>
+  <span class="tag-badge">
+    <a href="#">
+      <!-- trick to create tag cloud
+      see http://vvv.tobiassjosten.net/jekyll/jekyll-tag-cloud/ -->
+      <span class="badge tag-text" style="font-size: {{ tag | last | size | times: 100 | divided_by: site.tags.size | plus: 7 }}px">
+      {{ tag | first }}
+      </span>
+    </a>
+  </span>
   {% endfor %}
 </div>
 <!-- /well -->
