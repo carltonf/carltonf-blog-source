@@ -1,9 +1,10 @@
-<div class="sidebar">
+<div class="collapse" id="sidebar">
 
 <!-- TODO use meaningful content  -->
 <div class="well">
   <div class="input-group">
-    <input type="text" class="form-control" placeholder="Quick Search..." id="quick-search" />
+    <input id="quick-search" type="text" class="form-control"
+           placeholder="Quick Search..."/>
     <span class="input-group-btn" style="display: none">
       <button class="btn btn-default" type="button">
         <i class="glyphicon glyphicon-search"></i>
@@ -31,8 +32,8 @@
      });
    })
  }
-
 </script>
+
 <style>
  .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; font-size: 80%; }
  .autocomplete-suggestion { padding: 2px 5px; border-bottom: 1px; border-bottom-style: dashed; border-bottom-color: grey; }
