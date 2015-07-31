@@ -1,0 +1,37 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-07-31 Fri 17:18
+#+TITLE: Offline Distribution Package Repo
+#+DESCRIPTION: 
+#+TAGS: offline,repo
+#+CATEGORIES: 
+
+* Ubuntu/Debian
+Reference files can be found at [[https://github.com/carltonf/configurations/tree/master/offline_distro_pkg_repo/ubuntu_debian][offline-repo-confs]].
+
+** preparation
+1. define an offline repo location
+   add it to the top of the source list
+   ~deb file:///opt/ubuntu_offline_repo/ oneiric main restricted multiverse universe~
+2. populate the above directory
+   - the key here is to simulate the file system hierarchy of an ubuntu mirror
+   - download files with 'init_setup.bat'
+   - copy to corresponding directory in the local repo
+   - apt-get update
+3. the local repo is ready to be used, searched and generate dependencies.
+
+** how to use
+1. copy files in *in_linux* to the local repo (or other places e.g. /root/)
+2. you can accumulate the package to install to a separate file. (find them through apt-cache search)
+   the 'todo.txt' is and example
+3. run *./gen_list.sh* to generate *apt_list* (see *./gen_list.sh* to see usage)
+4. copy *apt_list* to pen disk to windows box with Internet
+5. run ~wget.exe -i apt_list~ to download
+6. copy all *deb* files downloaded to ~/var/cache/apt/archives/~
+7. ~apt-get install <packages>~
+
+* TODO openSUSE & Arch tips should be included.

@@ -1,0 +1,33 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-07-31 Fri 17:31
+#+TITLE: Bash/Shell Tips
+#+DESCRIPTION: A collection of Bash Tips 
+#+TAGS: Bash,tips
+#+CATEGORIES: 
+
+* Remove Some Files But Not All
+
+** Shell Pattern (=glob= and =extglob=)
+
+*** Basic Glob
+
+=?=: one char; =*=: any number of chars; =[..]=: one of the char
+
+*REMARK*: Very limited, trying to figure out the right pattern might be even
+harder and more time consuming than the toolchain method (see below).
+
+*** =extglob=
+
+Need to turn on this feature: =shopt -s extglob=.
+
+=!(.|.|.)=: anything that doesn't match patterns
+
+
+** Use extra tools
+
+One example: =ls | grep ... | xargs rm=

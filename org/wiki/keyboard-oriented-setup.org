@@ -1,0 +1,41 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-07-31 Fri 16:54
+#+TITLE: Keyboard Oriented Setup
+#+DESCRIPTION: Tools and configurations for a keyboard oriented setup.
+#+TAGS: keyboard,tools
+#+CATEGORIES: 
+
+It's highly recommended to use *ratpoison* or *stumpwm*. However, the following
+should work on any desktop environment (e.g. Gnome and KDE)
+
+* Tools
+- =xwrits= - reminds you to take wrist breaks
+
+  well, in case you don't have *workrave* or *RSIBreak*
+
+  *Update:* Recent years, I've used a Android app [[https://f-droid.org/repository/browse/?fdfilter%3Dbodhi&fdid%3Dorg.yuttadhammo.BodhiTimer][BodhiTimer]] to keep track the
+  time. It's simple, elegant and open source.
+
+- =xbindkeys= - a key-grabbing program for X
+
+  can be used to define combination keys that simulate behaviors of *ratpoison*
+
+- =dmenu= - dynamic menu (includes dmenu_run, and dmenu_path)
+
+  open program through keystrokes
+
+- =xmodmap= - utility for modifying keymaps and pointer button mappings in X
+
+  Emacs key (make enter and cap ctrls)
+
+* Some old Configurations
+
+[[https://github.com/carltonf/configurations/tree/master/keyoriented][Old and not used for a while]] (kept as a reference)
+
+*NOTE*: GNU =Guile= is required to configure =xbindkeys= for more advanced
+features.
