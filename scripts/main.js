@@ -26,4 +26,25 @@ $(function(){
         // must be in 'shown' event for this to work
         $('#quick-search').focus();
     })
+
+
+    ///////////////////////////////////////////////////////////////// 
+    // Quick Search
+    /* TODO too crude for the check on 'searchIndex' */
+    if ( !searchIndex ){
+        var searchIndex;
+        $.getJSON('/search-index.json', function (data){
+            searchIndex = data;
+
+            $('#quick-search').autocomplete({
+                lookup: searchIndex,
+
+                /* TODO we've force the format of JSON, use 'transformResult' to undo that. */
+                onSelect: function (suggestion) {
+                    console.log("Jump to: " + suggestion.data);
+                    window.location.href = suggestion.data;
+                }
+            });
+        })
+    }
 })
