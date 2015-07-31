@@ -205,6 +205,11 @@
 /**
  * Sidebar
  */
+li > #sidebar-btn.sidebar-toggled {
+    &, &:hover {
+        background-color: #E0E0E0;
+    }
+}
 
 #sidebar {
     font-size: 80%;
