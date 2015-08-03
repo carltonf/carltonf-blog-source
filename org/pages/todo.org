@@ -1,0 +1,50 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: page
+#+LAYOUT: page
+#+AUTHOR: carltonf
+#+DATE: 2015-08-03 Mon 17:37
+#+TITLE: TODO
+#+DESCRIPTION: A TODO list
+#+TAGS: todo
+#+CATEGORIES: 
+
+We list some long-term TODO entries here. For now only entries related to this
+blog site are included.
+
+* Blog Roadmap
+
+** TODO Populate Wiki.
+
+For quite a long time, we've built a =Git= repo (locally called =ICWiki= ;) that
+collects bits of knowledge for personal use. This task is about itemize it and
+put online under the =Wiki= page.
+
+** TODO Wiki Style Improvements [0/2]
+
+*** TODO Sidebar Recent listing includes =Wiki=
+
+Further include posts from all collections.
+
+*** TODO [#D] Alphabetical Listing
+*Waiting for at least >50 entries to justify this task*
+
+List =Wiki= entries alphabetically with each alphabet as a panel (would be a
+good use case for =Bootstrap= collapse panels).
+
+** TODO Philosophy Collection
+
+I'm not a philosopher by trade, but a philosophical man (self-titled :P). Over
+the years, I have pondered on many different problems, aggregated some
+"interesting" ideas. I've been through the stages: 
+
+: "delusion of knowing all" -> "disillusion and break-down" -> "rebuilding"
+
+The years since the sophomore year in the college have not been good to me.
+Though being accused of thinking too much, I start to find out it's the
+opposite: I've known too little and I was too ignorant. And thus I need to
+collect my thoughts, trace the roots, systematize the scattered ideas and learn
+more.
+
+
