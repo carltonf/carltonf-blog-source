@@ -1,0 +1,39 @@
+---
+collections: wiki
+layout: post
+title: Desktop Virtual Machine Tips
+date: 2015-08-03
+categories: 
+-
+tags: 
+- vm
+- tips
+author: carltonf
+excerpt: 
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">mount virtual disk</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+original reference: <a href="https://github.com/carltonf/configurations/blob/master/refs_cache/How%2520to%2520mount%2520a%2520VirtualBox%2520VDI%2520image%2520%257C%2520Be%2520the%2520signal.maff">How to mount a VirtualBox VDI image</a>.
+</p>
+
+<p>
+The following the essential steps needed
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-shell-script"><span style="color: #b22222;"># </span><span style="color: #b22222;">you need to be root</span>
+<span style="color: #b22222;">## </span><span style="color: #b22222;">max_part is needed, as sometimes it defaults to 0</span>
+modprobe nbd <span style="color: #a0522d;">max_part</span>=16
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">nbd0 is established by last cmd</span>
+qemu-nbd -c /dev/nbd0 .VirtualBox/Machines/win_xp/LargeData.vdi
+
+mount /dev/mbd0p1 /mnt/tmp
+</pre>
+</div>
+</div>
+</div>

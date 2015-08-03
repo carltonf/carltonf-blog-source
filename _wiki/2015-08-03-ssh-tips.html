@@ -1,0 +1,106 @@
+---
+collections: wiki
+layout: post
+title: SSH Tips
+date: 2015-08-03
+categories: 
+-
+tags: 
+- ssh
+- tips
+author: carltonf
+excerpt: 
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Speed/multiplex up ssh connection</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Cached articles <a href="https://github.com/carltonf/configurations/tree/master/refs_cache/ssh_connection_multiplexing">@here</a>.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><code>ssh -N -f host</code></h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Opens a connection and goes into the background without executing a remote
+command so you don't need to keep a window or shell running locally just to keep
+that connection.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><code>auto</code> vs <code>autoask</code></h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+You can set it to <code>autoask</code> instead of <code>auto</code> to have ssh prompt you for whether
+or not to reuse an existing connection.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><code>ControlPath</code></h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+The configuration directive <code>ControlPath</code> tells ssh where it should keep its
+socket information. I've chosen to put these files in /tmp, however it may be
+best to put this into your own home directory on multi-user systems.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><code>-o ControlMaster=no</code> for ssh tunneling</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+You will need to specify <code>-o ControlMaster=no</code> when using ssh to do ssh
+tunneling otherwise multiple tunnels to a particular host will not work.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">X11 forwarding under connection multiplexing</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+If it doesn't work and fail silently, use <code>-v</code> to see whether X11 forwarding
+request is sent to debug this. Possible solutions:
+</p>
+
+<ul class="org-ul">
+<li>config solution
+
+<pre class="example">
+add ForwardX11=yes (and ForwardX11Trusted=yes) to .ssh/config
+</pre>
+</li>
+
+<li><code>-S none</code> option
+
+<p>
+The last time I checked this one, it's not working, however it should
+according to ssh man page.
+</p>
+
+<p>
+PS: while testing this one, I crashed <code>systemd</code> in <code>SLED12 beta2</code>, which
+resulted in a very interesting bug.
+</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">Remaining Question</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Also, isn't the whole point of putting ControlPath in <code>.ssh/config</code> to make the
+<code>-S</code> argument uneccessary? And doesn't the <code>ControlMaster auto</code> also make the
+toggling <code>-M</code> uneccessary?
+</p>
+</div>
+</div>
+</div>
