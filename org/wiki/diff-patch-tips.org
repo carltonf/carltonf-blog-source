@@ -1,0 +1,21 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-03 Mon 14:21
+#+TITLE: Diff/Patch Tips
+#+DESCRIPTION: 
+#+TAGS: diff,patch,tips
+#+CATEGORIES: 
+
+* Two files both added some lines, but no change in other lines
+example:
+
+: diff -Naur index/ ~/icwiki/index/ > icwiki-patch.diff
+: patch -Rp0 --merge < ~/learnspace/git-mylife/icwiki/icwiki-patch.diff
+
+*NOTE*: you can =--dry-run= for previous command to see what the effect might
+be, however, you are still encouraged to backup your to-be-patched files.
+

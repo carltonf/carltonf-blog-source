@@ -1,0 +1,21 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-03 Mon 14:06
+#+TITLE: Rsync Tips
+#+DESCRIPTION: 
+#+TAGS: rsync,tips
+#+CATEGORIES: 
+
+* Just my common usage example
+
+#+BEGIN_SRC shell-script
+  rsync -avuz --exclude=.repo/ --exclude=.git/ `pwd` dev-tplink:
+  rsync -avuz dev-tplink:/home/xiongchao/gingerbread_u12/out .
+
+  # to windows: pay attention to the last slash of the 1st param.
+  rsync --delete -vuzr carlibrelib ~/mnt/syncdisk
+#+END_SRC

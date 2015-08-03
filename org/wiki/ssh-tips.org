@@ -1,0 +1,59 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-03 Mon 14:07
+#+TITLE: SSH Tips
+#+DESCRIPTION: 
+#+TAGS: ssh,tips
+#+CATEGORIES: 
+
+* Speed/multiplex up ssh connection
+Cached articles [[https://github.com/carltonf/configurations/tree/master/refs_cache/ssh_connection_multiplexing][@here]].
+
+** =ssh -N -f host=
+
+Opens a connection and goes into the background without executing a remote
+command so you don't need to keep a window or shell running locally just to keep
+that connection.
+** =auto= vs =autoask=
+
+You can set it to =autoask= instead of =auto= to have ssh prompt you for whether
+or not to reuse an existing connection.
+
+** =ControlPath=
+
+The configuration directive =ControlPath= tells ssh where it should keep its
+socket information. I've chosen to put these files in /tmp, however it may be
+best to put this into your own home directory on multi-user systems.
+
+** =-o ControlMaster=no= for ssh tunneling
+
+You will need to specify =-o ControlMaster=no= when using ssh to do ssh
+tunneling otherwise multiple tunnels to a particular host will not work.
+
+** X11 forwarding under connection multiplexing
+
+If it doesn't work and fail silently, use =-v= to see whether X11 forwarding
+request is sent to debug this. Possible solutions:
+
+- config solution
+
+  : add ForwardX11=yes (and ForwardX11Trusted=yes) to .ssh/config
+
+- =-S none= option
+  
+  The last time I checked this one, it's not working, however it should
+  according to ssh man page.
+  
+  PS: while testing this one, I crashed =systemd= in =SLED12 beta2=, which
+  resulted in a very interesting bug.
+
+** Remaining Question
+
+Also, isn't the whole point of putting ControlPath in =.ssh/config= to make the
+=-S= argument uneccessary? And doesn't the =ControlMaster auto= also make the
+toggling =-M= uneccessary?
+

@@ -31,3 +31,16 @@ Need to turn on this feature: =shopt -s extglob=.
 ** Use extra tools
 
 One example: =ls | grep ... | xargs rm=
+
+* Multiple Pipes
+** Common Grep Buffer Issue
+Use =--line-buffered=, a GNU grep extension.
+
+- Example
+  : adb shell 'getevent /dev/input/event4' | grep --line-buffered "0003 0019" | tee tmp.txt
+
+** Other Stdout Buffer Issue
+Use complex =while-read-line= structure.
+
+- Example
+  : tail -f logfile | while read line ; do echo "$line"| grep 'org.springframework'|cut -c 25- ; done
