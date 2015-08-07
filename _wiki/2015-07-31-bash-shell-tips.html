@@ -6,7 +6,8 @@ date: 2015-07-31
 categories: 
 -
 tags: 
-- Bash
+- bash
+- shell
 - tips
 author: carltonf
 excerpt: A collection of Bash Tips 
@@ -88,5 +89,125 @@ tail -f logfile | while read line ; do echo "$line"| grep 'org.springframework'|
 </li>
 </ul>
 </div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Label output lines with time stamps</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<b>NOTE</b>: you may need to deal with buffer issues, refer to <a href="#sec-2">Multiple Pipes</a>.
+</p>
+
+<ul class="org-ul">
+<li>Example
+The following timestamp the distance sensor's output.
+
+<p>
+The core is the following one-line <code>Perl</code>. You can change <code>time</code> to
+<code>localtime</code>, if you want prettier time format.
+</p>
+
+<pre class="example">
+perl -ne '$|=1; print "[" . time . "]" . ": $_"'
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-shell-script">adb shell <span style="color: #8b2252;">'getevent /dev/input/event4'</span> <span style="color: #8b2252;">\</span>
+    | grep --line-buffered <span style="color: #8b2252;">"0003 0019"</span> <span style="color: #8b2252;">\</span>
+    | perl -ne <span style="color: #8b2252;">'$|=1; print "[" . time . "]" . ": $_"'</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">relative time, the start of recording is the time zero.</span>
+adb logcat | perl -ne <span style="color: #8b2252;">\</span>
+    <span style="color: #8b2252;">'$|=1; $start = time unless $start; print "[" . (time - $start) . "]" . ": $_"'</span>
+</pre>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Cope with Line Ending</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+The moral is to raise the awareness of this issue rather than the specific solution.
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">Problem</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+If the underlying shell returns strings delimited by <code>CRLF</code> then the usual shell
+commands like below will fail.
+</p>
+
+<pre class="example">
+for ko in $(adb shell ls /system/lib/modules); adb pull "/system/lib/modules/$ko" ; done
+</pre>
+
+<p>
+As <code>$(...)</code> only removes Unix-style line ending, '\r' will be part of the string
+which leads to "does not exist" error.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">Solution</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Remove the '\r' part. The simplest way to do this is using `sed'.
+</p>
+<pre class="example">
+for ko in $(adb shell ls /system/lib/modules | sed 's|\r|\n|'); do adb pull /system/lib/modules/$ko; done
+</pre>
+
+<p>
+You are also welcome to use utility like <code>dos2unix</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Here string</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<pre class="src src-shell-script">awk <span style="color: #8b2252;">'/^\/dev/ {print $1}'</span> &lt;&lt;&lt;<span style="color: #8b2252;">"$(</span><span style="color: #ff00ff;">df</span><span style="color: #8b2252;"> /usr/bin/hexdump)"</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">&lt;=&gt;</span>
+
+df /usr/bin/hexdump | awk <span style="color: #8b2252;">'/^\/dev/ {print $1}'</span>
+</pre>
+</div>
+
+<p>
+<a href="http://tldp.org/LDP/abs/html/x17754.html#HERESTRINGSREF">http://tldp.org/LDP/abs/html/x17754.html#HERESTRINGSREF</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Double Pipeline followed by a colon</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Example <code>let argc++ || :</code>
+</p>
+
+<ol class="org-ol">
+<li>colon means a <code>nop</code> operation, i.e. does nothing.
+
+<p>
+Useful for clearing return or error status.
+</p>
+</li>
+
+<li>This idiom says: ignores the error from the first part of OR statement.
+</li>
+</ol>
 </div>
 </div>

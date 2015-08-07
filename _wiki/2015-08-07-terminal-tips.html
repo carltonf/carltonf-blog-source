@@ -1,0 +1,93 @@
+---
+collections: wiki
+layout: post
+title: Terminal Tips
+date: 2015-08-07
+categories: 
+-
+tags: 
+- terminal
+- tips
+author: carltonf
+excerpt: 
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Colors in Terminal</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Basically, you need to use the following pattern for output string that need
+colors. For exact color code, see below:
+</p>
+
+<pre class="example">
+printf("\x1b[%sm%s\x1b[0m", color_code, str-content);
+</pre>
+</div>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Simple table</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+The colors in the table below should be useful in most terminals.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-text">Black       0;30     Dark Gray     1;30
+Blue        0;34     Light Blue    1;34
+Green       0;32     Light Green   1;32
+Cyan        0;36     Light Cyan    1;36
+Red         0;31     Light Red     1;31
+Purple      0;35     Light Purple  1;35
+Brown       0;33     Yellow        1;33
+Light Gray  0;37     White         1;37
+
+and for background colors, the num is 40 to 47
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">A simple python script to show what's possible</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<a href="http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python">Reference</a>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">print_format_table</span>():
+    <span style="color: #8b2252;">"""</span>
+<span style="color: #8b2252;">    prints table of formatted text format options</span>
+<span style="color: #8b2252;">    """</span>
+    <span style="color: #a020f0;">for</span> style <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">xrange</span>(8):
+        <span style="color: #a020f0;">for</span> fg <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">xrange</span>(30,38):
+            <span style="color: #a0522d;">s1</span> = <span style="color: #8b2252;">''</span>
+            <span style="color: #a020f0;">for</span> bg <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">xrange</span>(40,48):
+                <span style="color: #483d8b;">format</span> = <span style="color: #8b2252;">';'</span>.join([<span style="color: #483d8b;">str</span>(style), <span style="color: #483d8b;">str</span>(fg), <span style="color: #483d8b;">str</span>(bg)])
+                <span style="color: #a0522d;">s1</span> += <span style="color: #8b2252;">'\x1b[%sm %s \x1b[0m'</span> % (<span style="color: #483d8b;">format</span>, <span style="color: #483d8b;">format</span>)
+            <span style="color: #a020f0;">print</span> s1
+        <span style="color: #a020f0;">print</span> <span style="color: #8b2252;">'\n'</span>
+
+print_format_table()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">References</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>Reader-friendly Reference
+<a href="http://jafrog.com/2013/11/23/colors-in-terminal.html">Color in Terminal</a>
+</li>
+
+<li>The Authortive Source
+<a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI Escape Code</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
