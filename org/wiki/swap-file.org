@@ -1,0 +1,38 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-07 Fri 16:45
+#+TITLE: Swap File
+#+DESCRIPTION: Use swap file in Linux
+#+TAGS: swap,linux
+#+CATEGORIES: 
+
+* Swap file
+
+Swap file is more flexible than swap partition.
+
+- Use file as swap space.
+
+  #+BEGIN_SRC shell-script
+    # create a 4G swap image
+    dd if=/dev/zero of=swap.img bs=1024M count=4
+    mkswap swap.img
+
+    # see the currently used swap space
+    swapon -s
+
+    # mount this file as swap space
+    swapon swap.img
+  #+END_SRC
+
+  Optionally you can use =swapoff= to disable some swap space.
+
+- Persistent 
+
+  Add this entry into =/etc/fstab=
+  #+BEGIN_SRC conf-space
+    /opt/swap.img  none            swap    defaults        0       0
+  #+END_SRC

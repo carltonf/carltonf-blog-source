@@ -1,0 +1,79 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-07 Fri 17:02
+#+TITLE: Offlineimap Tips
+#+DESCRIPTION: 
+#+TAGS: offlineimap,mail
+#+CATEGORIES: 
+
+* Debug one =offlineimap= error
+In my workplace, sometimes =offlineimap= fails to retrieve mails from the
+company mail sever sometimes.
+
+we have the following error:
+
+#+BEGIN_SRC text
+  Folder INBOX [acc: cxiongsuse]:
+   Copy message 13095 (1 of 84) cxiongsuse_remote:INBOX -> cxiongsuse_local
+   Copy message 13096 (2 of 84) cxiongsuse_remote:INBOX -> cxiongsuse_local
+  Copy message from cxiongsuse_remote:INBOX:
+   Establishing connection to imap.novell.com:993
+   ERROR: command: UID => no response after 60.0 secs
+   Establishing connection to imap.novell.com:993
+   ERROR: command: UID => no response after 60.0 secs
+   ERROR: command: UID => no response after 60.0 secs
+  Folder INBOX [acc: cxiongsuse]:
+   Copy message 13097 (3 of 84) cxiongsuse_remote:INBOX -> cxiongsuse_local
+  Thread 'Copy message from cxiongsuse_remote:INBOX' terminated with exception:
+  Traceback (most recent call last):
+    File "/usr/lib/python2.7/site-packages/offlineimap/threadutil.py", line 156, in run
+      Thread.run(self)
+    File "/usr/lib64/python2.7/threading.py", line 504, in run
+      self.__target(*self.__args, **self.__kwargs)
+    File "/usr/lib/python2.7/site-packages/offlineimap/folder/Base.py", line 330, in copymessageto
+      message = self.getmessage(uid)
+    File "/usr/lib/python2.7/site-packages/offlineimap/folder/IMAP.py", line 225, in getmessage
+      raise e
+  abort: command: UID => no response after 60.0 secs
+  
+  
+  Last 3 debug messages logged for Copy message from cxiongsuse_remote:INBOX prior to exception:
+  thread: Register new thread 'Copy message from cxiongsuse_remote:INBOX' (account 'cxiongsuse')
+  imap: Attempting plain authentication
+  imap: Attempting plain authentication
+  ERROR: Exceptions occurred during the run!
+  ERROR: command: UID => no response after 60.0 secs
+  ERROR: command: UID => no response after 60.0 secs
+  ERROR: command: UID => no response after 60.0 secs
+  
+#+END_SRC
+
+This following steps are a way to "fix" this, or more precisely a workaround.
+
+1. The "Copy" lines before errors identify the possible error message.
+
+2. Find the last successfully archived mail
+   
+   In the case above, 13095 and 13096 are the suspicious mails ID. Search the
+   local =offlineimap= mailbox for these two IDs. If you can't find it, use
+   13094, i.e. an even earlier one. After all, with an error close, the writing
+   operation might simply fail.
+
+3. Find another way to log into your mail account.
+   
+   Web UI, another Web clients and etc.
+
+4. Locate the mail you find in step 2.
+   
+   Sort all your mail from latest to oldest. And look at the source of the mail
+   in step 2, use "Date" to locate it. Pay attention to the time zone setting.
+   Let's denote the mail you found "2R".
+
+5. Remove one or more later mail(s) after "2R".
+   
+   This would usually solve the problem. Later on, we might try to find out
+   what's wrong with the "bad" mails.

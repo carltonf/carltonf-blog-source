@@ -1,0 +1,25 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-07 Fri 16:48
+#+TITLE: Misc CLI one liners
+#+DESCRIPTION: 
+#+TAGS: cli,oneliner
+#+CATEGORIES: 
+
+* How to backup linux files with 7z
+- tar + 7z
+  : tar cf - <dir/file> | 7z a -si <path_to_archive_file>
+* Cool one-line find
+- Finding # of files in a folder _recursively_
+  : find . -type f | wc -l
+
+- Finding # of ALL subfolders within a folder _recursively_
+  : find . -type d | wc -l
+
+- Find # of folders ONLY in current folder
+  : find . -maxdepth 1 -type d | wc -l
+

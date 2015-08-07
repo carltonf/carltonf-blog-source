@@ -1,0 +1,39 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-07 Fri 17:06
+#+TITLE: Restore Lost Files
+#+DESCRIPTION: 
+#+TAGS: testdisk,recovery,disk
+#+CATEGORIES: 
+
+Tools I've used to restore deleted/overwritten files.
+
+* =testdisk=
+
+This is a tool mainly for partition fixing, but the built-in file restoring
+function has come to handy a lot of times.
+
+Particularly good for case: you know the position of the file and there is no
+same-named file under the same path (i.e. doesn't work for overwritten files).
+This tool recovers the file by looking at the file system journal.
+
+* =photorec=
+
+The more powerful tool coming from the same developer team. This tool bypasses
+the file system, recovers files by looking at the content instead. This is the
+best shot for overwritten files.
+
+*NOTE*: Many on web says that you can't recover overwritten files. The fact is
+if the blocks of the files are overwritten then you are out of luck, but usually
+overwriting leaves the old one intact by storing new content in new blocks.
+
+* Other "bizarre" ways
+
+=grep=, =debugfs= and blablabla.... They work by principle and look awesome, BUT
+it's hard to use them.
+
+

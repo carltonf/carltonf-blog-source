@@ -21,6 +21,11 @@ For quite a long time, we've built a =Git= repo (locally called =ICWiki= ;) that
 collects bits of knowledge for personal use. This task is about itemize it and
 put online under the =Wiki= page.
 
+** TODO Post-navigation sidebar
+
+Other than the current site-wide navigation, an article-wide navigation would
+also be nice.
+
 ** TODO Wiki Style Improvements [0/2]
 
 *** TODO Sidebar Recent listing includes =Wiki=

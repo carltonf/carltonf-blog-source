@@ -1,0 +1,37 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-07 Fri 17:20
+#+TITLE: Networking Tips
+#+DESCRIPTION: including remote storage
+#+TAGS: networking,storage
+#+CATEGORIES: 
+
+* Samba
+** Mount =cifs=
+: mount -t cifs //10.0.0.2/winxp /mnt/smb -o user=icesnow,password=thisisyourpasswd
+
+To mandate the =uid= and =gid= for the mounted samba files, use =gid/uid= and
+=forcegid/forceuid= options.
+
+- Example
+
+  : mount -t cifs //git.tp-link.net/jobs jenkins/ -o user="xiongchao%betheman" -o uid=xiongchao -o gid=xiongchao -o forceuid -o forcegid
+
+** =smbmount=
+
+*DEPRECATED*, use the =cifs= instead
+
+- authentication
+  : smbmount //172.31.130.64/mobile/项目/GA/Qualcomm /mnt/tmp -o user="xiongchao%tplink"
+- guest
+  : smbmount //lyd-pc/ubuntu /mnt/lyd/ -o guest
+
+* The Stream Nature of TCP
+
+User protocol over TCP needs to deal with packet boundary *itself* The *stream
+nature* of TCP makes no guarantee towards whether a packet is splited or not.
+  

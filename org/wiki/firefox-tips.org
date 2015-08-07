@@ -1,0 +1,17 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: wiki
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-07 Fri 17:16
+#+TITLE: Firefox Tips
+#+DESCRIPTION: 
+#+TAGS: firefox,mozilla,tips
+#+CATEGORIES: 
+
+* Build Configurations
+URL
+: about:buildconfig
+
+Show what are the options used to build the current instance.
