@@ -1,0 +1,88 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+OPTIONS: H:2 num:nil tags:nil toc:nil timestamps:t
+#+TYPE: post
+#+LAYOUT: post
+#+AUTHOR: carltonf
+#+DATE: 2015-08-26 Wed 17:36
+#+TITLE: Installing SLED 12 with PXE using libvirt
+#+DESCRIPTION: 
+#+TAGS: libvirt,sled,bridge,stp
+#+CATEGORIES: 
+
+Recently I get a task to fix a bug related to SLED in KVM. Since there is a
+local PXE server for easy installation, I've planned to install SLED in KVM
+through PXE. Here is the struggle I've been through.
+
+To get PXE installation work, I need to have a working bridge that will place VM
+in the subnet with PXE server.
+
+* With =NetworkManager=
+
+=NetworkManager= is buggy. Despite the fact you can use a GUI to set up a
+bridge, you'll encounter various issues that make your life hard: 
+
+- The status indicator in the dialog is incorrect
+  
+  A bridge is always on regardless.
+
+- Turning-off/Removal of an existing bridge is problematic.
+  
+  Turning off doesn't seem to work. Remove a bridge in the dialog and yet this
+  bridge still exists.(verified using =nmcli con list= or =btrctl show=)
+
+** Possible solution
+
+The following procedure can be used to create a /useful/ bridge interface.
+
+Refer to [[https://www.happyassassin.net/2014/07/23/bridged-networking-for-libvirt-with-networkmanager-2014-fedora-21/][this article]] for detailed tips, basically:
+
+- Clean up existing profiles (as a safety measure).
+- Use the GUI only to create a bridge, set up slave interface and etc, but *NOT*
+  for anything else.
+- Use =nmcli= to bring up the bridge.
+
+  *NOTE:* up until =0.9.8=, there is no feedback after =nmcli con up <args>= and
+  even with some feedback in later versions, it's something like "command sent
+  (DBus-activated successfully)". =DBus= remote call guarantees no timing, you
+  need to *wait* for a little while for things to settle down.
+
+*** Remove a bridge connection
+As mentioned above this part is buggy:
+
+- Remove the bridge connection in the =NM= GUI interface.
+  
+  Of course this does _NOT_ really do anything, but if you don't do it the
+  bridge will persists even after you have removed it with rest steps, which is
+  just more confusing.
+
+- Bring the bridge interface down.
+
+  Use =ip link set bridge0 down=, instead of =ifdown=, =btrctl= or =nmcli con=,
+  all of which will be obstructed by =NM=. I think =ip link= works at kernel
+  level directly.
+
+- Remove the bridge.
+
+  =btrctl delbr bridge0= should pull the trick.
+
+* The old good =CLI= approach.
+
+=systemctl disable network= to turn off the =NetworkManager=. All standard
+procedures using =btrctl= should work.
+
+* Final tweak: STP.
+
+The bridge interface created above will work *normally*, but might *NOT* with
+=PXE=. The problem here is with the =STP=: [[https://en.wikipedia.org/wiki/Spanning_Tree_Protocol][Spanning Tree Protocol (wikipedia)]].
+
+It's a protocol to avoid [[https://en.wikipedia.org/wiki/Switching_loop][Layer 2 switching loop]], ([[http://www.omnisecu.com/cisco-certified-network-associate-ccna/what-is-layer-2-switching-loop.php][another article with
+illustration]]) by creating a spanning tree in the network topology. In the
+algorithm, there is a =blocking= phase to listen on the coming/going packets to
+gather information before any packets are forwarded. This delay would result in
+a timeout error in =PXE= connection.
+
+It's not recommended to disable =STP=, but instead set =forward-delay= to 0 as
+instructed in [[http://wiki.libvirt.org/page/PXE_boot_(or_dhcp)_on_guest_failed][libvirt's FAQ about bridge]]. The =NetworkManager= approach creates
+bridges with 15 seconds delay as default, and the =CLI= would create bridges
+without =STP=.
