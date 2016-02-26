@@ -11,7 +11,7 @@ author_name: "Carl Xiong"
 twitter_username: 
 github_username: carltonf
 
-highlighter: pygments
+highlighter: rouge
 # Build settings
 markdown: kramdown
 
