@@ -1,5 +1,7 @@
 LOCAL_SERVER_ADDR := 192.168.56.101
-EXTRA_ARGS := --drafts --incremental --watch
+# NOTE --incremental might not add new drafts or posts (even with restarts),
+# disable it as the efficiency is not really needed for now.
+EXTRA_ARGS := --drafts --watch
 
 serve:
 	@echo "** Serveing content locally..."
