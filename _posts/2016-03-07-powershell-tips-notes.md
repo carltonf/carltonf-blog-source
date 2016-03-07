@@ -30,8 +30,8 @@ objects
 There is practically no way to write a script even as simple as this one without using objects.
 
 
-Powershell for Linux User
-=========================
+Powershell 101 From a Linux Guy
+===============================
 
 Naming Convention
 -----------------
