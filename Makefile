@@ -1,13 +1,12 @@
-LOCAL_SERVER_ADDR := 192.168.56.101
-# NOTE --incremental might not add new drafts or posts (even with restarts),
-# disable it as the efficiency is not really needed for now.
-EXTRA_ARGS := --drafts --watch
+# As Thu Aug  4 CST 2016, local Jekyll is using docker image jekyll/jekyll
 
+
+.PHONY: default serve
+default: serve
+
+PORT := 4000
+CONTAINER_NAME := "carltonf-blog" 
 serve:
-	@echo "** Serveing content locally..."
-	bundle exec jekyll serve ${EXTRA_ARGS} --host ${LOCAL_SERVER_ADDR}
+	@echo "** Serving content locally..."
+	@docker run -it --rm --label=jekyll --name=${CONTAINER_NAME} -v `pwd`:/srv/jekyll -p ${PORT}:4000 jekyll/jekyll
 
-update:
-	@echo "** Update dependencies..."
-	bundle update
-	bower update
