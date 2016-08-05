@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html>
+---
+layout: default
+---
 
-  {% include head.html %}
+<article class="post">
 
-  <body>
-    {% include header.html %}
+  <div class="post-meta">
+    <h1 class="post-title">{{ page.title }}</h1>
+  </div>
 
-    <div class="container">
-      <div class="row">
-        <div id="page-content" class="col-lg-10 col-lg-offset-1">
-          <div class="page-content">
-            {{ content }}
-          </div>
-        </div>
-      </div>
-      {% include footer.html %}
-    </div>
-  </body>
+  <section>
+    {{content}}
+  </section>
 
-</html>
+</article>
+
+{% include footer.html %}

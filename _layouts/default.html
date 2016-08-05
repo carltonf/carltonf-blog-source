@@ -1,26 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html ⚡ lang="en">
   {% include head.html %}
-
   <body>
     {% include header.html %}
 
-    <div class="container">
-      <div class="row">
-        <div id="page-content" class="col-lg-10 col-lg-offset-1">
-          <div class="page-content">
-            {{ content }}
-          </div>
-        </div>
-
-        <div class="col-lg-3">
-           {% include sidebar.html %}
-        </div>
-      </div>
-
-      {% include footer.html %}
-    </div>
+    {{ content }}
   </body>
-
 </html>

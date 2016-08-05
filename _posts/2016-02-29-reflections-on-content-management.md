@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2016-02-29
 title: A Reflection on Content Management
 ---
 

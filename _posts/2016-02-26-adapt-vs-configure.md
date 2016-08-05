@@ -1,6 +1,7 @@
 ---
 collections: post
 layout: post
+date: 2016-02-06
 title: Adapt other than Configure
 categories: 
 tags: 
