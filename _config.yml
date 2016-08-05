@@ -1,5 +1,5 @@
 # -*- mode: conf -*-
-# Site settings
+
 title: Crystal Sight
 email: carl.xiong AT yahoo.com
 description: > # this means to ignore newlines until "baseurl:"
@@ -17,6 +17,7 @@ markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
+  parse_block_html: true
 
 encoding: utf-8
 permalink: /:title
