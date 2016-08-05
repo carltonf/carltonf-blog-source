@@ -38,6 +38,12 @@ pre {
   }
 }
 
+/***** my custom styles *****/
+
+.post-list-entry hr {
+    width: 65%;
+    margin-left: 0%;
+}
 /***** tufte tweaks *****/
 
 /* the kramdown processor used by Github output <code> tag instead of .code
