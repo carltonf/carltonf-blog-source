@@ -38,8 +38,23 @@ pre {
   }
 }
 
+/***** tufte tweaks *****/
+
+/* the kramdown processor used by Github output <code> tag instead of .code
+class and thus we need to convert .code styles in tufte to code tag styles */
 code {
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: 1.125rem;
   line-height: 1.6;
 }
+
+h1 code, h2 code, h3 code { font-size: 0.80em; }
+
+.marginnote code, .sidenote code { font-size: 1rem; }
+
+@media screen and (max-width: 760px) {
+                                       pre.code { width: 87.5%; }
+                                      }
+pre code { width: 52.5%;
+           padding-left: 2.5%;
+           overflow-x: auto; }
