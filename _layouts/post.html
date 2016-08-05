@@ -18,6 +18,13 @@ layout: default
     {{content}}
   </section>
 
+  <div>
+    <b> Tags </b>
+    {% for tag in page.tags %}
+    • <a href=""><span>{{ tag }}</span></a>
+    {% endfor %}
+  </div>
+
   {% include footer.html %}
 
 </article>
