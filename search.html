@@ -4,6 +4,8 @@ title: Search
 sitemap: false
 ---
 
+<i>DISCLAIM: just a google custom search for convience.</i>
+
 <script>
   (function() {
     var cx = '015705734217502132548:lf16gs2rc-a';
@@ -16,6 +18,13 @@ sitemap: false
     s.parentNode.insertBefore(gcse, s);
   })();
 </script>
-<div class="google-cse-box col-sm-12 col-md-8 col-md-offset-2 col-sm-offset-0">
-  <gcse:search queryParameterName="searchString" enableAutoComplete="true"></gcse:search>
+
+<!--
+-- NOTE tweak the style to be the same as <p> in other posts. I can not use
+-- <p> here, as google script would take div.google-cse-box out
+-->
+<div style="width: 55%">
+  <div class="google-cse-box col-sm-12 col-md-8 col-md-offset-2 col-sm-offset-0">
+    <gcse:search queryParameterName="searchString" enableAutoComplete="true"></gcse:search>
+  </div>
 </div>
