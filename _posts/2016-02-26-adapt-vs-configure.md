@@ -10,7 +10,8 @@ tags:
 author: carltonf
 ---
 
-# Adapt other than Configure #
+After many years of unscrutinized way of *configuring* -- try to make things "the right way", I've realized that in many cases adaption is better. It offers the most smooth entry into new fields, more productivity from the very start and it's also pedagogically the best way to learn from others. Configuring still matters but only when it really matters. Stay focused, unscrutinized configuring is essentially premature optimization.
+
 
 This serves as the first article written in `Markdown` directly. Previously most of my blog articles are written in `org`. I've been a long-time `org-mode` user and have done quite a bit on how to author blogs with `org`. However recently, after several attempts to fix my old configurations, I finally realized that all these struggles yield little return. 
 

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Posts
+title: Blog
 date: 2016-08-05
 ---
 
@@ -15,10 +15,8 @@ date: 2016-08-05
         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
       </h2>
 
-      <p>
-        {{ post.content | truncatewords: 77 | strip_html }}
-        <a href="{{ post.url | prepend: site.baseurl }}"> (More...)</a>
-      </p>
+      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
+      <p> {{ post.excerpt }} </p>
 
       <div>
         <span> Posted at <strong>{{ post.date | date: "%b %-d, %Y" }}</strong> </span>

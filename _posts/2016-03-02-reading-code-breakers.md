@@ -7,7 +7,10 @@ tag:
 - notes
 ---
 
-I read often, these "Readings: XXX" series are my note recordings. As an English learner, some notes appeal to me for their mere language values and might not be related to the content of the book ;P.
+Quotes and notes from book ~Colin F. Barnes~ *Code Breakers: Alpha*.
+
+
+When reading on Kindle, various highlightings and notes are accreted. These "Readings: XXX" series are my note recordings. As an English learner, some notes appeal to me for their mere language values and might not be related to the content of the book ;P. {% sidenote side1 Might be better to have separate repo for these notes %}
 
 
 Alpha

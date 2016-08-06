@@ -4,7 +4,9 @@ date: 2016-02-29
 title: A Reflection on Content Management
 ---
 
-Just some thoughts on "How do I manage content on computers?". I've been planing this post for quite some time, ever being a procrastinating type, sigh....
+Just some thoughts on "How do I manage files/content on computers?". 
+
+{% marginnote margin1 %} I've been planing this post for quite some time, ever being a procrastinative type, sigh.... {% endmarginnote %}
 
 File
 ====

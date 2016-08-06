@@ -8,9 +8,7 @@ tags:
 - notes
 ---
 
-Powershell tips&tricks gathered from multiple sources.
-
-*NOTE*: this shall be an ongoing list. 
+An ongoing accreted list of Powershell tips&tricks from multiple sources.
 
 
 PowerShell tips for bash users - five.agency
