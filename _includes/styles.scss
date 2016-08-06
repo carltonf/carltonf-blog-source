@@ -64,3 +64,9 @@ h1 code, h2 code, h3 code { font-size: 0.80em; }
 pre code { width: 52.5%;
            padding-left: 2.5%;
            overflow-x: auto; }
+
+/* p is generally confined to 55% width, which is ok in general. unfortunately
+for listed paragraphs (<li><p> style), this yields very narrow paragraphs. */
+li p {
+    width: 100%;
+}
