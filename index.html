@@ -1,36 +1,11 @@
 ---
 layout: default
-title: Posts - Crystal
+title: Crystal
 date: 2016-08-05
 ---
 
 <article>
 
-  <div class="post-list">
-    {% for post in site.posts %}
-    <div class="post-list-entry">
-
-      <hr>
-      <h2>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-      </h2>
-
-      <p>
-        {{ post.content | truncatewords: 77 | strip_html }}
-        <a href="{{ post.url | prepend: site.baseurl }}"> (More...)</a>
-      </p>
-
-      <div>
-        <span> Posted at <strong>{{ post.date | date: "%b %-d, %Y" }}</strong> </span>
-        {% for tag in post.tags %}
-        • <a href=""><span>{{ tag }}</span></a>
-        {% endfor %}
-      </div>
-
-    </div>
-    {% endfor %}
-  </div>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
+  <strong>Supposedly, we need a Home page here</strong>
+  <i>See further, but how far is far</i>
 </article>

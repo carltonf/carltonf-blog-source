@@ -12,23 +12,26 @@ author_name: "Carl Xiong"
 twitter_username: 
 github_username: carltonf
 
-highlighter: rouge
 # Build settings
 markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
   parse_block_html: true
+highlighter: rouge
 
 encoding: utf-8
-permalink: /:title
+# NOTE default collections get some special treating, and thus the 'index.html'
+# for it must be a separate page that has *different* path, '/posts' for now.
+permalink: /post/:title
 
 collections:
-    wiki:
-      output: true
-      permalink: /wiki/:title.html
+  wiki:
+    output: true
+    permalink: /wiki/:title.html
 
 ## to have plugins run, disable this setting
 # safe: true
 gems:
   - jekyll-sitemap
+  - jekyll-paginate
