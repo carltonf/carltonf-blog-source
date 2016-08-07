@@ -18,6 +18,7 @@ kramdown:
   hard_wrap: false
   parse_block_html: true
 highlighter: rouge
+exclude: [Makefile, tools]
 
 encoding: utf-8
 # NOTE default collections get some special treating, and thus the 'index.html'
