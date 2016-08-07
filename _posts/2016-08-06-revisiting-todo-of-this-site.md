@@ -31,7 +31,7 @@ August 2015. %} The timing is a pleasant coincidence.
 ## Populate Wiki
 
 I would call this part partially done as dozens of entries have been added since
-then. However there are not as mangy as I'd like. However, at present I believe
+then. However there are not as many as I'd like. However, at present I believe
 a completely independent wiki is not necessary. Much like the value of
 sidenote/marginnote, wiki should serve posts as reference source, and thus many
 features planned for wikis are scratched.

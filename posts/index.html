@@ -1,0 +1,56 @@
+---
+layout: page
+title: Blog
+date: 2016-08-05
+---
+
+<article>
+
+  <div class="post-list">
+    {% for post in paginator.posts %}
+    <div class="post-list-entry">
+
+      <hr>
+      <h2>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </h2>
+
+      <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
+      <p> {{ post.excerpt }} </p>
+
+      <div>
+        <span> Posted at <strong>{{ post.date | date: "%b %-d, %Y" }}</strong> </span>
+        {% for tag in post.tags %}
+        • <a href=""><span>{{ tag }}</span></a>
+        {% endfor %}
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination links -->
+  <hr style="margin-top: 6em;">
+  <div class="pagination" style="float: left">
+    {% if paginator.previous_page %}
+    <!-- NOTE add quick link to the latest list of posts. I'm not offerring the
+    oldest link though as it's deemed a esoteric feature -->
+    <span><a href="/posts" class="previous">Latest</a></span>
+    • <span><a href="{{ paginator.previous_page_path }}" class="previous">Prev</a></span>
+    {% else %}
+    <span class="previous">Prev</span>
+    {% endif %}
+    • <em class="page_number "> {{ paginator.page }} / {{ paginator.total_pages }}</em> •
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+    {% else %}
+    <span class="next ">Next</span>
+    {% endif %}
+  </div>
+
+  <!-- TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars -->
+  <div class="rss-subscribe" style="float: right; margin-right: 35%">
+    subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a>
+  </div>
+
+</article>
