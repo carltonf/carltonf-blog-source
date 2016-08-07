@@ -1,4 +1,4 @@
-Personal Site at [carltonf](carltonf.github.io)
+Personal Site at [carltonf](http://carltonf.github.io)
 
 [Blog Source](https://github.com/carltonf/carltonf-blog-source) is hosted
 separately, built locally and pushed to [Blog
