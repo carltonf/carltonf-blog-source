@@ -5,12 +5,14 @@
 default: serve
 
 PORT := 4000
-CONTAINER_NAME := "carltonf-blog" 
+CONTAINER_NAME := "carltonf-blog"
+DOCKER_CMD := docker run -it --rm --label=jekyll
+DOCKER_IMG := carltonf/jekyll-toolbox:latest
 serve:
 	@echo "** Serving content locally (at port ${PORT})..."
-	@docker run -it --rm --label=jekyll --name=${CONTAINER_NAME} -v `pwd`:/srv/jekyll -p ${PORT}:4000 jekyll/jekyll
+	@${DOCKER_CMD} --name=${CONTAINER_NAME} -v `pwd`:/srv/jekyll -p ${PORT}:4000 ${DOCKER_IMG} jekyll serve
 
-### Publishing related
+### Publishing tools
 SITE_REPO := git@github.com:carltonf/carltonf.github.io
 site-init:
 	@echo "** Init published _site/ ..."
