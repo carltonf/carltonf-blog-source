@@ -1,0 +1,22 @@
+---
+layout: page
+title: Tags
+---
+
+<div class="post-list">
+  {% if page.tag %}
+  <!-- Generating tag page -->
+    {% for post in site.tags[page.tag] %}
+      {% include post-list-entry.html %}
+    {% endfor %}
+  {% else %}
+  <!-- TODO tag cloud, instead of simple tag listing: it's actually quite easy
+  we only need to count the number of posts in each tag and adjust the font size
+  (or other styles) accordingly. -->
+    <p>
+    {% for tag in site.tags %}
+      • <a href="/tags/{{ tag | first }}"><span>{{ tag | first }}</span></a>
+    {% endfor %}
+    </p>
+  {% endif %}
+</div>
