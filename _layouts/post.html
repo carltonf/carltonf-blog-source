@@ -18,13 +18,20 @@ layout: default
 
   <section>
     {{content}}
+    <p class="article-tombstone" style="direction: rtl; font-size: 2.5em"><br>∎</p>
   </section>
 
-  <div>
-    <b> Tags </b>
-    {% for tag in page.tags %}
-    • <a href=""><span>{{ tag }}</span></a>
-    {% endfor %}
+  <div class="article-footer" style="width: 55%">
+    <div class="post-tags" style="float: left">
+      <b> Tags </b>
+      {% for tag in page.tags %}
+      • <a href=""><span>{{ tag }}</span></a>
+      {% endfor %}
+    </div>
+    <div class="post-comment-link" style="float: right" >
+      <b>Comment</b>:
+      <a href="{{ site.site_repo }}/issues/new" target="_blank">Github Issue</a>
+    </div>
   </div>
 
 </article>

@@ -10,6 +10,7 @@ author: "@carltonf"
 author_name: "Carl Xiong"
 twitter_username: 
 github_username: carltonf
+site_repo: https://github.com/carltonf/carltonf.github.io
 
 # Build settings
 markdown: kramdown
