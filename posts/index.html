@@ -6,24 +6,7 @@ date: 2016-08-05
 
 <div class="post-list">
   {% for post in paginator.posts %}
-  <div class="post-list-entry">
-
-    <hr>
-    <h2>
-      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-    </h2>
-
-    <!-- NOTE: Use the convention of Jekyll that the first parargraph is auto-converted as excerpt -->
-    <p> {{ post.excerpt }} </p>
-
-    <div>
-      <span> Posted at <strong>{{ post.date | date: "%b %-d, %Y" }}</strong> </span>
-      {% for tag in post.tags %}
-      • <a href=""><span>{{ tag }}</span></a>
-      {% endfor %}
-    </div>
-
-  </div>
+    {% include post-list-entry.html %}
   {% endfor %}
 </div>
 
