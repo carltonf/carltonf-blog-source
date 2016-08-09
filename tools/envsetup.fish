@@ -38,36 +38,48 @@ function __fish_jekyll_cwp -d 'set cwp'
     set path (realpath $post)
   else
     # NOTE try to be smart about $post
-    set path (realpath (find $TOP/_drafts $TOP/_posts $TOP/_wiki -name "*$post"))
+    set path __fish_jekyll_find_post $post
   end
 
-  echo "* INFO: set CWP to $post"
-  set jekyll_working_post $path
+  if [ -n $path ]
+    echo "* INFO: set CWP to $post"
+    set jekyll_working_post $path
+  else
+    echo "* Error: no post with name '$post'"
+    return 1
+  end
 end
 
-function jekyll-edit -d 'edit cwp, optionally set cwp'
-  set argv_len (count $argv)
-  # default to vi, '-v'
-  set editor_opt '-v'
-  # NOTE: the first arg should be option to select editor, default to vi.
-  switch $argv_len
-    case 0
-      set post ''
-    case 1
-      set post $argv[1]
-    case '*'
-      set editor_opt $argv[1]
-      set post $argv[2]
+function __fish_jekyll_find_post -d 'search post path with post name'
+  set found (find $TOP/_drafts $TOP/_posts $TOP/_wiki -path "*$argv" | head -1)
+  # NOTE: Remember to quote, as $found is empty and '[ -n ]' return true. WTF...
+  if [ -n "$found" ]
+    realpath $found
+  else
+    echo ''
   end
+end
 
-  switch $editor_opt
-    case '-v'
-      set editor vi
-    case '-e'
-      set editor ecn
-    case '*'
-      echo "* WARNING: unrecognised editor setting. Fall back to vi"
-      set editor vi
+
+function jekyll-edit -d 'edit cwp, optionally set cwp'
+  set editor vi
+  set editor_opt ''
+  set post ''
+
+  # NOTE looping through argv may be the best native way of handling args
+  # see: http://stackoverflow.com/a/14203146/2526378
+  for arg in $argv
+    switch $arg
+      case '-v'
+        set editor vi
+      case '-e'
+        set editor ecn
+      case '*'
+        set post (__fish_jekyll_find_post $arg)
+        if [ -n $post ]
+          break
+        end
+    end
   end
 
   if [ -z "$post" ]
