@@ -24,10 +24,6 @@ function jekyll -d 'enhanced jekyll'
   switch $cmd
     case edit
       jekyll-edit $rest_argv
-    case draft
-      jekyll-draft $rest_argv
-    case publish
-      jekyll-publish $rest_argv
     case '*'
       __jekyll $argv
   end
@@ -35,27 +31,36 @@ end
 
 # NOTE path to the working post. Keep it absolute
 set jekyll_working_post ''
-function __envsetup_set_cwp -d 'set cwp'
-  echo "* INFO: set CWP to $argv"
-  set jekyll_working_post (realpath $argv)
+function __fish_jekyll_cwp -d 'set cwp'
+  set post $argv
+  set path ''
+  if [ -e $post ]
+    set path (realpath $post)
+  else
+    # NOTE try to be smart about $post
+    set path (realpath (find $TOP/_drafts $TOP/_posts $TOP/_wiki -name "*$post"))
+  end
+
+  echo "* INFO: set CWP to $post"
+  set jekyll_working_post $path
 end
 
 function jekyll-edit -d 'edit cwp, optionally set cwp'
   set argv_len (count $argv)
+  # default to vi, '-v'
+  set editor_opt '-v'
   # NOTE: the first arg should be option to select editor, default to vi.
   switch $argv_len
     case 0
-      set editor vi
       set post ''
     case 1
-      set editor $argv[1]
-      set post ''
+      set post $argv[1]
     case '*'
-      set editor $argv[1]
+      set editor_opt $argv[1]
       set post $argv[2]
   end
 
-  switch $editor
+  switch $editor_opt
     case '-v'
       set editor vi
     case '-e'
@@ -66,35 +71,79 @@ function jekyll-edit -d 'edit cwp, optionally set cwp'
   end
 
   if [ -z "$post" ]
-    if [ -z "jekyll_working_post" ]
+    if [ -z "$jekyll_working_post" ]
       echo "* Error: current working post is not set."
       return
     else
+      if [ ! -f "$jekyll_working_post" ]
+        echo "* Error: $jekyll_working_post no longer exists."
+        return
+      end
       set post $jekyll_working_post
     end
   else
-    __envsetup_set_cwp $post
+    __fish_jekyll_cwp $post
   end
 
   eval $editor $jekyll_working_post
 end
 
-# NOTE due to the nature of draft command, the following only deals with the
-# most common situation:
-# 1. Title has no special chars other than whitespace (no tab)
-# 2. The draft format will always be in '.md'
-# 3. No other draft options are given (use __jekyll instead)
-function jekyll-draft -d 'enhance draft (alpha)'
-  set title "$argv[-1]"
-  set filename (string replace -a ' ' '-' "$title")'.md'
-  set path '_drafts/'$filename
-
-  __envsetup_set_cwp $path
-  # NOTE always offer the title as draft is not that smart
-  __jekyll draft "$title"
+# NOTE this may be learned from __fish_contains_opt
+function __fish_jekyll_no_subcommand -d 'Test if jekyll has sub command'
+  # TODO can be further simplifed
+  for i in (commandline -opc)
+    if contains -- $i edit draft publish unpublish
+      return 1
+    end
+  end
+  return 0
 end
 
-function jekyll-publish -d 'enhance publish'
-  __envsetup_set_cwp $argv
-  __jekyll publish $argv
+function __fish_jekyll_list_recent_drafts -d 'List the TWO most recent files from _drafts and _posts/'
+  set draft_files $TOP/_drafts/*.md
+  set post_files $TOP/_posts/*.md $TOP/_posts/*.html
+  set files ''
+  switch $argv
+    case drafts
+      set files $draft_files
+    case posts
+      set files $post_files
+    case all
+      set files $draft_files $post_files
+    case '*'
+      # NOTE just empty string
+      return ''
+  end
+
+  # NOTE I'm using '-P' here, an experimental feature to use '\K' switch. Use
+  # '-E' extended regexp to have easier reg and 'sed' is also an option.
+  #
+  # '-Q' can be supplied to ls to have file name quoted, which makes the output
+  # uglier. Quotes should not be necessary as no whitespace is allowed in both
+  # drafts and posts file names
+  ls -t $files | grep -m 7 -oP "$TOP/\K.*(md|html)\$"
 end
+
+# NOTE: much learned from https://github.com/docker/docker/blob/master/contrib/completion/fish/docker.fish
+complete -e -c jekyll
+# extras (maybe better to fall back to autocomplete wrapper)
+for cmd in edit publish unpublish
+  complete -c jekyll -f -n '__fish_jekyll_no_subcommand' -a $cmd -d 'Jekyll Cmd'
+  # NOTE use '-a' for 'edit' in case we want edit some older files. Remember to neglect condition '-a' in the default completions and omit '-f' for '-a'
+  complete -c jekyll -A -f -n "__fish_seen_subcommand_from $cmd" -s a -d 'toggle all files'
+  complete -c jekyll -A -n "__fish_seen_subcommand_from $cmd; and __fish_contains_opt -s a"
+end
+# draft needs no file completion
+complete -c jekyll -f -n '__fish_jekyll_no_subcommand' -a draft -d 'Jekyll Cmd'
+# NOTE: I've found no good way to stop file completions shown without offering at least one candidate
+complete -c jekyll -A -f -n '__fish_seen_subcommand_from draft' -a 'title'
+
+# Edit: more options
+complete -c jekyll -A -f -n '__fish_seen_subcommand_from edit' -s v -d 'Edit with vi (default)'
+complete -c jekyll -A -f -n '__fish_seen_subcommand_from edit' -s e -d 'Edit with emacsclient -nc'
+
+# recent completions
+# NOTE publish unpublish seems to only work
+complete -c jekyll -A -f -n "__fish_seen_subcommand_from edit; and not __fish_contains_opt -s a" -a '(__fish_jekyll_list_recent_drafts all)' -d 'recent'
+complete -c jekyll -A -f -n "__fish_seen_subcommand_from publish; and not __fish_contains_opt -s a" -a '(__fish_jekyll_list_recent_drafts drafts)' -d 'recent'
+complete -c jekyll -A -f -n "__fish_seen_subcommand_from unpublish; and not __fish_contains_opt -s a" -a '(__fish_jekyll_list_recent_drafts posts)' -d 'recent'
