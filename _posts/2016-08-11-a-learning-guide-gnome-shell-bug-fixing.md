@@ -2,6 +2,7 @@
 layout: post
 title: A learning guide for GNOME Shell bug fixing
 tags: [gnome, bug-fix]
+last_modified_at: 2016-08-12
 ---
 
 A curated list of learning materials, references for GNOME Shell (bug-fixing)
@@ -159,6 +160,32 @@ JS binding for GNOME. `seed` has not replaced
 it is the only one that has some documents.
 
 
+## [SLE Classic](https://bitbucket.org/carltonf/sle-classic)
+
+This part is actually about a SUSE-specific GNOME feature.
+
+At the beginning of `SLE 12` development, the drastic deviation of `GNOME 3`
+from old desktop design of `GNOME 2` (in `SLE 11`) was considered a regression
+for users. {% sidenote sn-gnome3-choice In case you are curious about why `GNOME
+3` was picked back then, the answer is very *human*: the remaining staff at
+Desktop Department were only familiar with `GNOME`. The irony is that `GNOME 3`
+is anything but a familiar `GNOME`. %} To tackle this issue, a feature was
+proposed which is basically an incarnation of `SLE 11` desktop look&feel. {%
+sidenote sn-other-gnomelikes For the record, [Mate](http://mate-desktop.com/)
+and [Cinnamon](https://github.com/linuxmint/Cinnamon) are popular GNOME-forked
+desktops which have done a much better job in preserving the traditional desktop
+design. The reason not to pick one of them was the concern over upstream
+community support. I'll avoid another irony comment ;P %}
+
+The repo at [Bitbucket](https://bitbucket.org/carltonf/sle-classic) was my
+personal repo to track the development of `SLE Classic`. It has some useful
+notes and can serve a good reference for maintaining `SLE Classic`. The commit
+log might also be of some interest but the old history is incomplete and
+convoluted as I was also beginner back then. At present, I believe it is merely
+an interim hack to help users migrate to newer desktop and should be
+discontinued in future `SLE` releases.
+
+
 # Recommended Learning Order
 
 {% marginnote mn-things-in-order %}
@@ -174,4 +201,3 @@ I think the following order is appropriate for a beginner:
 3. JavaScript core
 4. GNOME 3 Application Development Beginner's Guide: the recommended parts.
 5. X Power Tool:  really worth reading, but can be hard at the beginning.
-
