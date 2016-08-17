@@ -29,8 +29,10 @@ function jekyll -d 'enhanced jekyll'
   end
 end
 
-# NOTE path to the working post. Keep it absolute
-set jekyll_working_post ''
+# NOTE path to the working post. Keep it absolute.
+#
+# NOTE Also export it s.t. child processes have access to it.
+set -x jekyll_working_post ''
 function __fish_jekyll_cwp -d 'set cwp'
   set post $argv
   set path ''
