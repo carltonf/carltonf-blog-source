@@ -1,5 +1,7 @@
 set TOP (realpath (dirname (status -f))/../)
 
+set PATH $TOP/tools/node_modules/.bin $PATH
+
 function __jekyll -d 'the real jekyll docker runner'
   docker run -it --rm -v $TOP:/srv/jekyll carltonf/jekyll-toolbox:latest jekyll $argv
 end
