@@ -2,7 +2,7 @@
 layout: post
 title: A learning guide for GNOME Shell bug fixing
 tags: [gnome, bug-fix]
-last_modified_at: 2016-08-12
+last_modified_at: 2016-08-18
 ---
 
 A curated list of learning materials, references for GNOME Shell (bug-fixing)
