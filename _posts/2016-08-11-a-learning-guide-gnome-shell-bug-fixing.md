@@ -186,7 +186,27 @@ an interim hack to help users migrate to newer desktop and should be
 discontinued in future `SLE` releases.
 
 
-# Recommended Learning Order
+# Final Notes
+## Mentality
+
+Beginners for Shell might be surprised by the breaking changes *GNOME 3*
+introduces every release, the lack of documentation in `JavaScript` part and
+the *pragmatic* set of bindings offered to the `JavaScript` space. That's all
+right, *GNOME 3* strives to be something new and they are still in the process
+to be [something more](https://wiki.gnome.org/GnomeOS). Despite being bitten by
+these issues in the past, I have come to the revelation that most of the time
+developers work with insufficient knowledge and instability might just be the
+norm in this line of work. {% sidenote sn-80-20 In retrospect, I've written a
+[post](http://carltonf.github.io/post/a-workflow-for-bug-fixing) about this
+fact. %}
+
+Nevertheless, these will still cause inconvenience in the future but at least
+you are warned {% sidenote sn-warned Instead of wasting hours of searching in
+the doubt of one's own inability to find necessary information. Been there, done
+that ;P %}
+
+
+## Recommended Learning Order
 
 {% marginnote mn-things-in-order %}
 ["道生一, 一生二，二生三，三生万物".](http://baike.baidu.com/view/9647254.htm)
