@@ -187,6 +187,7 @@ discontinued in future `SLE` releases.
 
 
 # Final Notes
+
 ## Mentality
 
 Beginners for Shell might be surprised by the breaking changes *GNOME 3*
@@ -196,12 +197,12 @@ right, *GNOME 3* strives to be something new and they are still in the process
 to be [something more](https://wiki.gnome.org/GnomeOS). Despite being bitten by
 these issues in the past, I have come to the revelation that most of the time
 developers work with insufficient knowledge and instability might just be the
-norm in this line of work. {% sidenote sn-80-20 In retrospect, I've written a
-[post](http://carltonf.github.io/post/a-workflow-for-bug-fixing) about this
-fact. %}
+norm in this line of work. {% sidenote sn-80-20 In retrospect, I wrote a
+[post](/post/a-workflow-for-bug-fixing) about this
+quite a while ago. %}
 
 Nevertheless, these will still cause inconvenience in the future but at least
-you are warned {% sidenote sn-warned Instead of wasting hours of searching in
+you are warned. {% sidenote sn-warned Instead of wasting hours of searching in
 the doubt of one's own inability to find necessary information. Been there, done
 that ;P %}
 
