@@ -1,6 +1,7 @@
 ---
 layout: post
 title: To Quote or not quote: it's a problem
+last_modified_at: 2016-08-19
 ---
 
 After writing several bash and fish scripts, we've constantly encountered some
@@ -12,6 +13,8 @@ What quotes usually means.
 
 # Interactivity and Reader
 
+String type is the first-class type and it's usually the default one.
+
 ## How various shell read input
 
 ### The descriptive explanation
@@ -20,7 +23,7 @@ What quotes usually means.
 
 ## An example from Emacs
 
-In particular, the Emacs Regexp.
+In particular, the Emacs RegExp.
 
 
 # Common pitfalls related to quotes
@@ -50,4 +53,9 @@ idiom is used: `[ z$val = z ]`
 Consider `my_awesome_func $val`, if `val="hello world"`, `my_awesome_func` will
 get two arguments `hello` and `world` instead of a single string `hello world`,
 which might be what we want.
-  
+
+### `Embedded` quotes?
+
+`Command="sh -c" systemctl reboot ""` from recent `icewm` code.
+
+`{{ }}` liquid example
