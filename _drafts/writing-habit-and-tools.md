@@ -1,13 +1,15 @@
 ---
 layout: post
 title: Writing habit and tools
+date: 2016-08-21
+last_modified_at: 2016-08-21
 ---
 
 Follow my [TODO review], I've come out with the first draft of a writing habit.
 
 # The Life Cycle of a Post
 
-  {% sidenote More plainly, the steps for writing posts. ;P %}
+A nerdy term;P  {% sidenote More plainly, the steps for writing posts. ;P %}
 
 ## Goals of Topic
 
