@@ -12,7 +12,8 @@ DOCKER_IMG := carltonf/jekyll-toolbox:latest
 JEKYLL_ENV := development
 serve:
 	@echo "** Serving content locally (at port ${PORT})..."
-	@${DOCKER_CMD} --name=${CONTAINER_NAME} -v `pwd`:/srv/jekyll -p ${PORT}:4000 ${DOCKER_IMG} jekyll serve
+	@${DOCKER_CMD} --name=${CONTAINER_NAME} -v `pwd`:/srv/jekyll -p ${PORT}:4000 ${DOCKER_IMG} \
+		jekyll serve --drafts --watch --incremental
 
 build-production: JEKYLL_ENV := production
 build-production:
