@@ -38,12 +38,6 @@ pre {
   }
 }
 
-/***** my custom styles *****/
-
-.post-list-entry hr {
-    width: 65%;
-    margin-left: 0%;
-}
 /***** tufte tweaks *****/
 
 /* the kramdown processor used by Github output <code> tag instead of .code
@@ -70,3 +64,68 @@ for listed paragraphs (<li><p> style), this yields very narrow paragraphs. */
 li p {
     width: 100%;
 }
+
+/***** my custom styles *****/
+
+#main-box {
+    margin-top: 0%;
+    #name-box {
+        span {
+            font-size: 2em;
+        }
+        #name {
+            font-size: 8em;
+        }
+    }
+
+    #motto {
+        margin-left: 3%;
+        font-size: 1.6em;
+    }
+
+    #about-box {
+        margin: 6em 0 0 1%;
+
+        hr {
+            margin: 0 0 2em 22%;
+            width: 6em;
+        }
+    }
+}
+
+.post-list-entry {
+    padding-top: 1em;
+}
+
+.post-list-nav {
+    margin-top: 6em;
+    .pagination {
+        float: left;
+    }
+
+    .rss-subscribe {
+        float: right;
+        margin-right: 45%;
+    }
+}
+
+.post-article {
+    .article-tombstone {
+        direction: rtl;
+        font-size: 2.5em;
+    }
+
+    .article-footer {
+        width: 55%;
+
+        .post-tags {
+            float: left;
+        }
+
+        .post-comment-link {
+            float: right;
+        }
+    }
+}
+
+ /* TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars  */

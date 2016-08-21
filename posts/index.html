@@ -11,8 +11,8 @@ date: 2016-08-05
 </div>
 
 <!-- Pagination links: a special type of entry -->
-<div class="post-list-nav post-list-entry" style="margin-top: 6em;">
-  <div class="pagination" style="float: left">
+<div class="post-list-nav post-list-entry">
+  <div class="pagination">
     {% if paginator.previous_page %}
     <!-- NOTE add quick link to the latest list of posts. I'm not offerring the
          oldest link though as it's deemed a esoteric feature -->
@@ -29,8 +29,7 @@ date: 2016-08-05
     {% endif %}
   </div>
 
-  <!-- TODO bad style, 35% is in line with <hr>'s 65% width, factor these styles using SCSS vars -->
-  <div class="rss-subscribe" style="float: right; margin-right: 35%">
+  <div class="rss-subscribe">
     subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a>
   </div>
 </div>

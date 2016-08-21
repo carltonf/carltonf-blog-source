@@ -4,10 +4,10 @@ layout: default
 
 {% include header.html %}
 
-<article>
+<article class="post-article">
 
   <h2 itemprop="name">
-    <a href="{{ site.baseurl }}{{ post.url }}" itemprop="url">{{ page.title }}</a>
+    <a href="{{ site.baseurl }}{{ page.url }}" itemprop="url">{{ page.title }}</a>
   </h2>
 
   <div class="post-meta">
@@ -24,17 +24,17 @@ layout: default
 
   <section>
     {{content}}
-    <p class="article-tombstone" style="direction: rtl; font-size: 2.5em"><br>∎</p>
+    <p class="article-tombstone"><br>∎</p>
   </section>
 
-  <div class="article-footer" style="width: 55%">
-    <div class="post-tags" style="float: left">
+  <div class="article-footer">
+    <div class="post-tags">
       <b> Tags </b>
       {% for tag in page.tags %}
       • <a href="/tags/{{ tag }}"><span>{{ tag }}</span></a>
       {% endfor %}
     </div>
-    <div class="post-comment-link" style="float: right" >
+    <div class="post-comment-link">
       <b>Comment</b>:
       <a href="{{ site.site_repo }}/issues/new" target="_blank">Github Issue</a>
     </div>
