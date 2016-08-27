@@ -3,10 +3,10 @@ set TOP (realpath (dirname (status -f))/../)
 ## NOTE import habit tool
 set -l habit_npm_path $TOP/tools/node_modules/habit
 if [ ! -d $habit_npm_path ]
-  cd $TOP/tools
+  mkdir -pv $TOP/tools/node_modules/.bin
   # TODO use Github repo
-  npm install ~/work/habit
-  cd $TOP
+  ln -sv ~/work/habit $TOP/tools/node_modules/
+  ln -sv ../habit/bin/habit $TOP/tools/node_modules/.bin
 end
 ## end
 source "$habit_npm_path/sh/habit-envsetup.fish"
