@@ -1,23 +1,28 @@
 ---
 layout: post
 title: Try Out Bash on Unbuntu on Windows
-last_modified_at: 2016-08-25
-date: 2016-08-25
+last_modified_at: 2016-08-27
+date: 2016-08-27
+tags: 
+- windows
+- bash
+- ubuntu
 ---
 
 [Windows Subsystem for Linux](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux)
-is the new *toy* Microsoft brings to developers. I have played it for one day.
-It's still not good enough for daily use, but a possible alternative when
+is the new *toy* Microsoft brings to developers. Having played it for one day,
+I feel it's still not good enough for daily use, but a possible alternative when
 necessary.
 
-Not long ago Windows 10 has released its
+Not long ago, Windows 10 has released its
 [Anniversary Update](http://www.howtogeek.com/248177/whats-new-in-windows-10s-anniversary-update/),
 I've waited till it's in the official update channel{% sidenote sn-update To be
 honest, I have little confidence that an Windows 10 update would not cause some
 regression. Anniversary Update is no exception, there are issues like the
 machine can not wake up from hibernation, double authorization required by
-Windows Hello and etc. %}. It's still beta, and I didn't put it into serious
-use.
+Windows Hello and etc. %}. It's still beta, and thus I didn't expect very much
+from it.
+
 
 # Installation
 
@@ -31,12 +36,12 @@ Reinstalling `VirtualBox` fixed it. %}. CLI tools like `lxrun` are really nice.
 
 # Usage
 
-Packages can be installed from official `Ubuntu` repo. One thing suspicious is
+Packages can be installed from the official `Ubuntu` repo. One thing suspicious is
 the lack of many `Ubuntu` mirrors in the repo mirror list. Maybe it's due to the
 fact that `WSL` is still `Beta`?
 
 To my surprise, `tmux` is pre-installed. The default console host is not to my taste
-and I tried to run `rxvt-unicode`, which failed with errors of missing `tty` file and
+and I tried to run `rxvt-unicode`, which failed with errors about missing `tty` files and
 etc. This is understandable, not much has been done for things under `/dev`.
 
 Then I tried to `ping` and it didn't work for some permission issues.
@@ -77,9 +82,9 @@ For sure, I will not give up my *boxerized* environment {% sidenote
 sn-boxerized-post Hmmm...where is my long planned post on this setting? %} for
 `WSL`. It can not replace useful Windows tools like [cmder](http://cmder.net/)
 and Emacs on Windows either, so I'll not use it in my work or personal projects.
-`node` seems to be a good thing to have but `node` can run on `Windows` already
-and web service stuff might encounter network permission issues like `ping` down
-the road.
+`node` seems to be a good thing to have but `node` can natively run on `Windows`
+already and web service stuff might encounter network permission issues like
+`ping` down the road.
 
 
 # *Cynical Speculation*
@@ -94,15 +99,16 @@ nevertheless. Some [discussions](https://news.ycombinator.com/item?id=11445301)
 online also shows that this is not the first time Microsoft tries to do
 something like this.
 
-My gut feelings is that Microsoft is just staging a show here. All in the effort to
-put `Windows` back into developers' mind and back onto the focus of IT news.
+My gut feelings is that Microsoft is just staging a show here. All in the effort
+to put `Windows` back into developers' mind and back onto the focus of media.
 Just looks at the published name used in media - `Bash on Ubuntu on Windows`,
 what a mouthful, lousy name! But it is carefully picked, and sorted in terms'
 popularity in developers' mind: `Bash`, `Ubuntu` and `Windows` - A bad name on
 its own right, a good marketing strategy in today's IT context. `Windows`
-piggybacks upon `Bash` and `Ubuntu` to have a come back. Just like someone joked
-on the web about `WSL`: it's "Linux without the Linux part" or "GNU/NT". {%
-sidenote sn-gnu-nt Someone followed up: "Richard Stallman must be so proud." ;P %}
+piggybacks upon `Bash` and `Ubuntu` to try to have a come back. Just like
+someone joked on the web about `WSL`: it's "*Linux without the Linux part*" or
+"GNU/NT". {% sidenote sn-gnu-nt Someone followed up: "Richard Stallman must be
+so proud." ;P %}
 
 However, it's still an interesting show, and despite the caution for investing
 on this `WSL` thing, the sheer number of issues at
