@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Try Out Bash on Unbuntu on Windows
-last_modified_at: 2016-08-27
+last_modified_at: 2016-08-29
 date: 2016-08-27
 tags: 
 - windows
@@ -26,12 +26,17 @@ from it.
 
 # Installation
 
-Ever since *WSL* appeared in the *Insider* preview channel, there were many
-articles covering the installation. The installation from the official update
-channel remains almost the same as in preview. It's very easy and smooth {%
-sidenote sn-update-smoothness Hmmm... maybe worth mentioning, I've updated two
-machines to the Anniversary Update, one of them breaked `VirtualBox`.
-Reinstalling `VirtualBox` fixed it. %}. CLI tools like `lxrun` are really nice.
+Ever since *WSL* appeared in the *Insider* preview channel, there were
+[many articles](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide)
+covering the installation. The installation from the official update channel
+remains almost the same as in preview. It's very easy and smooth {% sidenote
+sn-update-smoothness Hmmm... maybe worth mentioning, I've updated two machines
+to the Anniversary Update, one of them breaked `VirtualBox`. Reinstalling
+`VirtualBox` fixed it. %}. CLI tools like `lxrun` are really nice {% sidenote
+sn-lxrun To avoid confusion, `lxrun` is only used to manage installation of
+linux subsystem, Linux subsystem needs to be enabled **first**. There is a
+[PowerShell guide](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide#enable-the-windows-subsystem-for-linux-feature-command-line)
+to enable WSL in CLI. %}.
 
 
 # Usage
@@ -47,10 +52,10 @@ etc. This is understandable, not much has been done for things under `/dev`.
 Then I tried to `ping` and it didn't work for some permission issues.
 
 GUI-Emacs failed to work {% sidenote sn-cli-emacs The CLI version worked without
-a problem, but in terminal I actually prefer `vim` over `Emacs`. %}, but
-GUI-`Spacemacs` can almost work. The vanilla `Emacs` window showed up but didn't
-react to any input. `Spacemacs` started normally but the window could not be
-resized, startup parameters like `geometry` settings didn't work. {% sidenote
+a problem, but these days in terminal I actually prefer `vim` over `Emacs`. %},
+but GUI-`Spacemacs` can almost work. The vanilla `Emacs` window showed up but
+didn't react to any input. `Spacemacs` started normally but the window could not
+be resized, startup parameters like `geometry` settings didn't work. {% sidenote
 sn-spacemacs-works The fact that `Spacemacs` can "work" but the vanilla one
 doesn't is really intriguing, though I didn't spend effort to investigate the
 cause. %} I've followed threads like
