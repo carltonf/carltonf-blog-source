@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Writing habit and tools
-date: 2016-08-21
 last_modified_at: 2016-08-30
 tags:
 - writing
