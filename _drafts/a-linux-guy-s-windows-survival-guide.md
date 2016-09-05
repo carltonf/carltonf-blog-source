@@ -34,13 +34,45 @@ environment, improve productivity and etc.
 
 ## Shell
 
-Powershell?
+I think the Shell environment is the most important tool to get right at first.
+Though most of the time I work in an SSH-session into a Linux box, there are
+situations a native Windows shell can be useful.
 
-Cmd itself?
+**PowerShell**. Admittedly, anyone familiar with Unix shell like `Bash` will
+found `PowerShell`
+[object pipline](https://msdn.microsoft.com/en-us/powershell/scripting/getting-started/fundamental/understanding-the-windows-powershell-pipeline)
+to be *intriguing* but *awkward*. The problem I feel about the object passing is
+that most CLI tools, particularly Unix ones, are not designed with `PowerShell`
+objects in mind and thus most of the time you are sticking with text pipeline,
+and `PowerShell` is not really good for that. {% sidenote sn-powershell The
+Object pipeline actually enforces tools to be in `PowerShell` ecosystem. Unless
+you plan to invest a lot in `PowerShell`, like what a Windows Server admin might
+do, I do not believe it's very useful. %}
 
-Bash for Windows?
+[Windows CMD](https://en.wikipedia.org/wiki/Cmd.exe) is old and ubiquitous on
+Windows machines. This is in fact my most used native shell on Windows. It's
+quite primitive and limited compared to `Bash`, but useful for some simple tasks
+and you really want to shell tasks in Windows simple.
 
-WSL?
+**Bash for Windows** There are various ported version of `Bash` on Windows, from
+stand-alone [Win-Bash](http://win-bash.sourceforge.net/){% sidenote sn-win-bash
+I remember I used to have a PenDrive bundled with some ported Unix tools. (Back
+at TP-Link, where most machines are Windows boxes and I tended to move around)
+`Win-Bash` is one of them. It's much light-weighted than other options and with
+ported `sed`, `grep` and etc, the scripting feels almost the same as in Linux.
+Of course, without a decent terminal program, it's not good for interactive use.
+%} to full-blown `Cygwin`. As I prefer to keep shell tasks under Windows simple,
+`CMD` batch file is usually good enough and works almost everywhere. I seldom
+use these `Bash` ports these days. {% sidenote sn-bash-on-windows The most
+recent serious use is a
+[Bash script](https://github.com/carltonf/vagrantfiles/blob/master/crystal-maker/basebox-packager.sh)
+on Windows that package `Vagrant` base box for personal use. That script also
+relies on other Unix tools. %}
+
+[Bash on Ubuntu on Windows](https://msdn.microsoft.com/en-us/commandline/wsl/about)
+can not really qualify as native shell yet, as it
+[can't run Windows executable](https://github.com/Microsoft/BashOnWindows/issues/333).
+I've written [a post about it](/post/try-out-bash-on-unbuntu-on-windows).
 
 
 ## Unix utilities
