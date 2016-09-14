@@ -2,7 +2,7 @@
 layout: post
 title: "A Linux Guy's Windows Survival Guide"
 date: 2016-09-01
-last_modified_at: 2016-09-05
+last_modified_at: 2016-09-14
 tags:
 - windows
 - linux
@@ -77,10 +77,22 @@ I've written [a post about it](/post/try-out-bash-on-unbuntu-on-windows).
 
 ## Unix utilities
 
-[ Git for windows ], the portable version feels better. Or maybe we should use
-`Cmder`.
+There are many different choices, and I've tried out some of them, like
+[UnxUtils](http://unxutils.sourceforge.net/), in my days back at TP-Link. The
+biggest issue with these standalone tools is they are not integrated. It's great
+to have a standalone ported tool when you just need that tool. But it eventually
+degrades into painful management and frustrating search for the lack of some
+tools. Arguably, [Cygwin](https://www.cygwin.com/) is the most feature-complete,
+integrated toolset out there. Unfortunately, it had too many rough edges back
+when I heavily relied on it. I generally avoid it these days. {% sidenote
+sn-cygwin One reason I prefer to avoid `Cygwin` is the easy access to powerful
+machine. For anything serious enough to consider `Cygwin`, firing up VM is
+usually a better and easier choice. %}
 
-Not Cygwin, has too many rough edges that are helpful.
+[Git for Windows](https://git-scm.com/downloads) has some of the most used Unix
+tools bundled for easy use. It offers a portable version. I use the full version
+of [Cmder](http://cmder.net/), which integrates `Git for Windows` among other
+goodies.
 
 
 ## Better Terminal
