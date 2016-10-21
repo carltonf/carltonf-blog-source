@@ -13,8 +13,9 @@ tags:
 Without referring to `GObject` documentation or any online posts {% sidenote
 sn-doc For the record, I can not claim I have never been exposed to `GObject`
 materials. The best I can say is that I haven't *systematically* learnt
-`GObject`. %}, understand minimal knowledge about `GObject` for the purpose of
-reading related code. The process is question-driven and code-inspired.
+`GObject`. %}, understand *just enough* knowledge about `GObject` for the
+purpose of reading related code. The process is question-driven and
+code-inspired.
 
 Reading code is essentially an activity in which readers trace the control flow
 (i.e. function calls), state transitions (i.e. variable values) from *interested
@@ -32,8 +33,16 @@ need to understand how the macro magic work.
 
 # For the Impatience
 
-The arguments below are quite lengthy and murky. Maybe it's better to summarize
-what I've learnt through the process beforehand.
+{% marginnote %}
+
+This section was added after the main body was finished. The whole argument
+below is quite lengthy and murky. Maybe it's better to summarize what I've
+learnt through the process beforehand.
+
+{% endmarginnote %}
+
+The procedure I would form with this *just enough* `GObject` knowledge is as
+follows:
 
 Look for class hierarchical info through file dependencies (includes), and
 `parent_XXX` members. Locate the exact method used in the polymorphism by
@@ -49,9 +58,9 @@ languages as direction, naming as hints, take bold `jumps of faith` to form a
 
 ## Question Driven
 
-By the term *question driven*, I mean that I start with questions about
-`GObject` that I'm interested in. Being an `OOP` implementation for C, basically
-we're asking about how Object-Oriented features
+*question-driven* is to start with questions about `GObject`. Being an `OO`
+implementation for C, basically we're asking about how Object-Oriented features
+are achieved in `GObject`:
 
 1. Where&How a class is defined?
 2. How the class inheritance is defined?
@@ -152,19 +161,19 @@ the term `obj` shows up twice. %}
 ## How is the class inheritance defined?
 
 As seen above, the `parent` and `parent_class` are what define the inheritance
-relationship between classes. Since the `C` has no awareness of class and
+relationship among classes. Since the `C` has no awareness of class and
 objects, there is no easy `UML` diagram to be drawn. However, by inspecting the
-dependency (include/includeby) between source files, we can still easily see
+dependencies (include/includeby) within the source, we can still easily see
 this relationship in graph as
-[this diagram](/images/code-reading-the-racing-of-two-agents/ArchInternalDependencies-gsm-app-client.png)
-shown. {% sidenote sn-dep-diagram Another interesting point revealed in the
+[this diagram](/images/understand-minimal-gobject-for-code-reading/ArchInternalDependencies-gsm-app-client.png)
+show. {% sidenote sn-dep-diagram Another interesting point revealed in the
 diagram is the *empty* dependency from `gsm-app` to `gsm-client`, i.e.
 `gsm-client.h` is included in `gsm-app.h` but nothing is used from
 `gsm-client.h`. Though this might be a mere historical residual, it suggests
 some connection between `client` and `app`. Indeed, `app` once started is a
 `client`. (And there can be more interconnections.) %}
 
-From the above dependency graph, we see clearly that `gsm-autostart-app` is a
+From the dependency graph, we see clearly that `gsm-autostart-app` is a
 subclass of `gsm-app`, which is also shown in the code:
 
 ```c
@@ -319,9 +328,10 @@ I've assumed `desktop-filename` is the same as `app->priv->desktop_filename`.
 From these, it's reasonable to say `g_initable_new` call above is the very call
 that instantializes an object.
 
-Similar arguments are made about other parts of the instantiation process. From
-the various function names and comparison with similar functions in `gsm-app`,
-the *educated guess* we can have about the instantiation process is as follows:
+**Finally**, Similar arguments can also be made about other parts of the
+instantiation process. From the various function names and comparison with
+similar functions in `gsm-app`, the *educated guess* we can have about the
+instantiation process is as follows:
 
 1. `XXX_new` is the method to *start* instantializing an object. It's likely
    there are other types of `new` offered by `GObject` other than
