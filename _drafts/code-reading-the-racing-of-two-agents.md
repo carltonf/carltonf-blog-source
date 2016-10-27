@@ -2,7 +2,7 @@
 layout: post
 title: "Code-Reading: The Racing Of Two Agents"
 date: 2016-10-17
-last_modified_at: 2016-10-25
+last_modified_at: 2016-10-27
 tags:
 - code-reading
 - sle
@@ -27,6 +27,14 @@ sequence is of most interest to us.{% sidenote sn-endsession There is a
 components talk back to `gnome-session` through the exported DBus service
 `org.gnome.SessionManager`. The term `SessionManager` is used interchangable
 with `gnome-session`.
+
+`gnome-session` does have some documentations oneline. However, they all seem to
+be outdated (compared the info I got from the code.). Nevertheless, they still
+provide some insights and you can find the [longer version][wiki-GnomeSession]
+and [the newer, shorter version][wiki-GnomeSessionTNG] here.
+
+[wiki-GnomeSession]:https://wiki.gnome.org/Projects/SessionManagement/GnomeSession 
+[wiki-GnomeSessionTNG]: https://wiki.gnome.org/Projects/SessionManagement/NewGnomeSession
 
 ### Saved Session
 
@@ -145,18 +153,171 @@ usual black dialogue is not found instead the white dialog is shown.
 *nearly* [linear style][end_phase() phase++] of state transitions. {% sidenote
 sn-linear-state A notable exception is during ending session
 (logout/reboot/shutdown),`GSM_MANAGER_PHASE_QUERY_END_SESSION` can transition
-back to `GSM_MANAGER_PHASE_RUNNING` in case of failures. Covered in another [post](#) %}
+back to `GSM_MANAGER_PHASE_RUNNING` in case of failures. Covered in another
+[post](#) %}
 
 [enum GsmManagerPhase]: {{page.SP2_GNOME_SESSION}}/gnome-session/gsm-manager.h#L54
 [end_phase() phase++]: {{page.SP2_GNOME_SESSION}}/gnome-session/gsm-manager.c#L497
 
 As shown above `Shell` starts at `DisplayServer` phase,
-(`X-GNOME-Autostart-Phase=DisplayServer`), much earlier the
-[default][load_desktop_file] `Application` phase.
+(`X-GNOME-Autostart-Phase=DisplayServer`), much earlier than the
+[default][load_desktop_file] `Application` phase. `polkit-gnome` was started at
+this default phase as it has no explicit phase setting. So usually, `Shell`
+starts and registers itself as agent before `polkit-gnome` can do *anything*.
 
 [load_desktop_file]: {{page.SP2_GNOME_SESSION}}/gnome-session/gsm-autostart-app.c#L614
-    
+
+The autostart condition `GNOME3 unless-session gnome` will be `true` under
+`gnome-classic` and thus `polkit-gnome` will start. However, since there is only
+one allowed polkit agent, `polkit-gnome` will fail and exit.
+
+
+## What if there is an saved session
+
+In a `saved session` situation, `gnome-session` will detect the relevant
+settings and saved session files under user home directory. It will load saved
+`apps` from saved session files **first**, before the normal loading of
+`required` and `autostart` apps. {% sidenote sn-loading-order The latter desktop
+files would not override earlier desktop files. `gnome-session` use the
+`provides` field to decide whether a later loaded desktop file is effective. %}
+
+`org.gnome.Shell`, as saved session file, the desktop entry file does **NOT**
+have the autostart phase set to `DisplayServer`, actually, not set at all. So
+it's started at `Application` phase, together with `polkit-gnome`.
+`polkit-gnome` is a much simpler program and might register itself as `polkit
+agent`, while `shell` is still running to get to its `JS` part. 
+
+In observation, with a `saved session`, `polkit-gnome` almost always win as the
+real agent.
+
+
 ## What if Shell died
 
-## What if with an saved session
+When `Shell` dies, it gets restarted by `gnome-session`. {% sidenote
+sn-shell-restart This is not to be confused with the built-in restart as
+`Alt-F2, r` would offter, in which case the process itself is not killed. %} The
+timing can be unfortunate for it can coincidences with the starting of
+`polkit-gnome`, and be outrun by it in registering as polkit agent.
 
+
+# Debugging
+
+In this section, I will show important questions I asked during debugging and
+some useful tips to prove points mentioned in the [Sequence](#sequence).
+
+## `polkit-gnome` starts under `gnome-classic`
+
+To prove this point, two approaches can be taken:
+
+1. Use [Linux Audit].
+2. *Manual Injection*. Change the destktop entry file or the executable itself.
+   In our case, capture the stdin/stderr are sufficient.
+
+[Linux Audit]: https://www.suse.com/documentation/sles11/singlehtml/audit_quickstart/audit_quickstart.html
+
+It's usually better to use `Audit` first and then empoly `Injection` to get more
+details.
+
+
+### Linux Auditing
+
+This seems to be the only non-intrusive approach. At the cost of complexity,
+`Audit` is very powerful and capable of much more.
+
+Make sure all prerequiresites are met {% sidenote sn-audit-post (Yelling!) I
+have another post for more detials. Plainning... %}.
+
+``` shell
+## Precaution: all commands are executed under root prviliages.
+
+# setup rules, you can optionally add more filter fields, uid might be a good addition.
+auditctl -a exit,always -F arch=b64 -S all -F path=/usr/lib/polkit-gnome-authentication-agent-1
+
+# verify the above is the only rule, not necessary but helpful in inspecting the log.
+auditctl -l
+
+# Logout and Login back again, in a new terminal, the -ts since time is the time
+# *just* before you login. Not necessary but helpful in reducting output size.
+ausearch -i -ts 16:10
+```
+
+You should see something like:
+
+``` text
+----
+type=UNKNOWN[1327] msg=audit(10/27/16 16:03:10.518:106) : proctitle="/usr/lib/polkit-gnome-authentication-agent-1" 
+type=PATH msg=audit(10/27/16 16:03:10.518:106) : item=1 name=/lib64/ld-linux-x86-64.so.2 inode=38532 dev=00:26 mode=file,755 ouid=root ogid=root rdev=00:00 nametype=NORMAL 
+type=PATH msg=audit(10/27/16 16:03:10.518:106) : item=0 name=/usr/lib/polkit-gnome-authentication-agent-1 inode=160885 dev=00:26 mode=file,755 ouid=root ogid=root rdev=00:00 nametype=NORMAL 
+type=CWD msg=audit(10/27/16 16:03:10.518:106) :  cwd=/home/vagrant 
+type=EXECVE msg=audit(10/27/16 16:03:10.518:106) : argc=1 a0=/usr/lib/polkit-gnome-authentication-agent-1 
+type=SYSCALL msg=audit(10/27/16 16:03:10.518:106) : arch=x86_64 syscall=execve success=yes exit=0 a0=0x11be100 a1=0x11be0a0 a2=0x11be150 a3=0xfc2c9fc5 items=2 ppid=1726 pid=1968 auid=vagrant uid=vagrant gid=users euid=
+vagrant suid=vagrant fsuid=vagrant egid=users sgid=users fsgid=users tty=(none) ses=91 comm=polkit-gnome-au exe=/usr/lib/polkit-gnome-authentication-agent-1 key=(null) 
+```
+
+From the log we can deduce: `ppid=1726` (`ps -up 1726` shows that it's
+`gnome-session-binary`) calls `execve` with
+`/usr/lib/polkit-gnome-authentication-agent-1` as the sole argument. In other
+words, `gnome-session` started `polkit-gnome`.
+
+
+### Manual Injection
+
+`Linux Auditing` is clean and quick, great for verifying unintend execution.
+However, it doesn't capture possible output from processes. For this we would
+have to inject extra code into the start sequence. Surely, we can replace
+`polkit-gnome-authentication-agent-1` with a custom script, which calls the real
+executable only with io rediction to some custom files. However, I'd like to
+introduce [systemd-cat] to take full advantage of `journald`.
+
+[systemd-cat]: https://www.freedesktop.org/software/systemd/man/systemd-cat.html
+
+First change the `Exec`{% sidenote sn-exec-line `Exec` line has specific format
+requirement, in doubt consult the [documentation][Exec-doc] %} line to something
+like:
+
+[Exec-doc]: https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html
+
+``` ini
+# /etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
+Exec=systemd-cat -t PK-G /usr/lib/polkit-gnome-authentication-agent-1
+```
+
+Then use `journalctl -t PK-G` to pick log from `polkit-gnome` out specifically.
+
+``` text
+-- Logs begin at Wed 2016-10-26 18:35:03 CST, end at Thu 2016-10-27 16:36:48 CST. --
+Oct 27 16:36:44 linux-rblp.suse PK-G[2704]: ** (polkit-gnome-authentication-agent-1:2704): WARNING **: Unable to register authentication agent: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: An authentication age
+Oct 27 16:36:44 linux-rblp.suse PK-G[2704]: Cannot register authentication agent: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: An authentication agent already exists for the given subject
+```
+
+## Why `polkit-gnome` started?
+
+The culprit is the condition line `GNOME3 unless-session gnome`. The current
+session name referred in this condition can be looked up by introspecting
+`org.gnome.SessionManager` object.
+
+{% marginnote mn-session-name %}
+
+Since the naming is not the same for this `session-name`, there were some
+confusion at the beginning, as some believed it refering to a `dconf` setting.
+It turns out this setting is the *default* if no session type is specified on
+the `gnome-session` command line.
+
+{% endmarginnote %}
+
+``` shell
+gdbus introspect --session --dest org.gnome.SessionManager \
+    --object-path /org/gnome/SessionManager | grep -i session
+    
+## Output>    readonly s SessionName = 'gnome-classic'
+
+# alternatively you can get to the desired property value directly, though much
+# more complicated and not recommended. (And you're to introspect first anyway
+# ;P)
+gdbus call --session --dest org.gnome.SessionManager \
+    --object-path /org/gnome/SessionManager \
+    --method org.freedesktop.DBus.Properties.Get \
+    org.gnome.SessionManager SessionName
+
+## Output> (<'gnome-classic'>,)
+```
