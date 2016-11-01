@@ -2,11 +2,15 @@
 layout: post
 title: A learning guide for GNOME Shell bug fixing
 tags: [gnome, bug-fix]
-last_modified_at: 2016-08-18
+last_modified_at: 2016-11-01
 ---
 
 A curated list of learning materials, references for GNOME Shell (bug-fixing)
 developers -- *very* pragmatic.
+
+**DISCLAIM:** Even at the time of writing, I was not following GNOME development
+as I used to be. So much of the claims on the states GNOME 3 might be
+out-righteously outdated.
 
 The other day, my team leader asked me to give some guide for new colleagues in
 the team. I came up with a list of learning materials, references *with strong
@@ -17,9 +21,9 @@ here is the guideline list plus my review.
 
 **Some Conventions**: different materials have different importance. I didn't
 bother going into fine grades of proficiency level. {% sidenote
-sn-proficiency-level This recalls the memory about the college entry exam, when
-every student was supposed to know the required proficiency level of every
-knowledge. %} Only two levels are used: **Master** and **General**.
+sn-proficiency-level This brings up the memory about the college entry exam, when
+every student was supposed to know the required proficiency level of each
+subject. %} Only two levels are used: **Master** and **General**.
 
 
 # Materials
@@ -36,7 +40,7 @@ still need to know it well for its ubiquity in gnome.
 {% marginnote mn-kdbus %} `DBus` would have been much more important if the
 kernel module [kdbus](https://www.freedesktop.org/wiki/Software/systemd/kdbus/)
 had been merged into kernel. The farthest progress it made was into
-`kernel-next`. I've read some articles at at
+`kernel-next`. I've read some articles at
 [phoronix](http://www.phoronix.com/scan.php?page=search&q=KDBUS) talking about
 the main obstacle was about the security. As a mere side looker, I'll not say
 more. {% endmarginnote %}
@@ -79,7 +83,7 @@ whatever the help they might offer. %}
 
 - General Information:  *Master*, helpful for debugging
 - Technology: *General*, you need to know the capacity of each component.
-- Looking Glass：*Master*. Not as useful as it claims to be but this is only
+- Looking Glass：*Master*. Not as useful as it claims to be but this is the only
   built-in tool we have.
 - Development guide for GNOME Shell：*General*, this is more about feature
   development and upstream involvement.
@@ -96,8 +100,9 @@ almost written completely in JavaScript, we all need to know it well.
   out there). The `JavaScript` engine used by GNOME Shell is
   [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey),
   version 24 {% sidenote sn-spidermonkey-version Previous SP1, i.e. GNOME 3.10.x
-  is shipped with version 17. %}, a relatively recent JS engine. However, GNOME has
-  only utilized a small set of JS features in a C-like way.
+  is shipped with `SpiderMonkey` version 17. %}, a relatively recent JS engine.
+  However, GNOME has only utilized a small set of JS features in a C-like
+  fashion.
 
 - [JavaScript: the Definitive Guide](https://www.amazon.com/JavaScript-Definitive-Guide-Activate-Guides-ebook/dp/B004XQX4K0).
 
