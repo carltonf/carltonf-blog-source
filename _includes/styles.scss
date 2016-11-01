@@ -131,7 +131,12 @@ li p {
 /** Tweak code block style */
 
 pre.highlight {
+    /* NOTE: 'auto' to adjust to the existence of sidenote block */
     width: auto;
+    /* NOTE: add a gap between sidenote block and code block */
+    padding-right: 2.5%;
+    /* NOTE: not too long when there is no sidenote block */
+    margin-right: 10%;
     code {
         width: auto;
         display: block;
