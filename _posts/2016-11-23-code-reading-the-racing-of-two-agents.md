@@ -2,7 +2,7 @@
 layout: post
 title: "Code-Reading: The Racing Of Two Agents"
 date: 2016-10-17
-last_modified_at: 2016-10-27
+last_modified_at: 2016-11-23
 tags:
 - code-reading
 - sle
@@ -133,7 +133,8 @@ However, a little search has surprised me that `gnome-fallback` was alive as
 [official][gnome-flashback official repo])! The history about `GNOME 3`,
 `fallback`, `classic` and `flashback` is convoluting, and I found
 [this post][the history of fallback and its likes] more or less match what I
-know. Now I'm starting to wonder whether `flashback` will make a *comeback*! %}.
+know. Now I'm starting to wonder whether `flashback` will make a *comeback*! ;P
+%}.
 
 [gnome-flashback]: https://wiki.gnome.org/Projects/GnomeFlashback
 [gnome-flashback official repo]: https://git.gnome.org/browse/gnome-flashback/
@@ -195,7 +196,7 @@ real agent.
 
 When `Shell` dies, it gets restarted by `gnome-session`. {% sidenote
 sn-shell-restart This is not to be confused with the built-in restart as
-`Alt-F2, r` would offter, in which case the process itself is not killed. %} The
+`Alt-F2, r` would offter, in which the process itself remains the same. %} The
 timing can be unfortunate for it can coincidences with the starting of
 `polkit-gnome`, and be outrun by it in registering as polkit agent.
 
@@ -222,10 +223,16 @@ details.
 ### Linux Auditing
 
 This seems to be the only non-intrusive approach. At the cost of complexity,
-`Audit` is very powerful and capable of much more.
+`Audit` is very powerful and capable of much more. {% sidenote sn-dtrace At the
+time of writing, I've read some news on a
+[Dtrace-like functionality for kernel][BPF tracing]. Looks very interesting and
+promising, though I'm not knowledged enough, yet, to comment on the usefulness for
+debugging problems like this post's. %}
+
+[BPF tracing]: http://www.brendangregg.com/blog/2016-10-27/dtrace-for-linux-2016.html
 
 Make sure all prerequiresites are met {% sidenote sn-audit-post (Yelling!) I
-have another post for more detials. Plainning... %}.
+have been working on another post for more detials. Plainning... %}.
 
 ``` shell
 ## Precaution: all commands are executed under root prviliages.
@@ -267,7 +274,11 @@ However, it doesn't capture possible output from processes. For this we would
 have to inject extra code into the start sequence. Surely, we can replace
 `polkit-gnome-authentication-agent-1` with a custom script, which calls the real
 executable only with io rediction to some custom files. However, I'd like to
-introduce [systemd-cat] to take full advantage of `journald`.
+introduce [systemd-cat] to take full advantage of `journald`. {% sidenote
+sn-systemd-cat And avoids the hassles of managing log files. `systemd-cat` can
+be really useful to debug `gnome-shell` by piping JS logs into `journald`. With
+advanced options offered by `journalctl`, this way is much sweeter than weeding
+through log files or terminal output, particularly so for `gdm` shell. %}
 
 [systemd-cat]: https://www.freedesktop.org/software/systemd/man/systemd-cat.html
 
@@ -283,6 +294,13 @@ Exec=systemd-cat -t PK-G /usr/lib/polkit-gnome-authentication-agent-1
 ```
 
 Then use `journalctl -t PK-G` to pick log from `polkit-gnome` out specifically.
+{% sidenote sn-journctl-since As with `ausearch`, a since-time can be passed
+with `-S,--since=`. Notably `journctl` features far richer time formats as
+documented in `man systemd.time`. You can use relative time setting like
+`journalctl -S -1min`. `ausearch` doesn't seem to support advanced time format.
+However, we can always use `date` to achieve similar result. For example, to get
+audit logs since 90 sec ago, we can use `ausearch -i -ts $(date +'%H:%M:%S' -d
+'-300sec')`. %}
 
 ``` text
 -- Logs begin at Wed 2016-10-26 18:35:03 CST, end at Thu 2016-10-27 16:36:48 CST. --
@@ -312,8 +330,8 @@ gdbus introspect --session --dest org.gnome.SessionManager \
 ## Output>    readonly s SessionName = 'gnome-classic'
 
 # alternatively you can get to the desired property value directly, though much
-# more complicated and not recommended. (And you're to introspect first anyway
-# ;P)
+# more complicated and not recommended. (And you're going to introspect first
+# anyway ;P)
 gdbus call --session --dest org.gnome.SessionManager \
     --object-path /org/gnome/SessionManager \
     --method org.freedesktop.DBus.Properties.Get \
