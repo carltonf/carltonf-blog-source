@@ -13,7 +13,7 @@ authoring&publishing a post is:
   git clone git@github.com:carltonf/carltonf-blog-source.git
   cd carltonf-blog-source/
   # clone site repo into `_site/`
-  make repo-init
+  make site-init
   # write some posts and commit into source repo
 
   # build the new site

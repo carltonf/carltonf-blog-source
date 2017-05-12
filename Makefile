@@ -1,7 +1,7 @@
 # As Thu Aug  4 CST 2016, local Jekyll is using docker image jekyll/jekyll
 
 
-.PHONY: default serve repo-init
+.PHONY: default serve site-init
 default: serve
 
 PORT := 4000
