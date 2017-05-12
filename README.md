@@ -6,7 +6,8 @@ Site](https://github.com/carltonf/carltonf.github.io).
 
 # Authoring&Publishing in [Blog Source](https://github.com/carltonf/carltonf-blog-source)
 
-Some ancillary tools are supplied in `Makefile`. A standard workflow in
+`Makefile` have some useful subcommands and might worth taking a look. A
+standard workflow in
 authoring&publishing a post is:
 
   ```sh
@@ -21,3 +22,20 @@ authoring&publishing a post is:
   # publish to site: no manual intervention is needed
   make site-publish
   ```
+
+# Notes on Ancillary tools
+
+## carltonf/jekyll-toolbox
+My own modified jeyll image for building personal blogs. Make subcommands `serve` and
+`site-build` use it.
+
+The current version is 20160808, published at
+[Docker Hub](https://hub.docker.com/r/carltonf/jekyll-toolbox/) and
+Dockerfile is available at
+[Github](https://github.com/carltonf/dockerfiles/tree/master/jekyll-toolbox).
+
+## habit (_deprecated_)
+Part of the `tools/envsetup.fish`, a tool to enforce writing style.
+
+However, it lacks polishing and hard to maintain in the long run. Source is
+hosted at [Github](https://github.com/carltonf/habit).
