@@ -1,13 +1,10 @@
-# As Thu Aug  4 CST 2016, local Jekyll is using docker image jekyll/jekyll
-
-
 .PHONY: default serve site-init
 default: serve
 
 PORT := 4000
 CONTAINER_NAME := "carltonf-blog"
 DOCKER_CMD := docker run -it --rm --label=jekyll
-DOCKER_IMG := carltonf/jekyll-toolbox:latest
+DOCKER_IMG := carltonf/jekyll-toolbox:20160808
 # NOTE the default env jekyll runs
 JEKYLL_ENV := development
 serve:
