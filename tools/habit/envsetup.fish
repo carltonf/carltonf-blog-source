@@ -2,11 +2,10 @@
 #
 # source this file in the project envsetup.fish
 
-# TODO The dependency on ENV is problematic as I see, maybe later we should
-# migrate to '.habit/' directory option.
-#
 # NOTE env used by `habit`
 set -x habit_working_post ''
+
+# TODO: get rid of those `-` commands and unify them under `habit`.
 function habit-cwp -d 'get/set cwp'
   if [ z"$argv" = z ]
     echo "*INFO: cwp is $post"
@@ -34,9 +33,16 @@ function habit-cwp -d 'get/set cwp'
   git add $habit_working_post
 end
 
-# TODO merge into habit nodejs
 function habit-diff -d 'Show all changes not commited yet'
   git diff HEAD -- $habit_working_post
+end
+
+function habit-commit -d 'Commit current changes following habit style.'
+  # NOTE the cmd is long due to that fish lacking multi-line string capture
+  git log --format=%B -n 1 -- $habit_working_post \
+  | sed -e '/^[^#]/ s/^/# /g' \
+  | cat - $TOP/tools/habit/git-template \
+  | git commit -F - -e -- $habit_working_post
 end
 
 function __fish_habit_find_post -d 'search post path with post name'
@@ -49,6 +55,4 @@ function __fish_habit_find_post -d 'search post path with post name'
   end
 end
 
-source (dirname (status -f))'/habit-complete.fish'
-
-set -x PATH $TOP/tools/node_modules/.bin $PATH
+source (dirname (status -f))'/ac.fish'

@@ -1,4 +1,6 @@
-# The above is the last commit message of the draft/post
+#### ** Habit **
+# The above is the last commit message of $habit_working_post.
+# Modify it according to the following template.
 #
 # The habit writing template is as follows:
 # <<< MSG begins
@@ -18,3 +20,4 @@
 # 2. title string and description are free-style strings.
 #
 # Ref: http://carltonf.github.io/post/writing-habit-and-tools
+#### ** Habit END **
