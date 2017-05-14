@@ -1,20 +1,14 @@
 set TOP (realpath (dirname (status -f))/../)
 
 ## NOTE import habit tool
-set -l habit_npm_path $TOP/tools/node_modules/habit
-if [ ! -d $habit_npm_path ]
-  mkdir -pv $TOP/tools/node_modules/.bin
-  # TODO use Github repo
-  ln -sv ~/work/habit $TOP/tools/node_modules/
-  ln -sv ../habit/bin/habit $TOP/tools/node_modules/.bin
-end
+set -l habit_path $TOP/tools/habit
+source "$habit_path/envsetup.fish"
 ## end
-source "$habit_npm_path/sh/habit-envsetup.fish"
 
 ## Wrapper around dockerized-jekyll
 # NOTE the followings are mostly from `envsetup-legacy.fish`
 function __jekyll -d 'the real jekyll docker runner'
-  docker run -it --rm -v $TOP:/srv/jekyll carltonf/jekyll-toolbox:latest jekyll $argv
+  docker run -it --rm -v $TOP:/srv/jekyll carltonf/jekyll-toolbox:20160808 jekyll $argv
 end
 
 # NOTE the following functions also have some enhancement to jekyll cli
