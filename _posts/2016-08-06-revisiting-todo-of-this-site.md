@@ -23,7 +23,7 @@ posts are not all converted though. %}.
 
 # Review
 
-The old *TODO* page was published almost exactly one year ago. {% sidenote last-TODO The
+The old *TODO* page was published almost exactly one year ago. {% sidenote sn-last-TODO The
 last [todo note](http://carltonf.github.io/post/old-todo-page) is taken at 03
 August 2015. %} The timing is a pleasant coincidence.
 
