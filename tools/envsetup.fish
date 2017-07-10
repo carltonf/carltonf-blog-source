@@ -36,3 +36,8 @@ complete -c jekyll -A -f -n '__fish_seen_subcommand_from draft' -a 'title'
 for cmd in publish unpublish
   complete -c jekyll -f -n '__fish_jekyll_no_subcommand' -a $cmd -d 'Jekyll Cmd'
 end
+
+## Helper commands
+function help -d 'Blog help command'
+  vi -R $TOP/README.md
+end
