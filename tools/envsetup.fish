@@ -3,19 +3,10 @@ set -x TOP (realpath (dirname (status -f))/../)
 ## NOTE import habit tool
 set -l habit_path $TOP/tools/habit
 source "$habit_path/envsetup.fish"
-set -x PATH $habit_path $PATH
+set -x PATH $TOP/tools $habit_path $PATH
 ## end
 
-## Wrapper around dockerized-jekyll
-# NOTE the followings are mostly from `envsetup-legacy.fish`
-function __jekyll -d 'the real jekyll docker runner'
-  docker run -it --rm -v $TOP:/srv/jekyll carltonf/jekyll-toolbox:20160808 jekyll $argv
-end
-
-# NOTE the following functions also have some enhancement to jekyll cli
-function jekyll -d 'enhanced jekyll'
-  __jekyll $argv
-end
+# NOTE: jekyll is a separate shell script now
 
 ## jekyll ac
 function __fish_jekyll_no_subcommand -d 'Test if jekyll has sub command'

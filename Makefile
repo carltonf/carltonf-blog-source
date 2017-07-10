@@ -3,19 +3,21 @@ default: serve
 
 PORT := 4000
 CONTAINER_NAME := "carltonf-blog"
-DOCKER_CMD := docker run -it --rm --label=jekyll
-DOCKER_IMG := carltonf/jekyll-toolbox:20160808
+# NOTE: the backquote '`' here is equivalent to '$(shell )'
+# NOTE: if you want to use a shell variable in a subshell, escape the dollar sign with `$$`
+DOCKER_CMD := docker run --rm -it -v `pwd`:/srv/jekyll --user=`id -u`:`id -g`
+DOCKER_IMG := carltonf/jekyll-toolbox:20170710
 # NOTE the default env jekyll runs
 JEKYLL_ENV := development
 serve:
 	@echo "** Serving content locally (at port ${PORT})..."
-	@${DOCKER_CMD} --name=${CONTAINER_NAME} -v `pwd`:/srv/jekyll -p ${PORT}:4000 ${DOCKER_IMG} \
-		jekyll serve --drafts --watch --incremental
+	@${DOCKER_CMD} --name=${CONTAINER_NAME} --label=jekyll -p ${PORT}:4000	\
+			 ${DOCKER_IMG} jekyll serve --drafts --watch --incremental
 
 build-production: JEKYLL_ENV := production
 build-production:
 	@echo "** Building content for publishing..."
-	@${DOCKER_CMD} -v `pwd`:/srv/jekyll -e "JEKYLL_ENV=${JEKYLL_ENV}" ${DOCKER_IMG} jekyll build
+	@${DOCKER_CMD} -e "JEKYLL_ENV=${JEKYLL_ENV}" ${DOCKER_IMG} jekyll build
 
 ### Publishing tools
 SITE_REPO := git@github.com:carltonf/carltonf.github.io

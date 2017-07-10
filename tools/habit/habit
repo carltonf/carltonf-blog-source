@@ -1,0 +1,53 @@
+#!/bin/bash
+
+function usage {
+    cat - <<END
+Usage: habit <command> [post]
+Available commands: new-draft | publish | unpublish
+NOTE: Relying on docker 'carltonf/jekyll-toolbox'.
+END
+}
+
+function commit {
+    local working_post="$1"
+
+    # NOTE fish doesn't have heredoc, which is inconvenient in such case
+    git log --format=%B -n 1 -- $working_post \
+        | sed -e '/^[^#]/ s/^/# /g' \
+        | cat - $TOP/tools/habit/git-template \
+        | git commit -F - -e -- $working_post
+}
+
+
+# TODO a unified Bash script
+cmd="$1"
+post="$2"
+title="$2"
+if [ x"$post" = x ]; then
+    # echo "* WARNING: working post is not set, choose the first modified post."
+    post=$(git status -s _posts/ _drafts/ | awk '/M/ {print $2; exit}')
+    title=""
+fi
+
+# TODO fish auto-completion
+case "$cmd" in
+    new-draft)
+        jekyll draft "$title"
+        ;;
+    publish)
+        jekyll publish "$post"
+        ;;
+    unpublish)
+        jekyll unpublish "$post"
+        ;;
+    diff)
+        git diff HEAD -- "$post"
+        ;;
+    commit)
+        commit "$post"
+        ;;
+    *)
+        echo "* Error: unknown command '$cmd'."
+        usage
+        ;;
+esac

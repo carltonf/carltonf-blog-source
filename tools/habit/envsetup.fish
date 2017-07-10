@@ -33,24 +33,6 @@ function habit-cwp -d 'get/set cwp'
   git add $habit_working_post
 end
 
-function habit-diff -d 'Show all changes not commited yet'
-  git diff HEAD -- $habit_working_post
-end
-
-# function habit-commit -d 'Commit current changes following habit style.'
-#   if [ -n $habit_working_post ]
-#     echo "* WARNING: working post is not set, choose the first modified post."
-#     set $habit_working_post (git status -s _posts/ _drafts/ | awk '/M/ {print $2}')[0]
-#   end
-
-
-#   # NOTE fish doesn't have heredoc, which is inconvenient in such case
-#   git log --format=%B -n 1 -- $habit_working_post \
-#   | sed -e '/^[^#]/ s/^/# /g' \
-#   | cat - $TOP/tools/habit/git-template \
-#   | git commit -F - -e -- $habit_working_post
-# end
-
 function __fish_habit_find_post -d 'search post path with post name'
   set found (find $TOP/_drafts $TOP/_posts $TOP/_wiki -path "*$argv" | head -1)
   # NOTE: Remember to quote, as $found is empty and '[ -n ]' return true. WTF...
