@@ -1,8 +1,9 @@
-set TOP (realpath (dirname (status -f))/../)
+set -x TOP (realpath (dirname (status -f))/../)
 
 ## NOTE import habit tool
 set -l habit_path $TOP/tools/habit
 source "$habit_path/envsetup.fish"
+set -x PATH $habit_path $PATH
 ## end
 
 ## Wrapper around dockerized-jekyll

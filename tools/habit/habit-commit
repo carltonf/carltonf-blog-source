@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+function commit {
+    local working_post="$1"
+
+    if [ x"$working_post" = x ]; then
+       echo "* WARNING: working post is not set, choose the first modified post."
+       working_post=$(git status -s _posts/ _drafts/ \
+                          | awk '/M/ {print $2; exit}')
+    fi
+
+    # NOTE fish doesn't have heredoc, which is inconvenient in such case
+    git log --format=%B -n 1 -- $working_post \
+        | sed -e '/^[^#]/ s/^/# /g' \
+        | cat - $TOP/tools/habit/git-template \
+        | git commit -F - -e -- $working_post
+}
+
+commit "$1"
+
+# TODO a unified Bash script
+# cmd="$1"
+
+# case $cmd
