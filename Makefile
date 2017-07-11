@@ -12,7 +12,8 @@ JEKYLL_ENV := development
 serve:
 	@echo "** Serving content locally (at port ${PORT})..."
 	@${DOCKER_CMD} --name=${CONTAINER_NAME} --label=jekyll -p ${PORT}:4000	\
-			 ${DOCKER_IMG} jekyll serve --drafts --watch --incremental
+			 ${DOCKER_IMG} jekyll serve --drafts --watch --incremental \
+			 --limit_posts 3 --force_polling
 
 build-production: JEKYLL_ENV := production
 build-production:
