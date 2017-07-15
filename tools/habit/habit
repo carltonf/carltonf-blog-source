@@ -3,7 +3,7 @@
 function usage {
     cat - <<END
 Usage: habit <command> [post]
-Available commands: new-draft | publish | unpublish
+Available commands: new-draft publish unpublish diff commit serve
 NOTE: Relying on docker 'carltonf/jekyll-toolbox'.
 END
 }
@@ -18,8 +18,17 @@ function commit {
         | git commit -F - -e -- $working_post
 }
 
+function serve {
+    local PORT=4000
+    local limit_posts=2
+    # TODO what `--label` use here.
+    # NOTE Use `--force_polling`, so it works with vboxsf
+    DOCKER_RUN_OPTS="--name=carltonf-blog --label=jekyll -p ${PORT}:4000" \
+                   jekyll serve --drafts --watch --incremental \
+                   --limit_posts $limit_posts --force_polling
+}
 
-# TODO a unified Bash script
+
 cmd="$1"
 post="$2"
 title="$2"
@@ -45,6 +54,9 @@ case "$cmd" in
         ;;
     commit)
         commit "$post"
+        ;;
+    serve)
+        serve
         ;;
     *)
         echo "* Error: unknown command '$cmd'."
