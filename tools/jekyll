@@ -12,7 +12,7 @@ fi
 # problems if the main user happens to be this as well (a comman setup for my
 # boxized environemnt).
 function __jekyll {
-    docker run -it --rm -v "$TOP":/srv/jekyll     \
+    docker run -i --rm -v "$TOP":/srv/jekyll     \
            --user=$(id -u):$(id -g)             \
            $DOCKER_RUN_OPTS                     \
            carltonf/jekyll-toolbox:latest       \
