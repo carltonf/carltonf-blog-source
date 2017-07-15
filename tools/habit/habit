@@ -1,10 +1,27 @@
 #!/bin/bash
+#
+# A script helps writing blogs
+
+SUPPORTED_CMDS="new-draft publish unpublish diff commit serve"
+
+## Helpers for AutoCompletion BEGIN
+# NOTE: A function that helps with AC
+# For now, only prints the sub commands
+function __ac_tool {
+    echo "$SUPPORTED_CMDS"
+}
+# hijack the whole commands
+if [ "$1" = "__ac_tool" ]; then
+    __ac_tool
+    exit 0
+fi
+# END
 
 function usage {
     cat - <<END
 Usage: habit <command> [post]
-Available commands: new-draft publish unpublish diff commit serve
-NOTE: Relying on docker 'carltonf/jekyll-toolbox'.
+Available commands: $SUPPORTED_CMDS
+NOTE: Most commands relies on docker and image 'carltonf/jekyll-toolbox'.
 END
 }
 
