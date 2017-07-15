@@ -2,12 +2,17 @@
 
 # Wrapper for jekyll-toolbox
 
+if [ $OS = "Windows_NT" ]; then
+    # Dealing with Bash on Windows
+    TOP="$(cygpath -a -w $TOP)"
+fi
+
 # NOTE jekyll is not designed to run as root, so it "chpst -u jekyll:jekyll",
 # jekyll in image has uid 1000 and gid 1000, so usually it doesn't cause any
 # problems if the main user happens to be this as well (a comman setup for my
 # boxized environemnt).
 function __jekyll {
-    docker run -it --rm -v $TOP:/srv/jekyll     \
+    docker run -it --rm -v "$TOP":/srv/jekyll     \
            --user=$(id -u):$(id -g)             \
            $DOCKER_RUN_OPTS                     \
            carltonf/jekyll-toolbox:latest       \
