@@ -2,7 +2,7 @@
 layout: post
 title: Still Emacs, still Tufte
 date: 2017-07-10
-last_modified_at: 2017-07-10
+last_modified_at:
 tags:
 - markdown
 - tufte
