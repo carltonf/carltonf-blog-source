@@ -6,38 +6,42 @@ Site](https://github.com/carltonf/carltonf.github.io).
 
 # Authoring&Publishing in Blog Source
 
-`Makefile` have some useful subcommands and might worth taking a look. A
-standard workflow in authoring&publishing a post is:
+A standard workflow in authoring&publishing a post is:
 
   ```sh
-  git clone git@github.com:carltonf/carltonf-blog-source.git
+  git clone https://github.com/carltonf/carltonf-blog-source.git
   cd carltonf-blog-source/
-  # clone published site repo into `_site/`
-  make site-init
+  # setup the environment (supports bash and fish) and the tool habit
+  source tools/envsetup.bash
+  # [optional] clone published site repo into `_site/`
+  habit init
   # write some posts and commit into source repo
-  # ... with help from tools/ ...
-  # build the new site
-  make serve
-  # publish to site: no manual intervention is needed
-  make site-publish
+  # habit new-draft
+  habit commit
+  # review the post with local webserver
+  habit serve
+  # satisfied? Publish!
+  habit site-publish
   ```
 
 # Notes on Ancillary tools
 
 ## carltonf/jekyll-toolbox
-My own modified jeyll image for building personal blogs. `Make` subcommands `serve` and
-`site-build` use it.
+My own modified jeyll image for building personal blogs. Many of `habit`
+subcommands use it.
 
-The current version is 20160808, published at
+The current version is 20170710, published at
 [Docker Hub](https://hub.docker.com/r/carltonf/jekyll-toolbox/) and
 Dockerfile is available at
 [Github](https://github.com/carltonf/dockerfiles/tree/master/jekyll-toolbox).
 
-## habit (_WIP_)
-Part of the `tools/envsetup.fish`, a tool to enforce writing style.
+## habit
 
-Currently I am working on some **simple** `Bash` script to get the core function
-work again.
+The main tool used for authoring and publishing, a part of the
+`tools/envsetup.*sh`.
+
+Currently it's implemented in Bash. The below is a short history of this tool ;P
+
 
 ### Never-finished fish version ###
 
