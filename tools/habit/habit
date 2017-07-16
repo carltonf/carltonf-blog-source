@@ -3,7 +3,7 @@
 # A script helps writing blogs
 
 SUPPORTED_CMDS="new-draft publish unpublish diff commit \
-serve site-publish"
+serve site-publish site-init"
 
 ## Helpers for AutoCompletion BEGIN
 # NOTE: A function that helps with AC
@@ -87,6 +87,13 @@ END
 }
 
 function site_publish {
+    if [ ! -d _site/.git ]; then
+        echo "WARNING: _site/ is not initialized! Doing 'habit init'..."
+        site_init
+
+        # NOTE bail out if init failed
+        [ $? -eq 1 ] || exit 1;
+    fi
     echo "** Building content for publishing..."
     DOCKER_RUN_OPTS='-e JEKYLL_ENV=production' \
                    jekyll build
@@ -94,6 +101,14 @@ function site_publish {
 	  echo "** Quick publishing with current HEAD message..."
 	  git rev-list --format=%B --max-count=1 HEAD | sed 's/^commit/source repo commit:/' \
 		    | (cd _site/; git add . ; git commit -F- ; git push)
+}
+
+function site_init {
+    local SITE_REPO="https://github.com/carltonf/carltonf.github.io"
+	  echo "** Initalize published _site/ ..."
+    # TODO as with `--depth 1`, we are not interested in the history of `_site`
+    # anyway, so we might as well purging old history
+	  git clone --single-branch --depth 1 ${SITE_REPO} _site
 }
 
 cmd="$1"
@@ -126,8 +141,11 @@ case "$cmd" in
         limit_posts="$2"
         serve "$limit_posts"
         ;;
-    site_publish)
+    site-publish)
         site_publish
+        ;;
+    site-init)
+        site_init
         ;;
     *)
         echo "* Error: unknown command '$cmd'."
