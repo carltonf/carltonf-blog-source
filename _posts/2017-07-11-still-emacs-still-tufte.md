@@ -2,7 +2,7 @@
 layout: post
 title: Still Emacs, still Tufte
 date: 2017-07-10
-last_modified_at:
+last_modified_at: 2017-07-16
 tags:
 - tech
 - markdown
@@ -25,9 +25,10 @@ sidenote/marginnote _mess_.
 ![screenshot](/images/still-emacs-still-tufte/markdown-tufte-screenshot.png)
 
 The above is the screenshot for the extension. You can find the code at
-[markdown-tufte][markdown-tufte].
+[markdown-tufte][markdown-tufte], it's still just a hack and packaged as a
+`spacemacs` layer.
 
-[markdown-tufte]: #
+[markdown-tufte]: https://github.com/carltonf/markdown-tufte
  
 And the rest of this post are some thoughts (murmuring).
 
@@ -94,6 +95,15 @@ supports `Tufte` style.
 It's just that `RStudio` is a beast and I am not doing any data science, yet.
 Also I only used `RStudio` once before to learn some basics about `R` and it was
 quite a while ago. The learning cost would be too high just for the posts.
+
+### `Writage`
+
+[Writage][Writage] is a tool ... converting `MS Word` to `Markdown`! It's still
+early stage, and it's not open source, though it is _"available for free trial"_
+for now. Despite all above, it's an interesting project: after all, like it or
+hate it, `MS Word` is the _king_ of the `WISIWIG` world.
+
+[Writage]: http://www.writage.com/
 
 
 ## About Habit and Discipline
