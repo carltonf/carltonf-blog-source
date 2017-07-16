@@ -4,10 +4,11 @@ title: "Understand 'Just Enough' GObject For Code Reading"
 date: 2016-10-18
 last_modified_at: 2016-10-21
 tags:
+- tech
 - gobject
 - code-reading
 - question-driven
-- gnome-session
+- gnome
 ---
 
 Without referring to `GObject` documentation or any online posts {% sidenote

@@ -3,6 +3,7 @@ layout: post
 date: 2016-03-07
 title: Powershell Tips Notes
 tags:
+- tech
 - powershell
 - tips
 - notes

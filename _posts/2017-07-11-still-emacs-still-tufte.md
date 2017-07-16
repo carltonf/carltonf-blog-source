@@ -4,6 +4,7 @@ title: Still Emacs, still Tufte
 date: 2017-07-10
 last_modified_at:
 tags:
+- tech
 - markdown
 - tufte
 - emacs

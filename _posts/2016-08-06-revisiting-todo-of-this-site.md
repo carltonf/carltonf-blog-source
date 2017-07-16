@@ -3,7 +3,8 @@ collections: post
 layout: post
 title: Revisiting TODO of this site
 date: 2016-08-06
-tags: 
+tags:
+- tech
 - todo
 - admin
 author: carltonf

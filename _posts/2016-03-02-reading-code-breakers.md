@@ -2,7 +2,8 @@
 layout: post
 date: 2016-03-02
 title: "Reading: Code Breakers"
-tag:
+tags:
+- crystal
 - reading
 - notes
 ---

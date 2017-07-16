@@ -3,7 +3,8 @@ layout: post
 title: Try Out Bash on Unbuntu on Windows
 last_modified_at: 2016-08-29
 date: 2016-08-27
-tags: 
+tags:
+- tech
 - windows
 - bash
 - ubuntu

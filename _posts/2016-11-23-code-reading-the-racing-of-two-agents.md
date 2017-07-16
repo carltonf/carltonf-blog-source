@@ -4,6 +4,7 @@ title: "Code-Reading: The Racing Of Two Agents"
 date: 2016-10-17
 last_modified_at: 2016-11-23
 tags:
+- tech
 - code-reading
 - sle
 SP2_GNOME_SESSION: 'https://github.com/GNOME/gnome-session/tree/eba0460033804d2d5ce60953c76fd75f396cc43e'

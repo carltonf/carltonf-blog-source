@@ -5,6 +5,7 @@ date: 2015-07-10 Fri 16:18
 title: A workflow for bug fixing
 categories:
 tags:
+- tech
 - bug-fix
 - workflow
 author: carltonf

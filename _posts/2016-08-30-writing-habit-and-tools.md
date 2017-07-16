@@ -3,6 +3,7 @@ layout: post
 title: Writing habit and tools
 last_modified_at: 2016-08-30
 tags:
+- tech
 - writing
 - habit
 - tool

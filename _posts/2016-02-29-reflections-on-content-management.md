@@ -2,6 +2,9 @@
 layout: post
 date: 2016-02-29
 title: A Reflection on Content Management
+tags:
+- tech
+- reflection
 ---
 
 Just some thoughts on "How do I manage files/content on computers?". 
