@@ -2,7 +2,8 @@
 #
 # A script helps writing blogs
 
-SUPPORTED_CMDS="new-draft publish unpublish diff commit serve"
+SUPPORTED_CMDS="new-draft publish unpublish diff commit \
+serve site-publish"
 
 ## Helpers for AutoCompletion BEGIN
 # NOTE: A function that helps with AC
@@ -69,10 +70,6 @@ function new_draft {
     # Bash 4.0+, converting to lower case
     post=${post,,}
     post="./_drafts/${post}.md"
-    # NOTE In case of new_draft, it can be a string without md extension.
-    # Nevertheless, the following can cope with both situations.
-    # sed -e "s/^\(date:\)/\1 $(date +%Y-%m-%d)/g" $TOP/tools/draft-template.md \
-    #     > $TOP/_drafts/"${post%.md}".md
 
     # NOTE generate the YAML header
     cat - > $post <<END
@@ -89,6 +86,15 @@ END
     echo 'New draft created: ' ${post#./}
 }
 
+function site_publish {
+    echo "** Building content for publishing..."
+    DOCKER_RUN_OPTS='-e JEKYLL_ENV=production' \
+                   jekyll build
+
+	  echo "** Quick publishing with current HEAD message..."
+	  git rev-list --format=%B --max-count=1 HEAD | sed 's/^commit/source repo commit:/' \
+		    | (cd _site/; git add . ; git commit -F- ; git push)
+}
 
 cmd="$1"
 # NOTE `post` is the file name, or the title in case of `new-draft`
@@ -116,8 +122,12 @@ case "$cmd" in
         commit "$post"
         ;;
     serve)
+        # NOTE passing number 0 to have all posts&drafts built
         limit_posts="$2"
         serve "$limit_posts"
+        ;;
+    site_publish)
+        site_publish
         ;;
     *)
         echo "* Error: unknown command '$cmd'."
