@@ -17,6 +17,10 @@ if [ "$1" = "__ac_tool" ]; then
 fi
 # END
 
+# NOTE first return to TOP, so later we can use relative paths to avoid Path
+# difference among Moba, cmder and Linux
+cd $TOP
+
 function usage {
     cat - <<END
 Usage: habit <command> [post]
@@ -27,38 +31,77 @@ END
 
 function commit {
     local working_post="$1"
+    local git_status="$(git status --porcelain $working_post)"
 
-    # NOTE fish doesn't have heredoc, which is inconvenient in such case
-    git log --format=%B -n 1 -- $working_post \
-        | sed -e '/^[^#]/ s/^/# /g' \
-        | cat - $TOP/tools/habit/git-template \
-        | git commit -F - -e -- $working_post
+    # Update the modified timestamp only if it's already in the repo
+    if [[ $git_status == 'M '* ]]; then
+        sed -i -e "s/^\(last_modified_at:\).*/\1 $(date +%Y-%m-%d)/g" \
+            $working_post
+    fi
+
+    # NOTE add first, needed for new draft
+    git add $working_post
+    # TODO update to use `heredoc`
+    git log --follow --format=%B -n 1 -- $working_post  \
+        | sed -e '/^[^#]/ s/^/# /g'                     \
+        | cat - ./tools/habit/git-template           \
+              > ./.git/COMMIT_EDITMSG.habit
+
+    # NOTE needed as vim in Git4Win doesn't cope well with `-F -`
+    git commit -F ./.git/COMMIT_EDITMSG.habit -e -- $working_post
 }
 
 function serve {
     local PORT=4000
-    local limit_posts=2
+    local limit_posts=${1:-3}
     # TODO what `--label` use here.
     # NOTE Use `--force_polling`, so it works with vboxsf
-    DOCKER_RUN_OPTS="--name=carltonf-blog --label=jekyll -p ${PORT}:4000" \
+    DOCKER_RUN_OPTS="-t --name=carltonf-blog --label=jekyll -p ${PORT}:4000" \
                    jekyll serve --drafts --watch --incremental \
                    --limit_posts $limit_posts --force_polling
 }
 
+function new_draft {
+    local title="$1"
+    # NOTE Converting `title` to proper post filename
+    # post is the file name (canonicalized from the title)
+    local post=${title//[^A-Za-z0-9._-]/-}
+    # Bash 4.0+, converting to lower case
+    post=${post,,}
+    post="./_drafts/${post}.md"
+    # NOTE In case of new_draft, it can be a string without md extension.
+    # Nevertheless, the following can cope with both situations.
+    # sed -e "s/^\(date:\)/\1 $(date +%Y-%m-%d)/g" $TOP/tools/draft-template.md \
+    #     > $TOP/_drafts/"${post%.md}".md
+
+    # NOTE generate the YAML header
+    cat - > $post <<END
+--
+layout: post
+title: "$title"
+date: $(date +%Y-%m-%d)
+last_modified_at:
+tags:
+- tech
+--
+END
+
+    echo 'New draft created: ' ${post#./}
+}
+
 
 cmd="$1"
+# NOTE `post` is the file name, or the title in case of `new-draft`
 post="$2"
-title="$2"
 if [ x"$post" = x ]; then
     # echo "* WARNING: working post is not set, choose the first modified post."
-    post=$(git status -s _posts/ _drafts/ | awk '/M/ {print $2; exit}')
-    title=""
+    post=$(git status -s _posts/ _drafts/ | awk '/M|A/ {print $2; exit}')
 fi
 
 # TODO fish auto-completion
 case "$cmd" in
     new-draft)
-        jekyll draft "$title"
+        new_draft "$post"
         ;;
     publish)
         jekyll publish "$post"
@@ -73,7 +116,8 @@ case "$cmd" in
         commit "$post"
         ;;
     serve)
-        serve
+        limit_posts="$2"
+        serve "$limit_posts"
         ;;
     *)
         echo "* Error: unknown command '$cmd'."
