@@ -73,14 +73,14 @@ function new_draft {
 
     # NOTE generate the YAML header
     cat - > $post <<END
---
+---
 layout: post
 title: "$title"
 date: $(date +%Y-%m-%d)
 last_modified_at:
 tags:
 - tech
---
+---
 END
 
     echo 'New draft created: ' ${post#./}
