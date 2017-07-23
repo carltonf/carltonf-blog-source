@@ -130,8 +130,8 @@ li p {
 
 /** Tweak quotes **/
 blockquote p {
-    // p has 1.4em
-    font-size: 1.2em;
+    // p has 1.4rem
+    font-size: 1.2rem;
     // Use the negative spread trick to have on-side only shadow
     // NOTE: pre.highlight code gets easier for overflow hidden the other 3 sides
     // padding for shadow, margin to compensate the extra shift
