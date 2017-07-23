@@ -128,7 +128,19 @@ li p {
     }
 }
 
-/** Tweak code block style */
+/** Tweak quotes **/
+blockquote p {
+    // p has 1.4em
+    font-size: 1.2em;
+    // Use the negative spread trick to have on-side only shadow
+    // NOTE: pre.highlight code gets easier for overflow hidden the other 3 sides
+    // padding for shadow, margin to compensate the extra shift
+    box-shadow: -10px 0 10px -10px #9c9c9c;
+    padding-left: 1em;
+    margin-left: -1em;
+}
+
+/** Tweak code block style **/
 
 pre.highlight {
     /* NOTE: 'auto' to adjust to the existence of sidenote block */
